@@ -1,0 +1,89 @@
+@use './styles/variables.scss' as *;
+@use './styles/comic-print';
+
+html {
+  background-color: $rebase-6;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: unset;
+  font-family: 'Lexend Deca', sans-serif;
+  background-color: $rebase-6;
+  color: $rebase-7;
+  overflow-x: hidden;
+}
+
+* {
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Ningún medio o tabla debe forzar scroll horizontal en móvil */
+img,
+video,
+canvas,
+svg,
+iframe {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+li,
+a {
+  overflow-wrap: break-word;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+/* Layout shell: compensa la altura del menú fijo */
+.spacer {
+  height: 56px;
+}
+
+@media (min-width: 801px) {
+  .spacer {
+    height: 72px;
+  }
+}
+
+.spacer.home-spacer {
+  height: 0;
+}
+
+.full-screen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: $rebase-6;
+  color: $rebase-7;
+  text-align: center;
+}
+
+.overlay-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.overlay-logo-wrapper {
+  display: none; /* coloca tu logo en public/assets/logos/ y reactiva */
+}

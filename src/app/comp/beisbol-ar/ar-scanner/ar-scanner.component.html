@@ -1,0 +1,186 @@
+<section class="ar-page page-shell">
+  <header class="ar-header">
+    <p class="eyebrow">Experiencia AR · Beisbol LMB</p>
+    <h1>Escáner de marcadores</h1>
+    <p class="lede">
+      Activa la cámara, apunta a un póster o selecciona un marcador para desplegar
+      modelos, stats, video y animaciones del diamante.
+    </p>
+    <a routerLink="/marcadores" class="guide-link">Ver guía de marcadores</a>
+  </header>
+
+  <div class="ar-layout">
+    <div class="ar-stage">
+      <div class="camera-frame">
+        <video #videoEl playsinline muted class="camera-video" [class.active]="cameraActive()"></video>
+        @if (!cameraActive()) {
+          <div class="camera-placeholder" (click)="openCameraModal($event)">
+            <mat-icon>photo_camera</mat-icon>
+            <p>Cámara inactiva</p>
+            <span class="placeholder-hint">
+              Toca para activar la cámara o simula un marcador
+            </span>
+          </div>
+        }
+
+        @if (activeMarker(); as marker) {
+          <div
+            class="ar-overlay"
+            [class.is-animating]="animating()"
+            [style.--marker-color]="marker.color"
+          >
+            <div class="ar-model" aria-hidden="true">
+              <span class="diamond"></span>
+              <span class="pulse"></span>
+            </div>
+            <p class="ar-label">{{ marker.name }}</p>
+
+            @if (showInfo()) {
+              <div class="ar-panel info-panel">
+                <h3>Información</h3>
+                <p>{{ marker.info }}</p>
+              </div>
+            }
+            @if (showStats()) {
+              <div class="ar-panel stats-panel">
+                <h3>Stats</h3>
+                <ul>
+                  @for (s of marker.stats; track s.label) {
+                    <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
+                  }
+                </ul>
+              </div>
+            }
+            @if (videoPlaying()) {
+              <div class="ar-panel video-panel">
+                <mat-icon>play_circle</mat-icon>
+                <p>{{ marker.videoHint }}</p>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="ar-controls">
+        @if (!cameraActive()) {
+          <button type="button" class="btn-primary" (click)="openCameraModal($event)">
+            Activar cámara
+          </button>
+        } @else {
+          <button type="button" class="btn-secondary" (click)="stopCamera()">
+            Detener cámara
+          </button>
+        }
+
+        @if (activeMarker(); as marker) {
+          <div class="action-row" role="group" aria-label="Acciones AR">
+            <button
+              type="button"
+              class="action-btn"
+              [class.pressed]="btnPressed() === 'info'"
+              (click)="pressAction('info', $event)"
+            >
+              <mat-icon>info</mat-icon>
+              Info
+            </button>
+            <button
+              type="button"
+              class="action-btn"
+              [class.pressed]="btnPressed() === 'stats'"
+              (click)="pressAction('stats', $event)"
+            >
+              <mat-icon>bar_chart</mat-icon>
+              Stats
+            </button>
+            <button
+              type="button"
+              class="action-btn"
+              [class.pressed]="btnPressed() === 'video'"
+              (click)="pressAction('video', $event)"
+            >
+              <mat-icon>videocam</mat-icon>
+              Video
+            </button>
+            <button
+              type="button"
+              class="action-btn"
+              [class.pressed]="btnPressed() === 'anim'"
+              (click)="pressAction('anim', $event)"
+            >
+              <mat-icon>animation</mat-icon>
+              Animar
+            </button>
+          </div>
+          <button type="button" class="btn-ghost" (click)="clearMarker()">
+            Cerrar marcador · {{ marker.name }}
+          </button>
+        }
+      </div>
+
+      @if (cameraError()) {
+        <p class="feedback error" role="alert">{{ cameraError() }}</p>
+      }
+      @if (feedback()) {
+        <p class="feedback" role="status">{{ feedback() }}</p>
+      }
+    </div>
+
+    <aside class="markers-pick" aria-labelledby="markers-heading">
+      <h2 id="markers-heading">Simular escaneo</h2>
+      <p>Sin póster físico: elige un detonador y abre la ventana AR.</p>
+      <div class="marker-grid">
+        @for (m of markers; track m.id) {
+          <button
+            type="button"
+            class="marker-card"
+            [class.selected]="activeMarker()?.id === m.id"
+            (click)="simulateScan(m, $event)"
+          >
+            <span class="swatch" [style.background]="m.color"></span>
+            <span class="marker-copy">
+              <span class="marker-name">{{ m.name }}</span>
+              <span class="marker-sub">{{ m.subtitle }}</span>
+            </span>
+          </button>
+        }
+      </div>
+    </aside>
+  </div>
+</section>
+
+@if (showCameraModal()) {
+  <div
+    class="cam-modal-backdrop"
+    (click)="cancelCameraModal()"
+    role="presentation"
+  >
+    <div
+      class="cam-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cam-modal-title"
+      (click)="$event.stopPropagation()"
+    >
+      <mat-icon class="cam-modal-icon">photo_camera</mat-icon>
+      <h2 id="cam-modal-title">Acceso a la cámara</h2>
+      <p>
+        Diamante 9 necesita usar la cámara de tu teléfono para escanear
+        marcadores de realidad aumentada. El video se muestra solo en este
+        dispositivo: no se graba, no se guarda y no se envía a ningún servidor.
+      </p>
+      <ul>
+        <li>Tu navegador te pedirá confirmar el permiso.</li>
+        <li>Puedes cerrar la cámara en cualquier momento.</li>
+        <li>Si lo niegas, igual puedes simular un marcador.</li>
+      </ul>
+      <div class="cam-modal-actions">
+        <button type="button" class="btn-secondary" (click)="cancelCameraModal()">
+          Ahora no
+        </button>
+        <button type="button" class="btn-primary" (click)="confirmCamera($event)">
+          Permitir cámara
+        </button>
+      </div>
+    </div>
+  </div>
+}

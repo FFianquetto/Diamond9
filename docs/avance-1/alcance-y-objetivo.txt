@@ -1,0 +1,108 @@
+================================================================================
+                    UNIVERSIDAD AUTÓNOMA DE NUEVO LEÓN
+              Licenciatura en Multimedia y Animación Digital
+                    Procesamiento de Imágenes · Grupo 052
+
+                        PROYECTO INTEGRADOR
+
+                        D I A M A N T E   9
+                Aplicación web de Realidad Aumentada
+              Beisbol Mexicano — Zona Norte (LMB)
+
+                    Alcance y objetivo del proyecto
+                    (Documento previo al 1° avance)
+
+              Alumno:    Fernando Adolfo Cancino Cuenca
+              Matrícula: 2132913
+              Rol:       Programador / Diseñador de ventana AR
+              Fecha:     ______________________
+================================================================================
+
+
+1. OBJETIVO GENERAL
+--------------------------------------------------------------------------------
+Desarrollar una aplicación web de realidad aumentada dedicada al beisbol de la
+zona norte de México, en la que el usuario escanee marcadores impresos (escudo,
+carta de jugador, elemento del diamante) y reciba contenido interactivo en
+pantalla: información, estadísticas, video y animaciones básicas.
+
+La app funciona en navegador móvil Android e iOS y es responsive. No se plantea
+una app nativa comercial ni un backend en producción.
+
+
+2. OBJETIVOS ESPECÍFICOS
+--------------------------------------------------------------------------------
+1. Interfaz responsive con una sola identidad visual (colores, tipografía y
+   componentes reutilizados en todas las pantallas).
+2. Ventana AR con cámara web y overlay de contenido al detectar un marcador.
+3. Al menos dos tipos de acciones dentro de la ventana AR (Info, Stats, Video,
+   Animar) con la misma estética de botones del sitio.
+4. Modos complementarios: trivia temática y estadísticas simuladas.
+5. Acervo de video editable con filtros permitidos (Canvas 2D). No se
+   implementan filtros prohibidos: B/N, escala de grises, sepia, exposición ni
+   colores invertidos.
+
+
+3. ALCANCE TEMÁTICO
+--------------------------------------------------------------------------------
+Enfoque exclusivo: equipos del norte de la Liga Mexicana de Beisbol.
+Referencia temática (datos de demostración): Sultanes de Monterrey, Acereros
+del Norte, Saraperos de Saltillo, Algodoneros Unión Laguna, Toros de Tijuana y
+Águilas de Mexicali.
+
+Fuera de alcance: equipos del centro y sureste, cobertura total de la liga,
+datos oficiales en tiempo real, tienda, pagos o usuarios registrados.
+
+
+4. ALCANCE POR ENTREGA
+--------------------------------------------------------------------------------
+1° avance  Justificación de plataforma, propuesta de proyecto y de interfaz;
+           prototipo navegable (Inicio, Escáner AR, Marcadores, Videos, Trivia,
+           Estadísticas) con datos dummy e identidad visual estable.
+
+2° avance  Escaneo real de al menos dos marcadores, eventos básicos al
+           reconocer imagen y manual preliminar.
+
+3° avance  Tres marcadores, acciones AR completas, modelos 3D (glTF/glb),
+           optimización y video demo; empaque APK si el tiempo lo permite.
+
+Lo que no esté terminado se reporta como “en progreso”, no como cumplido.
+
+
+5. DISEÑO DE LA INTERFAZ
+--------------------------------------------------------------------------------
+No se rediseña desde cero: se reutiliza la estética del prototipo y se trabaja
+con componentes Angular compartidos (menú, footer, shell de página, botones).
+
+Identidad visual: fondo oscuro, acento cyan (#00C2D7), tipografía Lexend Deca,
+paneles y botones consistentes, layout responsive móvil primero.
+
+Pantallas (insertar capturas):
+
+  [Imagen] 01 — Inicio: marca DIAMANTE 9, titular, CTAs “Abrir escáner AR” y
+           “Ver marcadores”, y sección de modos.
+  [Imagen] 02 — Escáner AR: frame de cámara, overlay, botones Info · Stats ·
+           Video · Animar, selector de marcadores y mensajes de feedback.
+  [Imagen] 03 — Guía de marcadores: tres tarjetas con tip de uso y acciones.
+  [Imagen] 04 — Videos: preview, lista de clips y chips de filtros permitidos.
+  [Imagen] 05 — Trivia: pregunta, opciones, feedback y puntaje.
+  [Imagen] 06 — Estadísticas: scoreboard y líderes con datos dummy del norte.
+
+
+6. FLUJO DE USO
+--------------------------------------------------------------------------------
+Inicio → Guía de marcadores (opcional) o Escáner AR → activar cámara / marcador
+→ interactuar con Info, Stats, Video o Animar → Videos, Trivia o Estadísticas
+desde el menú.
+
+
+7. COMPROMISO DEL DOCUMENTO
+--------------------------------------------------------------------------------
+Sí se entrega: app web AR responsive, temática de beisbol del norte, identidad
+única, botones AR coherentes, contenido temático y datos de demostración.
+
+No se promete: liga completa, datos oficiales en vivo, app nativa comercial,
+pagos o usuarios, ni tracking AR y modelos 3D terminados en el 1° avance.
+
+
+— Fin del documento. Insertar capturas del diseño en los espacios indicados. —

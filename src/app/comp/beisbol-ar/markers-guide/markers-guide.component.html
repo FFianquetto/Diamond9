@@ -1,0 +1,23 @@
+<section class="guide-page page-shell">
+  <header>
+    <p class="eyebrow">Guía de uso</p>
+    <h1>Marcadores AR</h1>
+    <p class="lede">
+      Tres detonadores distintos, cada uno con contenido propio. Imprímelos o
+      ábrelos en otra pantalla y úsalos con el escáner.
+    </p>
+  </header>
+
+  <div class="list">
+    @for (m of markers; track m.id; let i = $index) {
+      <article class="card">
+        <span class="idx">0{{ i + 1 }}</span>
+        <h2>{{ m.name }}</h2>
+        <p>{{ m.tip }}</p>
+        <p class="actions"><strong>Acciones:</strong> {{ m.actions }}</p>
+      </article>
+    }
+  </div>
+
+  <a routerLink="/ar" class="btn-primary">Ir al escáner AR</a>
+</section>

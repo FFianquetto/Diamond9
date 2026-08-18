@@ -1,0 +1,86 @@
+<div class="home-container" [class.compress-top]="atTop">
+  <section class="hero-video-section" aria-labelledby="hero-brand">
+    <div class="hero-depth-layer" aria-hidden="true"></div>
+    <div class="hero-video-content">
+      <p class="hero-brand" id="hero-brand" aria-label="Diamante 9">DIAMANTE 9</p>
+      <h1 class="hero-video-title">
+        BEISBOL EN<br />
+        <span class="value-proposition-highlight-text">REALIDAD</span>
+        AUMENTADA.
+      </h1>
+      <p class="hero-supporting">
+        Escanea marcadores de la Liga Mexicana, despliega modelos 3D, stats,
+        trivias y videos con filtros — todo en una app web responsive.
+      </p>
+      <div class="hero-cta-group">
+        <button type="button" class="hero-cta-primary" (click)="navigateTo('/ar', $event)">
+          Abrir escáner AR
+        </button>
+        <button type="button" class="hero-cta-secondary" (click)="navigateTo('/marcadores', $event)">
+          Ver marcadores
+        </button>
+      </div>
+      <button type="button" class="hero-scroll-cue" (click)="scrollToModes()">
+        <span>Explorar modos</span>
+        <mat-icon aria-hidden="true">expand_more</mat-icon>
+      </button>
+    </div>
+    <div class="hero-portal-scrim" aria-hidden="true"></div>
+  </section>
+
+  <section class="d9-portals-section" id="modos" aria-labelledby="modos-heading">
+    <div class="d9-portals-intro">
+      <p class="d9-portals-eyebrow">Experiencias</p>
+      <h2 class="d9-portals-heading" id="modos-heading">
+        Modos de <span>interacción</span>
+      </h2>
+      <p class="d9-portals-subheading">
+        Galería AR, trivia, videos inmersivos y estadísticas — coherentes con
+        la temática del beisbol.
+      </p>
+    </div>
+
+    <nav class="hero-portal-buttons" aria-label="Modos Diamante 9">
+      @for (mode of modes; track mode.link) {
+        <a class="hero-portal-button" [routerLink]="mode.link" [attr.aria-label]="mode.title" (click)="onModeClick($event)">
+          <span class="hero-portal-index" aria-hidden="true">{{ mode.index }}</span>
+          <span class="hero-portal-eyebrow">DIAMANTE 9</span>
+          <span class="hero-portal-title">
+            <span class="hero-portal-highlight">{{ mode.title }}</span>
+          </span>
+          <span class="hero-portal-subtitle">{{ mode.subtitle }}</span>
+        </a>
+      }
+    </nav>
+  </section>
+
+  <div class="main-content-overlay">
+    <section class="booking-promo-section" appReveal>
+      <div class="booking-promo-content">
+        <div class="booking-promo-heading">
+          Activa la cámara. Escanea. Interactúa.
+        </div>
+        <div class="booking-promo-subheading">
+          Info, stats, video y animaciones desde la ventana AR.
+        </div>
+        <button class="booking-promo-btn" type="button" (click)="navigateTo('/ar', $event)">
+          Empezar ahora
+        </button>
+      </div>
+    </section>
+
+    <section class="value-proposition-section" appReveal>
+      <div class="value-proposition-row">
+        <div class="value-proposition-heading">
+          Somos
+          <span class="value-proposition-brand-highlight">DIAMANTE 9</span>
+        </div>
+        <div class="value-proposition-subheading">
+          Experiencia web de realidad aumentada dedicada al beisbol de la Liga
+          Mexicana: marcadores físicos, contenido 3D, trivias y un acervo de
+          video editable con filtros — sin tienda, pagos ni portales comerciales.
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

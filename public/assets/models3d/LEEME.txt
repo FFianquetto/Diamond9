@@ -1,0 +1,1 @@
+Coloca aquí modelos 3D (glTF / .glb) para la experiencia AR.

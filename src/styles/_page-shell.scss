@@ -1,0 +1,205 @@
+@use "./variables.scss" as *;
+
+/// Shared page shell for listing / marketing surfaces
+@mixin d9-page-shell {
+  min-height: 100vh;
+  background: $rebase-6;
+  color: $rebase-7;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+@mixin d9-page-halftone-corner($side: right) {
+  // decorative corner dots removed
+}
+
+@mixin d9-editorial-title {
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: $rebase-7;
+  margin: 0 0 1rem;
+  text-shadow: none;
+  filter: none;
+}
+
+@mixin d9-editorial-subtitle {
+  font-size: clamp(1.05rem, 2.1vw, 1.2rem);
+  font-weight: 400;
+  color: $rebase-14;
+  line-height: 1.65;
+  margin: 0 0 1.75rem;
+  max-width: 42rem;
+}
+
+@mixin d9-comic-card {
+  background: $rebase-6;
+  border: 1.5px solid rgba($rebase-10, 0.55);
+  border-radius: 10px;
+  color: $rebase-7;
+  box-shadow: 0 12px 28px rgba($rebase-6, 0.45);
+  transition: transform $d9-med $d9-ease, box-shadow $d9-med $d9-ease, border-color $d9-fast ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba($rebase-10, 0.85);
+    box-shadow:
+      0 0 14px rgba($rebase-10, 0.14),
+      0 16px 32px rgba($rebase-6, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    box-shadow: 0 10px 24px rgba($rebase-6, 0.4);
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+/// Stack de cards: 1 por renglón en móvil; columnas desde tablet
+@mixin d9-card-stack($min-desktop: 240px, $gap: 0.7rem) {
+  display: grid;
+  gap: $gap;
+  grid-template-columns: 1fr;
+  width: 100%;
+
+  @media (min-width: 769px) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, #{$min-desktop}), 1fr));
+  }
+}
+
+@mixin d9-primary-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: $rebase-10;
+  color: $rebase-6;
+  border: 2px solid $rebase-10;
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    0 2px 0 rgba($rebase-7, 0.2),
+    0 8px 20px rgba($rebase-6, 0.4);
+  transition: transform $d9-fast $d9-ease, box-shadow $d9-fast $d9-ease, background-color $d9-fast ease;
+
+  &:hover {
+    background: $rebase-12;
+    border-color: $rebase-12;
+    transform: translateY(-2px);
+    box-shadow:
+      0 3px 0 rgba($rebase-7, 0.25),
+      0 12px 24px rgba($rebase-6, 0.45);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($rebase-10, 0.65);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 768px) {
+    &:hover {
+      transform: none;
+      box-shadow:
+        0 2px 0 rgba($rebase-7, 0.2),
+        0 8px 20px rgba($rebase-6, 0.4);
+    }
+  }
+}
+
+@mixin d9-secondary-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($rebase-7, 0.04);
+  color: $rebase-7;
+  border: 2px solid rgba($rebase-14, 0.65);
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba($rebase-6, 0.3);
+  transition: transform $d9-fast $d9-ease, box-shadow $d9-fast $d9-ease, background-color $d9-fast ease, color $d9-fast ease, border-color $d9-fast ease;
+
+  &:hover {
+    background: rgba($rebase-7, 0.08);
+    color: $rebase-7;
+    border-color: rgba($rebase-7, 0.7);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($rebase-10, 0.65);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 768px) {
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+@mixin d9-chip {
+  appearance: none;
+  background: $rebase-6;
+  color: $rebase-14;
+  border: 2px solid rgba($rebase-14, 0.45);
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all $d9-fast $d9-ease;
+
+  &.active,
+  &[aria-selected="true"],
+  &.selected {
+    background: $rebase-10;
+    color: $rebase-6;
+    border-color: $rebase-10;
+    box-shadow: 0 4px 12px rgba($rebase-6, 0.3);
+  }
+
+  &:hover:not(.active):not([aria-selected="true"]):not(.selected) {
+    border-color: rgba($rebase-7, 0.55);
+    color: $rebase-7;
+  }
+}
+
+@mixin d9-input {
+  background: $rebase-6;
+  color: $rebase-7;
+  border: 2px solid rgba($rebase-14, 0.45);
+  border-radius: 10px;
+  transition: border-color $d9-fast ease, box-shadow $d9-fast ease;
+
+  &::placeholder {
+    color: rgba($rebase-14, 0.85);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $rebase-10;
+    box-shadow: 0 0 0 3px rgba($rebase-10, 0.2);
+  }
+}
+
+@mixin d9-reduced-motion-cards {
+  @include reduced-motion {
+    &:hover {
+      transform: none !important;
+    }
+  }
+}

@@ -1,0 +1,232 @@
+@use "../../../../styles/variables.scss" as *;
+@use "../../../../styles/page-shell" as *;
+
+.game-page {
+  @include d9-page-shell;
+  padding: 1.25rem 1rem 3.5rem;
+  max-width: 520px;
+  margin: 0 auto;
+  padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+.eyebrow {
+  color: $rebase-10;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin: 0 0 0.4rem;
+}
+
+h1 {
+  @include d9-editorial-title;
+  font-size: clamp(1.7rem, 7vw, 2.4rem);
+  margin-bottom: 0.65rem;
+}
+
+.lede {
+  @include d9-editorial-subtitle;
+  margin-bottom: 1.1rem;
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+
+.stat {
+  @include comic-surface;
+  padding: 0.55rem 0.25rem;
+  text-align: center;
+
+  span {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $rebase-14;
+  }
+
+  strong {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 1.15rem;
+    color: $rebase-10;
+  }
+}
+
+.diamond {
+  position: relative;
+  aspect-ratio: 1 / 1.08;
+  max-height: min(52vh, 420px);
+  margin: 0 auto 1rem;
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 78%, rgba($rebase-10, 0.18), transparent 42%),
+    linear-gradient(180deg, #0b2a1a 0%, #12351f 55%, #0a1f14 100%);
+  border: 2px solid rgba($rebase-14, 0.4);
+}
+
+.field {
+  position: absolute;
+  inset: 12% 16% 10%;
+}
+
+.base,
+.plate,
+.mound {
+  position: absolute;
+  background: $rebase-7;
+}
+
+.base {
+  width: 14px;
+  height: 14px;
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px rgba($rebase-7, 0.35);
+}
+
+.b2 { top: 6%; left: 50%; margin-left: -7px; }
+.b3 { top: 42%; left: 4%; }
+.b1 { top: 42%; right: 4%; }
+
+.plate {
+  width: 22px;
+  height: 18px;
+  left: 50%;
+  bottom: 4%;
+  margin-left: -11px;
+  clip-path: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
+  background: $rebase-12;
+}
+
+.mound {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  left: 50%;
+  top: 38%;
+  margin-left: -9px;
+  background: #c4a574;
+  box-shadow: 0 0 0 6px rgba(#c4a574, 0.25);
+}
+
+.ball {
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, #fff 0 35%, #e8e8e8 36% 100%);
+  box-shadow: 0 0 0 1px #c62828 inset, 0 6px 12px rgba($rebase-6, 0.45);
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+
+  &.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &.gone {
+    opacity: 0;
+    transform: translateY(-80px) scale(0.4);
+    transition: transform 0.45s $d9-ease, opacity 0.45s ease;
+  }
+}
+
+.cue {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  top: 0.7rem;
+  margin: 0;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: $rebase-7;
+  text-shadow: 0 2px 8px rgba($rebase-6, 0.8);
+}
+
+.swing-btn {
+  @include d9-primary-btn;
+
+  & {
+    width: 100%;
+    min-height: 64px;
+    border-radius: 999px;
+    font-size: 1.15rem;
+    letter-spacing: 0.12em;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  &.ready {
+    box-shadow:
+      0 0 0 4px rgba($rebase-10, 0.22),
+      0 10px 24px rgba($rebase-6, 0.45);
+    animation: pulse-ready 0.9s ease-in-out infinite;
+  }
+
+  &.idle {
+    background: $rebase-12;
+    border-color: $rebase-12;
+  }
+}
+
+.log {
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.log li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  font-size: 0.85rem;
+  color: $rebase-14;
+
+  span {
+    flex: 0 0 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: $rebase-6;
+    background: $rebase-10;
+  }
+}
+
+@keyframes pulse-ready {
+  0%,
+  100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+@include reduced-motion {
+  .swing-btn.ready {
+    animation: none;
+  }
+}
+
+@media (min-width: 720px) {
+  .game-page {
+    padding-top: 2rem;
+  }
+
+  .swing-btn {
+    min-height: 56px;
+  }
+}

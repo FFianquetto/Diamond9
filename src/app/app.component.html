@@ -1,0 +1,16 @@
+@if (isInAppBrowser()) {
+  <div class="full-screen-overlay">
+    <h1 class="overlay-title">{{ appName }}</h1>
+    <p>Para usar la cámara AR, abre esta página en tu navegador predeterminado:</p>
+    <ul>
+      <li>Toca el ícono de menú <strong>(•••)</strong> en la esquina.</li>
+      <li>Elige <strong>"Abrir en el navegador"</strong> (Safari / Chrome).</li>
+    </ul>
+  </div>
+} @else {
+  <app-menu-bar></app-menu-bar>
+  <div class="spacer" [class.home-spacer]="isHomeRoute"></div>
+  <router-outlet></router-outlet>
+  <app-footer-button></app-footer-button>
+  <app-particle-fx></app-particle-fx>
+}

@@ -1,0 +1,53 @@
+<section class="trivia-page page-shell">
+  <header>
+    <p class="eyebrow">Modo bonus</p>
+    <h1>Trivia de beisbol</h1>
+    <p class="lede">
+      Reto interactivo sobre la historia y reglas del beisbol mexicano. Gana
+      puntos y recibe retroalimentación al instante.
+    </p>
+  </header>
+
+  @if (!finished()) {
+    <div class="progress">
+      Pregunta {{ index() + 1 }} / {{ questions.length }} · Puntaje {{ score() }}
+    </div>
+
+    <article class="card">
+      <h2>{{ current().question }}</h2>
+      <div class="options">
+        @for (opt of current().options; track opt; let i = $index) {
+          <button
+            type="button"
+            class="option"
+            [class.correct]="answered() && i === current().correct"
+            [class.wrong]="answered() && selected() === i && i !== current().correct"
+            [disabled]="answered()"
+            (click)="pick(i, $event)"
+          >
+            {{ opt }}
+          </button>
+        }
+      </div>
+    </article>
+
+    @if (feedback()) {
+      <p class="feedback" role="status">{{ feedback() }}</p>
+    }
+
+    @if (answered()) {
+      <button type="button" class="btn-primary" (click)="next($event)">
+        {{ index() >= questions.length - 1 ? 'Ver resultado' : 'Siguiente' }}
+      </button>
+    }
+  } @else {
+    <article class="card result">
+      <h2>Resultado final</h2>
+      <p class="score-big">{{ score() }} / {{ questions.length }}</p>
+      <p>{{ feedback() }}</p>
+      <button type="button" class="btn-primary" (click)="restart($event)">
+        Jugar de nuevo
+      </button>
+    </article>
+  }
+</section>

@@ -1,0 +1,88 @@
+@use "../../../../styles/variables.scss" as *;
+@use "../../../../styles/page-shell" as *;
+
+.guide-page {
+  @include d9-page-shell;
+  padding: 2rem 1.25rem 4rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  color: $rebase-10;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+h1 {
+  @include d9-editorial-title;
+}
+
+.lede {
+  @include d9-editorial-subtitle;
+}
+
+.list {
+  /* Tres detonadores: 1 por renglón en móvil y los 3 en fila desde tablet
+     para no dejar una tarjeta suelta con hueco al costado */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: 700px) {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+  }
+}
+
+.card {
+  @include comic-surface;
+  padding: 1.15rem 1.25rem;
+  position: relative;
+
+  .idx {
+    color: $rebase-10;
+    font-weight: 900;
+    font-size: 0.85rem;
+  }
+
+  h2 {
+    margin: 0.25rem 0 0.5rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+    color: $rebase-14;
+    line-height: 1.5;
+  }
+
+  .actions {
+    margin-top: 0.65rem;
+    color: $rebase-7;
+
+    strong {
+      color: $rebase-12;
+    }
+  }
+}
+
+.btn-primary {
+  @include d9-primary-btn;
+
+  & {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    text-decoration: none;
+  }
+
+  @media (min-width: 640px) {
+    width: auto;
+  }
+}

@@ -1,0 +1,72 @@
+// Core
+$rebase-6:  #000000;  // Background principal
+$rebase-7:  #FFFFFF;  // Texto principal
+
+// Brand / Primary
+$rebase-8:  #010440;  // Azul profundo
+$rebase-9:  #3E688C;  // Azul secundario
+$rebase-10: #00C2D7;  // Cyan / Accent principal
+
+// Supporting tones
+$rebase-11: #071A2E;  // Azul oscuro intermedio
+$rebase-12: #8BEAF2;  // Cyan claro / highlights
+$rebase-13: #161A2F;  // Superficies intermedias (evitar en cards; preferir $rebase-6)
+$rebase-14: #A8B3C2;  // Texto secundario
+
+// Motion
+$d9-ease: cubic-bezier(0.22, 1, 0.36, 1);
+$d9-fast: 180ms;
+$d9-med: 280ms;
+
+/// Soft cyan edge accent (restrained)
+@mixin cyan-offset($x: 0, $y: 4px, $opacity: 0.25) {
+  box-shadow: 0 #{$y} 16px rgba($rebase-10, $opacity);
+}
+
+/// Soft depth + silver edge (readable on black)
+@mixin comic-panel-shadow($depth: 0.4) {
+  box-shadow:
+    3px 3px 0 0 rgba($rebase-14, 0.35),
+    0 14px 32px rgba($rebase-6, $depth);
+}
+
+/// Halftone disabled (kept for call-site compatibility)
+@mixin halftone($color: $rebase-10, $size: 4px, $opacity: 0.1) {
+  // intentionally empty — decorative dots removed
+}
+
+/// Film grain / print noise (lightweight SVG noise)
+@mixin print-grain($opacity: 0.04) {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: $opacity;
+}
+
+/// Panel surface — black + silver border depth
+@mixin comic-surface {
+  background: $rebase-6;
+  border: 2px solid rgba($rebase-14, 0.55);
+  border-radius: 10px;
+  color: $rebase-7;
+  @include comic-panel-shadow(0.4);
+}
+
+/// Soft silver edge layer (apply on positioned parent)
+@mixin offset-layer($x: 4px, $y: 4px, $color: $rebase-14) {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    translate: $x $y;
+    border: 2px solid rgba($color, 0.45);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

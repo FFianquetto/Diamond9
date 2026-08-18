@@ -1,0 +1,76 @@
+<section class="game-page page-shell">
+  <header>
+    <p class="eyebrow">Más · Mini juego</p>
+    <h1>Jonrón al toque</h1>
+    <p class="lede">
+      Un pitch, un toque. Espera a que la pelota entre a la zona y batea con
+      el pulgar. Hecho para jugarlo con una sola mano en el celular.
+    </p>
+  </header>
+
+  <div class="hud" aria-live="polite">
+    <div class="stat">
+      <span>Pts</span>
+      <strong>{{ score() }}</strong>
+    </div>
+    <div class="stat">
+      <span>HR</span>
+      <strong>{{ homers() }}</strong>
+    </div>
+    <div class="stat">
+      <span>Racha</span>
+      <strong>{{ streak() }}</strong>
+    </div>
+    <div class="stat">
+      <span>Pitch</span>
+      <strong>{{ pitchLabel() }}</strong>
+    </div>
+  </div>
+
+  <div
+    class="diamond"
+    [class.is-incoming]="phase() === 'incoming'"
+    [class.is-homer]="contact() === 'homer'"
+  >
+    <div class="field" aria-hidden="true">
+      <span class="base b2"></span>
+      <span class="base b3"></span>
+      <span class="base b1"></span>
+      <span class="plate"></span>
+      <span class="mound"></span>
+    </div>
+
+    <div
+      class="ball"
+      [class.visible]="phase() === 'incoming' || phase() === 'result'"
+      [class.gone]="contact() === 'homer' || contact() === 'double'"
+      [style.top.%]="18 + ballProgress() * 62"
+    ></div>
+
+    <p class="cue">{{ cue() }}</p>
+  </div>
+
+  <button
+    type="button"
+    class="swing-btn"
+    [class.ready]="phase() === 'incoming'"
+    [class.idle]="phase() === 'idle' && !finished()"
+    (pointerdown)="swing($event)"
+  >
+    @if (finished()) {
+      Otra entrada
+    } @else if (phase() === 'idle') {
+      Empezar
+    } @else {
+      Batear
+    }
+  </button>
+
+  @if (log().length) {
+    <ol class="log" aria-label="Resultados de cada pitcheo">
+      @for (row of log(); track row.n) {
+        <li><span>{{ row.n }}</span>{{ row.result }}</li>
+      }
+    </ol>
+  }
+</section>

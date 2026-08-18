@@ -1,0 +1,51 @@
+<section class="stats-page page-shell">
+  <header>
+    <p class="eyebrow">Tiempo real (simulado)</p>
+    <h1>Estadísticas en vivo</h1>
+    <p class="lede">
+      Marcador y líderes del día para el prototipo. Los valores se actualizan
+      automáticamente para demostrar la interfaz de stats.
+    </p>
+  </header>
+
+  <article class="scoreboard">
+    <div class="team away">
+      <span class="name">{{ game().away }}</span>
+      <span class="runs">{{ game().awayScore }}</span>
+    </div>
+    <div class="meta">
+      <span>{{ game().half === 'alta' ? 'Alta' : 'Baja' }} {{ game().inning }}ª</span>
+      <span>{{ game().outs }} out{{ game().outs === 1 ? '' : 's' }}</span>
+    </div>
+    <div class="team home">
+      <span class="name">{{ game().home }}</span>
+      <span class="runs">{{ game().homeScore }}</span>
+    </div>
+  </article>
+
+  <p class="feedback" role="status">{{ feedback() }}</p>
+
+  <div class="detail-grid">
+    <div class="detail">
+      <h3>Pitcher</h3>
+      <p>{{ game().pitcher }}</p>
+    </div>
+    <div class="detail">
+      <h3>Al bat</h3>
+      <p>{{ game().batter }}</p>
+    </div>
+  </div>
+
+  <section class="leaders" aria-labelledby="leaders-title">
+    <h2 id="leaders-title">Líderes del día</h2>
+    <ul>
+      @for (l of leaders; track l.name) {
+        <li>
+          <strong>{{ l.name }}</strong>
+          <span>{{ l.team }}</span>
+          <em>{{ l.stat }}</em>
+        </li>
+      }
+    </ul>
+  </section>
+</section>

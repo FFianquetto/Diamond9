@@ -1,0 +1,52 @@
+<section class="videos-page page-shell">
+  <header>
+    <p class="eyebrow">Acervo multimedia</p>
+    <h1>Videos y filtros</h1>
+    <p class="lede">
+      Galería temática de beisbol / archivo Mundial 2026. Cada clip se puede
+      editar con filtros permitidos por la rúbrica (sin B/N, escala de grises,
+      sepia, exposición ni inversión).
+    </p>
+  </header>
+
+  <div class="player-wrap">
+    <canvas #canvasEl class="filter-canvas" aria-label="Vista previa con filtro"></canvas>
+    @if (feedback()) {
+      <p class="toast" role="status">{{ feedback() }}</p>
+    }
+  </div>
+
+  <section class="block" aria-labelledby="acervo-title">
+    <h2 id="acervo-title">Elige un video</h2>
+    <div class="video-list">
+      @for (v of videos; track v.id) {
+        <button
+          type="button"
+          class="video-card"
+          [class.active]="selectedVideo().id === v.id"
+          (click)="selectVideo(v, $event)"
+        >
+          <span class="accent" [style.background]="v.accent"></span>
+          <span class="title">{{ v.title }}</span>
+          <span class="caption">{{ v.caption }}</span>
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="filters-title">
+    <h2 id="filters-title">Filtros de edición</h2>
+    <div class="filter-row">
+      @for (f of filters; track f.id) {
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="selectedFilter() === f.id"
+          (click)="selectFilter(f.id, $event)"
+        >
+          {{ f.label }}
+        </button>
+      }
+    </div>
+  </section>
+</section>

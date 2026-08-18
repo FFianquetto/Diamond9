@@ -1,0 +1,482 @@
+@use "../../../../styles/variables.scss" as *;
+@use "../../../../styles/page-shell" as *;
+
+.ar-page {
+  @include d9-page-shell;
+  padding: 2rem 1.25rem 4rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  color: $rebase-10;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin: 0 0 0.5rem;
+}
+
+.ar-header h1 {
+  @include d9-editorial-title;
+}
+
+.lede {
+  @include d9-editorial-subtitle;
+}
+
+.guide-link {
+  color: $rebase-12;
+  font-weight: 600;
+}
+
+.ar-layout {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  margin-top: clamp(1.25rem, 3vw, 1.75rem);
+  align-items: start;
+
+  /* Escritorio: cámara a la izquierda y detonadores a la derecha
+     para no dejar hueco al costado del frame */
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr);
+  }
+}
+
+.ar-stage {
+  min-width: 0;
+}
+
+.camera-frame {
+  position: relative;
+  /* Si la altura limita el frame, queda centrado en vez de pegado a la izquierda */
+  margin-inline: auto;
+  aspect-ratio: 3 / 4;
+  max-height: 68vh;
+  background: $rebase-11;
+  border: 2px solid rgba($rebase-14, 0.45);
+  border-radius: 12px;
+  overflow: hidden;
+  @include comic-panel-shadow(0.45);
+
+  @media (min-width: 640px) {
+    aspect-ratio: 4 / 3;
+    max-height: 58vh;
+  }
+
+  /* Pantallas bajas: cuadro horizontal para aprovechar el ancho */
+  @media (max-height: 700px) {
+    aspect-ratio: 4 / 3;
+    max-height: 62vh;
+  }
+}
+
+.camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  &.active {
+    opacity: 1;
+  }
+}
+
+.camera-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  place-items: center;
+  gap: 0.4rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: $rebase-14;
+  cursor: pointer;
+
+  p {
+    margin: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+  }
+
+  .placeholder-hint {
+    max-width: 28ch;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: rgba($rebase-14, 0.75);
+  }
+
+  mat-icon {
+    font-size: 44px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.ar-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 20%, rgba($rebase-6, 0.55) 100%);
+}
+
+.ar-model {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+}
+
+.diamond {
+  width: 72px;
+  height: 72px;
+  background: var(--marker-color, $rebase-10);
+  transform: rotate(45deg);
+  border: 3px solid $rebase-7;
+  box-shadow: 0 0 24px rgba($rebase-10, 0.45);
+  transition: transform 0.6s $d9-ease;
+}
+
+.ar-overlay.is-animating .diamond {
+  animation: spin-diamond 1.2s $d9-ease infinite;
+}
+
+.pulse {
+  position: absolute;
+  inset: 10px;
+  border: 2px solid var(--marker-color, $rebase-10);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+
+.ar-label {
+  margin-top: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $rebase-7;
+}
+
+.ar-panel {
+  margin-top: 1rem;
+  max-width: 85%;
+  padding: 0.85rem 1rem;
+  @include comic-surface;
+  pointer-events: auto;
+
+  h3 {
+    margin: 0 0 0.4rem;
+    font-size: 0.85rem;
+    color: $rebase-10;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: $rebase-14;
+    line-height: 1.45;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba($rebase-14, 0.2);
+    span {
+      color: $rebase-14;
+    }
+    strong {
+      color: $rebase-7;
+    }
+  }
+}
+
+.video-panel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  mat-icon {
+    color: $rebase-10;
+  }
+}
+
+.ar-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+
+  @media (min-width: 420px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.action-btn {
+  @include d9-comic-card;
+
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.65rem 0.35rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: $rebase-7;
+    background: $rebase-6;
+  }
+
+  mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    color: $rebase-10;
+  }
+
+  &.pressed {
+    border-color: $rebase-10;
+    background: rgba($rebase-10, 0.15);
+    transform: scale(0.96);
+  }
+}
+
+.btn-primary {
+  @include d9-primary-btn;
+
+  & {
+    padding: 0.85rem 1.25rem;
+    width: 100%;
+  }
+}
+
+.btn-secondary,
+.btn-ghost {
+  appearance: none;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: $rebase-7;
+  border: 2px solid rgba($rebase-14, 0.55);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: none;
+  color: $rebase-14;
+  font-size: 0.8rem;
+}
+
+.feedback {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  background: rgba($rebase-10, 0.12);
+  border: 1px solid rgba($rebase-10, 0.4);
+  color: $rebase-12;
+  font-size: 0.9rem;
+
+  &.error {
+    background: rgba(#c62828, 0.15);
+    border-color: rgba(#ef5350, 0.5);
+    color: #ffcdd2;
+  }
+}
+
+.markers-pick {
+  min-width: 0;
+
+  h2 {
+    @include d9-editorial-title;
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    margin-bottom: 0.4rem;
+  }
+
+  > p {
+    color: $rebase-14;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0 0 0.9rem;
+  }
+}
+
+.marker-grid {
+  @include d9-card-stack(220px, 0.65rem);
+}
+
+.marker-card {
+  @include d9-comic-card;
+
+  & {
+    text-align: left;
+    padding: 0.85rem 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: stretch;
+    gap: 0.75rem;
+    background: $rebase-6;
+    color: inherit;
+  }
+
+  &.selected {
+    border-color: $rebase-10;
+    box-shadow: 0 0 0 1px rgba($rebase-10, 0.4);
+  }
+}
+
+.swatch {
+  flex: 0 0 auto;
+  width: 6px;
+  border-radius: 3px;
+}
+
+.marker-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.marker-name {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.92rem;
+}
+
+.marker-sub {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: $rebase-14;
+}
+
+@keyframes spin-diamond {
+  0% {
+    transform: rotate(45deg) scale(1);
+  }
+  50% {
+    transform: rotate(225deg) scale(1.08);
+  }
+  100% {
+    transform: rotate(405deg) scale(1);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@include reduced-motion {
+  .ar-overlay.is-animating .diamond,
+  .pulse {
+    animation: none;
+  }
+}
+
+.cam-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: grid;
+  place-items: end center;
+  padding: 1rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  background: rgba($rebase-6, 0.72);
+  backdrop-filter: blur(8px);
+
+  @media (min-width: 640px) {
+    place-items: center;
+  }
+}
+
+.cam-modal {
+  width: min(100%, 420px);
+  padding: 1.35rem 1.2rem 1.2rem;
+  border-radius: 18px 18px 14px 14px;
+  background: $rebase-6;
+  border: 1.5px solid rgba($rebase-10, 0.55);
+  box-shadow: 0 18px 40px rgba($rebase-6, 0.55);
+  color: $rebase-7;
+
+  h2 {
+    margin: 0.35rem 0 0.7rem;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  p,
+  li {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: $rebase-14;
+  }
+
+  ul {
+    margin: 0.85rem 0 1.15rem;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.35rem;
+  }
+}
+
+.cam-modal-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  color: $rebase-10;
+}
+
+.cam-modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0.6rem;
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 0.5rem;
+  }
+}

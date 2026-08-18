@@ -1,0 +1,72 @@
+<section class="game-page page-shell">
+  <header>
+    <p class="eyebrow">Más · Mini juego</p>
+    <h1>Hockey de rebote</h1>
+    <p class="lede">
+      Desliza la tabla y toca la estrella con la pelota. Cada estrella vale 1
+      punto y sube un poco la velocidad. Junta 5 para ganar.
+    </p>
+  </header>
+
+  <div class="hud" aria-live="polite">
+    <div class="stat">
+      <span>Estrellas</span>
+      <strong>{{ score() }}/{{ goal }}</strong>
+    </div>
+    <div class="stat">
+      <span>Vidas</span>
+      <strong>{{ lives() }}</strong>
+    </div>
+    <div class="stat">
+      <span>Meta</span>
+      <strong>5</strong>
+    </div>
+  </div>
+
+  <div class="court-wrap">
+    <canvas
+      #court
+      class="court"
+      (pointerdown)="onPointerDown($event)"
+      (pointermove)="onPointerMove($event)"
+      (pointerup)="onPointerUp()"
+      (pointercancel)="onPointerUp()"
+      (pointerleave)="onPointerUp()"
+    ></canvas>
+
+    @if (state() === 'ready') {
+      <div class="overlay">
+        <p>Rebota la pelota contra la estrella. Junta 5.</p>
+      </div>
+    }
+    @if (state() === 'paused') {
+      <div class="overlay">
+        <p>Pausa</p>
+      </div>
+    }
+    @if (state() === 'over') {
+      <div class="overlay">
+        <p>Se cayó la pelota</p>
+        <strong>{{ score() }}/{{ goal }} estrellas</strong>
+      </div>
+    }
+    @if (state() === 'won') {
+      <div class="overlay">
+        <p>¡Ganaste!</p>
+        <strong>{{ goal }} estrellas</strong>
+      </div>
+    }
+  </div>
+
+  <div class="actions">
+    @if (state() === 'ready' || state() === 'over' || state() === 'won') {
+      <button type="button" class="btn-main" (pointerdown)="start($event)">
+        {{ state() === 'ready' ? 'Jugar' : 'Otra partida' }}
+      </button>
+    } @else {
+      <button type="button" class="btn-ghost" (pointerdown)="pauseToggle($event)">
+        {{ state() === 'paused' ? 'Seguir' : 'Pausa' }}
+      </button>
+    }
+  </div>
+</section>
