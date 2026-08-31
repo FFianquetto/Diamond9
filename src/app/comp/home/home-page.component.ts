@@ -30,8 +30,8 @@ export class HomeComponent {
     },
     {
       index: '02',
-      title: 'Videos + filtros',
-      subtitle: 'Acervo LMB / Mundial 2026 con edición por filtros permitidos.',
+      title: 'Galería',
+      subtitle: 'Imágenes LNM y videos de béisbol embebidos desde YouTube.',
       link: '/videos',
     },
     {
@@ -43,17 +43,35 @@ export class HomeComponent {
     {
       index: '04',
       title: 'Estadísticas',
-      subtitle: 'Marcador y líderes en tiempo real (prototipo simulado).',
+      subtitle: 'Standing LNM 2026, líderes y récords de leyendas del béisbol.',
       link: '/estadisticas',
     },
     {
       index: '05',
+      title: 'Historia del béisbol',
+      subtitle: 'Línea de tiempo y perfiles de las figuras más importantes.',
+      link: '/historia',
+    },
+    {
+      index: '06',
+      title: 'Recompensas',
+      subtitle: 'Gana insignias al escanear, jugar o completar la trivia.',
+      link: '/recompensas',
+    },
+    {
+      index: '07',
+      title: 'Modelos 3D',
+      subtitle: 'Galería de props rotando: bate, pelota, gorra, guante y trofeo.',
+      link: '/modelos',
+    },
+    {
+      index: '08',
       title: 'Jonrón al toque',
       subtitle: 'Mini juego para celular: batea en el momento justo.',
       link: '/juego',
     },
     {
-      index: '06',
+      index: '09',
       title: 'Hockey de rebote',
       subtitle: 'Desliza la tabla y no dejes caer la pelota.',
       link: '/rebote',

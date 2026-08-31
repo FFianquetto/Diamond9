@@ -19,10 +19,14 @@ export class MenuBarComponent implements OnInit, OnDestroy {
   public isAtTop = true;
   public isMenuOpen = false;
   public isExtraMenuOpen = false;
+  public isGamesMenuOpen = false;
+  public isMobileGamesOpen = false;
+  public isMobileMoreOpen = false;
   public isLandingPage = true;
   public activeRoute = '/';
   public logoLetters = ['D', '9', '·', 'A', 'R'];
   public logoClickCount = 0;
+  private skipNextDocumentClose = false;
 
   constructor(private router: Router) {
     this.router.events
@@ -54,22 +58,39 @@ export class MenuBarComponent implements OnInit, OnDestroy {
     }
     if (window.innerWidth <= 800) {
       this.isExtraMenuOpen = false;
+      this.isGamesMenuOpen = false;
+    } else {
+      this.isMobileGamesOpen = false;
+      this.isMobileMoreOpen = false;
     }
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
-    const targetElement = event.target as HTMLElement;
+    const target = event.target as HTMLElement;
+
     if (
-      !targetElement.closest('.menu-bar') &&
+      !target.closest('.menu-bar') &&
       this.isMenuOpen &&
       window.innerWidth <= 900
     ) {
       this.isMenuOpen = false;
       document.body.style.overflow = '';
     }
-    if (!targetElement.closest('.menu-bar') && window.innerWidth > 800) {
-      this.isExtraMenuOpen = false;
+
+    if (this.skipNextDocumentClose) {
+      this.skipNextDocumentClose = false;
+      return;
+    }
+
+    if (window.innerWidth > 800) {
+      const onToggle = target.closest('.more-menu-btn');
+      const inPanel = target.closest('.extra-menu-panel');
+
+      if (!onToggle && !inPanel) {
+        this.isExtraMenuOpen = false;
+        this.isGamesMenuOpen = false;
+      }
     }
   }
 
@@ -77,17 +98,45 @@ export class MenuBarComponent implements OnInit, OnDestroy {
     this.isMenuOpen = !this.isMenuOpen;
     if (this.isMenuOpen) {
       this.isExtraMenuOpen = false;
+      this.isGamesMenuOpen = false;
+    } else {
+      this.isMobileGamesOpen = false;
+      this.isMobileMoreOpen = false;
     }
     document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
   }
 
   toggleExtraMenu(event: Event): void {
     event.stopPropagation();
+    this.skipNextDocumentClose = true;
+    this.isGamesMenuOpen = false;
     this.isExtraMenuOpen = !this.isExtraMenuOpen;
+  }
+
+  toggleGamesMenu(event: Event): void {
+    event.stopPropagation();
+    this.skipNextDocumentClose = true;
+    this.isExtraMenuOpen = false;
+    this.isGamesMenuOpen = !this.isGamesMenuOpen;
+  }
+
+  toggleMobileGames(event: Event): void {
+    event.stopPropagation();
+    this.isMobileMoreOpen = false;
+    this.isMobileGamesOpen = !this.isMobileGamesOpen;
+  }
+
+  toggleMobileMore(event: Event): void {
+    event.stopPropagation();
+    this.isMobileGamesOpen = false;
+    this.isMobileMoreOpen = !this.isMobileMoreOpen;
   }
 
   closeExpandedMenus(): void {
     this.isExtraMenuOpen = false;
+    this.isGamesMenuOpen = false;
+    this.isMobileGamesOpen = false;
+    this.isMobileMoreOpen = false;
     this.isMenuOpen = false;
     document.body.style.overflow = '';
   }
@@ -103,8 +152,21 @@ export class MenuBarComponent implements OnInit, OnDestroy {
     return this.activeRoute === path;
   }
 
+  isGamesActive(): boolean {
+    return (
+      this.isActive('trivia') ||
+      this.isActive('juego') ||
+      this.isActive('rebote')
+    );
+  }
+
   isMoreActive(): boolean {
-    return this.isActive('marcadores') || this.isActive('juego') || this.isActive('rebote');
+    return (
+      this.isActive('marcadores') ||
+      this.isActive('historia') ||
+      this.isActive('recompensas') ||
+      this.isActive('modelos')
+    );
   }
 
   private checkCurrentRoute(url: string): void {

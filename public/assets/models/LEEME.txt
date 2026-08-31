@@ -1,0 +1,38 @@
+Modelos 3D — Escáner AR (Diamante 9)
+=====================================
+
+ESTRUCTURA DE CARPETAS
+----------------------
+  public/assets/models/
+    bate/     Baseball_Bat.glb  + bat_normal.png
+    pelota/   baseball.glb      + bola.jpg + bola_Normal.jpg
+    gorra/    baseball_cap.glb
+    guante/   glove.glb         + glove.jpeg
+    trofeo/   (falta GLB/OBJ web) + Trophy1_Basetexture.jpg
+
+CONFIG
+------
+  public/assets/data/ar-models.json
+  - "file": ruta del modelo (.glb u .obj)
+  - "texture": mapa de color (png / jpg / jpeg) — opcional
+  - "normalMap": mapa de normales — opcional
+
+FORMATOS
+--------
+  ✅ GLB  — recomendado (materiales embebidos + texturas externas opcionales)
+  ✅ OBJ  — con .mtl y texturas en la misma carpeta
+  ❌ FBX / .max — no soportados en el navegador
+
+TROFEO
+------
+  Solo hay trophy1.max (3ds Max). Conviértelo a GLB en Blender
+  (o importa el .max y exporta glTF) y ponlo como:
+    "file": "assets/models/trofeo/trofeo.glb"
+  Mientras tanto la app usa un trofeo procedural con Trophy1_Basetexture.jpg.
+
+OPTIMIZACIÓN
+------------
+  - Ideal < 2 MB por modelo (guante.glb ~25 MB es muy pesado para móvil)
+  - Triángulos: 5k–20k
+  - Texturas: 512 o 1024
+  - Después de cambiar archivos: Ctrl+F5

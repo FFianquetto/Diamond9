@@ -1,0 +1,36 @@
+{
+  "titulo": "Premios Diamante 9",
+  "nota": "Gana insignias simples al escanear, jugar o completar la trivia.",
+  "premios": [
+    {
+      "id": "primer-escaneo",
+      "titulo": "Primera carta",
+      "descripcion": "Escanea cualquier marcador en el Escáner AR.",
+      "icono": "document_scanner"
+    },
+    {
+      "id": "explorador",
+      "titulo": "Explorador AR",
+      "descripcion": "Escanea 3 marcadores distintos.",
+      "icono": "explore"
+    },
+    {
+      "id": "jonron",
+      "titulo": "Jonronero",
+      "descripcion": "Termina una entrada en Jonrón al toque.",
+      "icono": "sports_baseball"
+    },
+    {
+      "id": "rebote",
+      "titulo": "Rebote perfecto",
+      "descripcion": "Gana una partida en Hockey de rebote.",
+      "icono": "sports_tennis"
+    },
+    {
+      "id": "trivia",
+      "titulo": "Fan de la trivia",
+      "descripcion": "Completa la trivia una vez.",
+      "icono": "quiz"
+    }
+  ]
+}

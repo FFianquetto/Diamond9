@@ -1,0 +1,35 @@
+Galería — Imágenes (Diamante 9)
+================================
+
+CARPETA PARA TUS FOTOS
+----------------------
+  public/assets/galeria/imagenes/
+
+FORMATOS
+--------
+  ✅ jpg / jpeg / png / webp
+  Ideal: < 800 KB por imagen, ancho máx. ~1600 px
+
+CÓMO AGREGAR UNA IMAGEN
+-----------------------
+  1. Copia el archivo a esta carpeta (sin espacios ni acentos en el nombre).
+     Ejemplo: mi-foto-estadio.jpg
+
+  2. Abre: public/assets/data/galeria.json
+
+  3. Agrega un bloque en "images":
+
+     {
+       "id": "img-mi-foto",
+       "title": "Mi foto",
+       "caption": "Descripción corta",
+       "src": "assets/galeria/imagenes/mi-foto-estadio.jpg",
+       "tag": "Estadio"
+     }
+
+  4. Guarda y recarga la app (Ctrl+F5).
+
+NOTA
+----
+  Los videos NO van aquí: se configuran en galeria.json con youtubeId
+  (embeds de YouTube, canal LMB / equipos en español).

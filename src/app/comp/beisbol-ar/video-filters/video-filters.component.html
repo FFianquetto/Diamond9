@@ -1,52 +1,129 @@
-<section class="videos-page page-shell">
-  <header>
-    <p class="eyebrow">Acervo multimedia</p>
-    <h1>Videos y filtros</h1>
-    <p class="lede">
-      Galería temática de beisbol / archivo Mundial 2026. Cada clip se puede
-      editar con filtros permitidos por la rúbrica (sin B/N, escala de grises,
-      sepia, exposición ni inversión).
-    </p>
-  </header>
+<section class="galeria-page page-shell">
+  <div class="galeria-inner">
+    <header>
+      <p class="eyebrow">Acervo multimedia</p>
+      <h1>Galería</h1>
+      <p class="lede">
+        Sube tus fotos en <code>public/assets/galeria/imagenes/</code> y mira
+        resúmenes de equipos de la Liga Mexicana de Beisbol en YouTube.
+      </p>
+    </header>
 
-  <div class="player-wrap">
-    <canvas #canvasEl class="filter-canvas" aria-label="Vista previa con filtro"></canvas>
-    @if (feedback()) {
-      <p class="toast" role="status">{{ feedback() }}</p>
+    <div class="pill-switch" role="tablist" aria-label="Tipo de contenido">
+      <button
+        type="button"
+        role="tab"
+        class="pill"
+        [class.active]="tab() === 'imagenes'"
+        [attr.aria-selected]="tab() === 'imagenes'"
+        (click)="setTab('imagenes')"
+      >
+        Imágenes
+      </button>
+      <button
+        type="button"
+        role="tab"
+        class="pill"
+        [class.active]="tab() === 'videos'"
+        [attr.aria-selected]="tab() === 'videos'"
+        (click)="setTab('videos')"
+      >
+        Videos
+      </button>
+    </div>
+
+    @if (loading()) {
+      <p class="status">Cargando galería…</p>
+    } @else if (tab() === 'imagenes') {
+      <div class="layout" role="tabpanel">
+        <div class="stage image-stage">
+          @if (activeImage(); as img) {
+            <img
+              [src]="img.src"
+              [alt]="img.title"
+              decoding="async"
+              fetchpriority="high"
+            />
+            <div class="stage-meta">
+              <span class="tag">{{ img.tag }}</span>
+              <h2>{{ img.title }}</h2>
+              <p>{{ img.caption }}</p>
+            </div>
+          } @else {
+            <p class="status">
+              Aún no hay imágenes. Agrega archivos en
+              <code>assets/galeria/imagenes/</code> y regístralos en
+              <code>galeria.json</code>.
+            </p>
+          }
+        </div>
+
+        <div class="thumbs" aria-label="Imágenes">
+          @for (img of images(); track img.id) {
+            <button
+              type="button"
+              class="thumb"
+              [class.active]="activeImage()?.id === img.id"
+              (click)="selectImage(img)"
+            >
+              <img [src]="img.src" [alt]="img.title" loading="lazy" decoding="async" />
+              <span>{{ img.title }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="layout" role="tabpanel">
+        <div class="stage video-stage">
+          @if (activeVideo(); as vid) {
+            <div class="embed">
+              <iframe
+                [src]="embedUrl(vid.youtubeId)"
+                [title]="vid.title"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                referrerpolicy="strict-origin-when-cross-origin"
+              ></iframe>
+            </div>
+            <div class="stage-meta">
+              <span class="tag">{{ vid.channel }}</span>
+              <h2>{{ vid.title }}</h2>
+              <p>{{ vid.caption }}</p>
+            </div>
+          } @else {
+            <p class="status">No hay videos disponibles.</p>
+          }
+        </div>
+
+        <div class="thumbs video-thumbs" aria-label="Videos">
+          @for (vid of videos(); track vid.id) {
+            <button
+              type="button"
+              class="thumb"
+              [class.active]="activeVideo()?.id === vid.id"
+              (click)="selectVideo(vid)"
+            >
+              <img
+                [src]="thumbUrl(vid.youtubeId)"
+                [alt]="vid.title"
+                loading="lazy"
+                decoding="async"
+                width="320"
+                height="180"
+              />
+              <span>{{ vid.title }}</span>
+            </button>
+          }
+        </div>
+      </div>
     }
+
+    <p class="api-note">
+      Canal en español: Liga Mexicana de Beisbol (resúmenes de equipos). Para
+      agregar un video, copia el ID de YouTube en
+      <code>assets/data/galeria.json</code>. Las fotos van en
+      <code>assets/galeria/imagenes/</code> (ver LEEME.txt).
+    </p>
   </div>
-
-  <section class="block" aria-labelledby="acervo-title">
-    <h2 id="acervo-title">Elige un video</h2>
-    <div class="video-list">
-      @for (v of videos; track v.id) {
-        <button
-          type="button"
-          class="video-card"
-          [class.active]="selectedVideo().id === v.id"
-          (click)="selectVideo(v, $event)"
-        >
-          <span class="accent" [style.background]="v.accent"></span>
-          <span class="title">{{ v.title }}</span>
-          <span class="caption">{{ v.caption }}</span>
-        </button>
-      }
-    </div>
-  </section>
-
-  <section class="block" aria-labelledby="filters-title">
-    <h2 id="filters-title">Filtros de edición</h2>
-    <div class="filter-row">
-      @for (f of filters; track f.id) {
-        <button
-          type="button"
-          class="filter-chip"
-          [class.active]="selectedFilter() === f.id"
-          (click)="selectFilter(f.id, $event)"
-        >
-          {{ f.label }}
-        </button>
-      }
-    </div>
-  </section>
 </section>

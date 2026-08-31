@@ -1,0 +1,295 @@
+{
+  "titulo": "Historia del béisbol",
+  "nota": "Hitos mundiales y figuras legendarias del béisbol profesional (MLB y México).",
+  "timeline": [
+    {
+      "year": 1846,
+      "titulo": "Primer partido con reglas modernas",
+      "descripcion": "El Knickerbocker Base Ball Club de Nueva York juega contra el New York Nine en Hoboken; se considera el origen del béisbol organizado."
+    },
+    {
+      "year": 1869,
+      "titulo": "Primer equipo profesional",
+      "descripcion": "Los Cincinnati Red Stockings se convierten en el primer club totalmente profesional de la historia."
+    },
+    {
+      "year": 1925,
+      "titulo": "Nace la Liga Mexicana de Béisbol",
+      "descripcion": "Se funda la LMB como circuito profesional en México; hoy es una de las ligas independientes más importantes de América."
+    },
+    {
+      "year": 1947,
+      "titulo": "Jackie Robinson rompe la barrera",
+      "descripcion": "Robinson debuta con los Brooklyn Dodgers, abriendo las Grandes Ligas a jugadores afroamericanos y transformando el deporte."
+    },
+    {
+      "year": 1973,
+      "titulo": "Bateador designado (DH)",
+      "descripcion": "La Liga Americana adopta el bateador designado, cambio estructural que influyó también en ligas como la LMB."
+    },
+    {
+      "year": 1981,
+      "titulo": "Fernandomania",
+      "descripcion": "Fernando Valenzuela, oriundo de Etchohuaquila, Sonora, gana el Cy Young y la Novato del Año con los Dodgers en una de las temporadas más icónicas de la MLB."
+    },
+    {
+      "year": 2026,
+      "titulo": "LNM y el ecosistema mexicano",
+      "descripcion": "La Liga Norte de México consolida su rol como filial regional de la LMB, conectando talento del noroeste con equipos de primera división."
+    }
+  ],
+  "leyendas": [
+    {
+      "id": "babe-ruth",
+      "nombre": "Babe Ruth",
+      "pais": "Estados Unidos",
+      "era": "1914–1935",
+      "posicion": "Bateador / Pitcher",
+      "liga": "MLB",
+      "color": "#B71C1C",
+      "resumen": "Considerado el mayor icono del béisbol. Transformó el juego con su poder al bate y popularizó el jonrón como arma ofensiva dominante.",
+      "stats": [
+        { "label": "HR", "value": "714" },
+        { "label": "AVG", "value": ".342" },
+        { "label": "RBI", "value": "2,214" },
+        { "label": "WAR ref.", "value": "183" }
+      ],
+      "logros": [
+        "7× campeón de Serie Mundial",
+        "12× líder de jonrones",
+        "Salón de la Fama (1936)"
+      ]
+    },
+    {
+      "id": "hank-aaron",
+      "nombre": "Hank Aaron",
+      "pais": "Estados Unidos",
+      "era": "1954–1976",
+      "posicion": "Bateador",
+      "liga": "MLB",
+      "color": "#1565C0",
+      "resumen": "Rompió el récord de jonrones de Babe Ruth con 755 HR. Símbolo de consistencia, poder y dignidad ante la presión histórica.",
+      "stats": [
+        { "label": "HR", "value": "755" },
+        { "label": "H", "value": "3,771" },
+        { "label": "RBI", "value": "2,297" },
+        { "label": "AVG", "value": ".305" }
+      ],
+      "logros": [
+        "1× campeón de Serie Mundial (1957)",
+        "3× Gold Glove",
+        "Salón de la Fama (1982)"
+      ]
+    },
+    {
+      "id": "jackie-robinson",
+      "nombre": "Jackie Robinson",
+      "pais": "Estados Unidos",
+      "era": "1947–1956",
+      "posicion": "Segunda base",
+      "liga": "MLB",
+      "color": "#212121",
+      "resumen": "Primer afroamericano en la MLB moderna. Su número 42 está retirado en todas las Grandes Ligas.",
+      "stats": [
+        { "label": "AVG", "value": ".311" },
+        { "label": "H", "value": "1,518" },
+        { "label": "SB", "value": "197" },
+        { "label": "MVP", "value": "1949" }
+      ],
+      "logros": [
+        "1× campeón de Serie Mundial (1955)",
+        "Novato del Año (1947)",
+        "Salón de la Fama (1962)"
+      ]
+    },
+    {
+      "id": "roberto-clemente",
+      "nombre": "Roberto Clemente",
+      "pais": "Puerto Rico",
+      "era": "1955–1972",
+      "posicion": "Jardinero derecho",
+      "liga": "MLB",
+      "color": "#F9A825",
+      "resumen": "Excelencia total: bateo, brazo y liderazgo. Alcanzó exactamente 3,000 hits antes de su fallecimiento trágico en 1972.",
+      "stats": [
+        { "label": "H", "value": "3,000" },
+        { "label": "AVG", "value": ".317" },
+        { "label": "Gold Glove", "value": "12" },
+        { "label": "MVP", "value": "1966" }
+      ],
+      "logros": [
+        "2× campeón de Serie Mundial",
+        "Premio Roberto Clemente (legado humanitario)",
+        "Salón de la Fama (1973)"
+      ]
+    },
+    {
+      "id": "nolan-ryan",
+      "nombre": "Nolan Ryan",
+      "pais": "Estados Unidos",
+      "era": "1966–1993",
+      "posicion": "Pitcher",
+      "liga": "MLB",
+      "color": "#C62828",
+      "resumen": "El rey de los ponches. Lanzó 7 juegos sin hit ni carrera y mantuvo récords de velocidad y longevidad en el montículo.",
+      "stats": [
+        { "label": "SO", "value": "5,714" },
+        { "label": "ERA", "value": "3.19" },
+        { "label": "No-hitter", "value": "7" },
+        { "label": "W", "value": "324" }
+      ],
+      "logros": [
+        "Récord histórico de ponches",
+        "11× All-Star",
+        "Salón de la Fama (1999)"
+      ]
+    },
+    {
+      "id": "sandy-koufax",
+      "nombre": "Sandy Koufax",
+      "pais": "Estados Unidos",
+      "era": "1955–1966",
+      "posicion": "Pitcher",
+      "liga": "MLB",
+      "color": "#0277BD",
+      "resumen": "Dominó la década de 1960 con una curva y un relevo letales. Carrera corta pero de impacto monumental.",
+      "stats": [
+        { "label": "ERA", "value": "2.76" },
+        { "label": "SO", "value": "2,396" },
+        { "label": "Cy Young", "value": "3" },
+        { "label": "No-hitter", "value": "4" }
+      ],
+      "logros": [
+        "4× campeón de Serie Mundial",
+        "1 juego perfecto (1965)",
+        "Salón de la Fama (1972)"
+      ]
+    },
+    {
+      "id": "ted-williams",
+      "nombre": "Ted Williams",
+      "pais": "Estados Unidos",
+      "era": "1939–1960",
+      "posicion": "Jardinero izquierdo",
+      "liga": "MLB",
+      "color": "#2E7D32",
+      "resumen": "«El Kid». Último bateador en superar .400 en temporada completa (.406 en 1941). Maestro del ojo al plato.",
+      "stats": [
+        { "label": "AVG", "value": ".344" },
+        { "label": "OBP", "value": ".482" },
+        { "label": "HR", "value": "521" },
+        { "label": "MVP", "value": "2" }
+      ],
+      "logros": [
+        "6× campeón de bateo",
+        "2× Triple Corona",
+        "Salón de la Fama (1966)"
+      ]
+    },
+    {
+      "id": "fernando-valenzuela",
+      "nombre": "Fernando Valenzuela",
+      "pais": "México",
+      "era": "1980–1997",
+      "posicion": "Pitcher",
+      "liga": "MLB / LMB",
+      "color": "#1565C0",
+      "resumen": "El rostro del béisbol mexicano en Grandes Ligas. «Fernandomania» en 1981 inspiró a generaciones en México y Latinoamérica.",
+      "stats": [
+        { "label": "W", "value": "173" },
+        { "label": "ERA", "value": "3.54" },
+        { "label": "SO", "value": "2,074" },
+        { "label": "Cy Young", "value": "1 (1981)" }
+      ],
+      "logros": [
+        "1× campeón de Serie Mundial (1981)",
+        "Novato y Cy Young en el mismo año",
+        "Salón de la Fama mexicano (ícono nacional)"
+      ]
+    },
+    {
+      "id": "hector-espino",
+      "nombre": "Héctor Espino",
+      "pais": "México",
+      "era": "1962–1984",
+      "posicion": "Jardinero / Primera base",
+      "liga": "LMB",
+      "color": "#FF8F00",
+      "resumen": "«El Niño». El mayor jonronero en la historia de la Liga Mexicana, con poder legendario en la loma.",
+      "stats": [
+        { "label": "HR LMB", "value": "453" },
+        { "label": "AVG", "value": ".325" },
+        { "label": "H", "value": "2,376" },
+        { "label": "MVP LMB", "value": "4" }
+      ],
+      "logros": [
+        "Récord de jonrones LMB",
+        "Salón de la Fama del Béisbol Mexicano",
+        "Ícono de los Orange Growers / Tigres"
+      ]
+    },
+    {
+      "id": "nelson-barrera",
+      "nombre": "Nelson Barrera",
+      "pais": "México / Venezuela",
+      "era": "1983–2003",
+      "posicion": "Tercera base",
+      "liga": "LMB",
+      "color": "#6A1B9A",
+      "resumen": "Uno de los bateadores más productivos de la LMB. Compitió con Espino por récords de jonrones y carreras impulsadas.",
+      "stats": [
+        { "label": "HR LMB", "value": "455" },
+        { "label": "RBI", "value": "1,573" },
+        { "label": "H", "value": "2,350" },
+        { "label": "Juegos", "value": "2,418" }
+      ],
+      "logros": [
+        "Récords históricos de HR y RBI en LMB",
+        "Salón de la Fama del Béisbol Mexicano",
+        "Figura de Saraperos y múltiples equipos"
+      ]
+    },
+    {
+      "id": "roberto-ortiz",
+      "nombre": "Roberto Ortiz",
+      "pais": "México",
+      "era": "1937–1953",
+      "posicion": "Jardinero",
+      "liga": "LMB",
+      "color": "#00838F",
+      "resumen": "Pionero del béisbol profesional mexicano. Bateador de contacto y poder en la era dorada de la LMB.",
+      "stats": [
+        { "label": "AVG", "value": ".345" },
+        { "label": "H", "value": "1,792" },
+        { "label": "HR", "value": "131" },
+        { "label": "Temporadas", "value": "17" }
+      ],
+      "logros": [
+        "Múltiples títulos de bateo LMB",
+        "Salón de la Fama del Béisbol Mexicano",
+        "Leyenda de los Tuneros / Sultanes"
+      ]
+    },
+    {
+      "id": "vinicio-garcia",
+      "nombre": "Vinicio García",
+      "pais": "México",
+      "era": "1944–1960",
+      "posicion": "Segunda base",
+      "liga": "LMB",
+      "color": "#5D4037",
+      "resumen": "«Cuba» García. Segunda base histórico de la LMB, referente de defensa y liderazgo en la posguerra mexicana.",
+      "stats": [
+        { "label": "AVG", "value": ".295" },
+        { "label": "H", "value": "1,850+" },
+        { "label": "Juegos", "value": "1,900+" },
+        { "label": "Temporadas", "value": "16" }
+      ],
+      "logros": [
+        "Campeón múltiple con Sultanes",
+        "Salón de la Fama del Béisbol Mexicano",
+        "Referente defensivo de la segunda base"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "nota": "Perfil de escaneo: colores distintivos del logo + palabras/letras visibles. Requiere AMBOS.",
+  "profiles": [
+    {
+      "id": "marineros-ensenada",
+      "colors": ["#021a33", "#42a5f5", "#1565c0", "#ffffff"],
+      "keywords": ["MARINEROS", "ENS", "ENSENADA"]
+    },
+    {
+      "id": "barbanegras-tijuana",
+      "colors": ["#dc2626", "#b91c1c", "#0a0a0a", "#171717", "#ffffff"],
+      "keywords": ["BARBANEGRAS", "BARBANEGRA", "TIJ", "TIJUANA"]
+    },
+    {
+      "id": "bucaneros-cabos",
+      "colors": ["#003840", "#00e5ff", "#00c2d7", "#ffffff"],
+      "keywords": ["BUCANEROS", "CAB", "CAMP"]
+    },
+    {
+      "id": "algodoneros-slrc",
+      "colors": ["#2e2200", "#ffd54f", "#f9a825", "#ffffff"],
+      "keywords": ["ALGODONEROS", "SLRC", "SAN LUIS"]
+    },
+    {
+      "id": "tiburones-penasco",
+      "colors": ["#001e33", "#29b6f6", "#0277bd", "#ffffff"],
+      "keywords": ["TIBURONES", "PCO", "PENASCO"]
+    },
+    {
+      "id": "cerveceros-tecate",
+      "colors": ["#2a1600", "#ff9100", "#ff8f00", "#ffffff"],
+      "keywords": ["CERVECEROS", "TEC", "TECATE"]
+    },
+    {
+      "id": "liga-lnm",
+      "colors": ["#0d1b2a", "#90caf9", "#3e688c", "#ffffff"],
+      "keywords": ["LNM", "2026"]
+    },
+    {
+      "id": "walter-silva",
+      "colors": ["#c62828", "#1a1a1a", "#ffffff"],
+      "keywords": ["WALTER", "SILVA"]
+    },
+    {
+      "id": "andres-garza",
+      "colors": ["#0d3d4a", "#8beaf2", "#00c2d7"],
+      "keywords": ["GARZA", "ANDRES", "ANDRÉS"]
+    },
+    {
+      "id": "oliver-carrillo",
+      "colors": ["#0d3d4a", "#00c2d7", "#8beaf2"],
+      "keywords": ["CARRILLO", "OLIVER"]
+    },
+    {
+      "id": "alejandro-carrillo",
+      "colors": ["#1a2a3a", "#1565c0", "#0d47a1"],
+      "keywords": ["CARRILLO", "ALEJANDRO", "ENS"]
+    }
+  ]
+}

@@ -10,7 +10,8 @@
 
   @if (!finished()) {
     <div class="progress">
-      Pregunta {{ index() + 1 }} / {{ questions.length }} · Puntaje {{ score() }}
+      Pregunta {{ index() + 1 }} / {{ questions.length }} · Puntaje
+      {{ score() }}
     </div>
 
     <article class="card">
@@ -21,7 +22,9 @@
             type="button"
             class="option"
             [class.correct]="answered() && i === current().correct"
-            [class.wrong]="answered() && selected() === i && i !== current().correct"
+            [class.wrong]="
+              answered() && selected() === i && i !== current().correct
+            "
             [disabled]="answered()"
             (click)="pick(i, $event)"
           >
@@ -37,7 +40,7 @@
 
     @if (answered()) {
       <button type="button" class="btn-primary" (click)="next($event)">
-        {{ index() >= questions.length - 1 ? 'Ver resultado' : 'Siguiente' }}
+        {{ index() >= questions.length - 1 ? "Ver resultado" : "Siguiente" }}
       </button>
     }
   } @else {

@@ -1,1 +1,16 @@
-Coloca aquí las imágenes detonadoras AR (marcadores / pósters).
+Referencias de escaneo (deben coincidir con targetImage del JSON)
+=================================================================
+
+Equipos: cada PNG es distinto (círculo/diamante + nombre) para no confundirse.
+Cartel LNM: liga-lnm.png → datos de liga.json (standing / campeón).
+Jugadores: cartas en jugadores.json.
+
+IMPORTANTE
+- La info siempre sale del JSON (jugadores.json / equipos.json / liga.json).
+- Tras detectar, la ficha se BLOQUEA hasta pulsar “Escanear de nuevo”.
+- Para un logo físico real: reemplaza el PNG del equipo con una foto clara
+  SOLO del logo (sin UI del navegador) y recarga con Ctrl+F5.
+
+Archivos clave:
+- barbanegras-tijuana.png
+- liga-lnm.png  ← tercer marcador (Cartel LNM / logo de la liga)

@@ -1,6 +1,7 @@
-import { Component, OnDestroy, computed, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ParticleFxService } from '../../shared/particle-fx/particle-fx.service';
+import { RewardsService } from '../rewards.service';
 
 type PitchPhase = 'idle' | 'windup' | 'incoming' | 'result';
 type Contact = 'whiff' | 'foul' | 'single' | 'double' | 'homer' | null;
@@ -17,8 +18,9 @@ interface PitchLog {
   templateUrl: './home-run-game.component.html',
   styleUrl: './home-run-game.component.scss',
 })
-export class HomeRunGameComponent implements OnDestroy {
+export class HomeRunGameComponent implements OnInit, OnDestroy {
   private readonly fx = inject(ParticleFxService);
+  private readonly rewards = inject(RewardsService);
 
   readonly totalPitches = 9;
   phase = signal<PitchPhase>('idle');
@@ -44,6 +46,10 @@ export class HomeRunGameComponent implements OnDestroy {
   private resultTimer: ReturnType<typeof setTimeout> | null = null;
   private startedAt = 0;
   private duration = 900;
+
+  ngOnInit(): void {
+    this.rewards.loadCatalog().subscribe();
+  }
 
   ngOnDestroy(): void {
     this.clearTimers();
@@ -90,8 +96,11 @@ export class HomeRunGameComponent implements OnDestroy {
     if (this.pitchIndex() >= this.totalPitches) {
       this.finished.set(true);
       this.phase.set('idle');
+      const premio = this.rewards.recordJonronPlayed();
       this.cue.set(
-        `Entrada terminada · ${this.score()} pts · ${this.homers()} jonrones`,
+        premio
+          ? `Entrada terminada · ${this.score()} pts · ¡Premio: ${premio}!`
+          : `Entrada terminada · ${this.score()} pts · ${this.homers()} jonrones`,
       );
       this.fx.burstCenter(this.homers() > 0 ? 'homer' : 'confetti');
       return;

@@ -32,15 +32,7 @@
         [class.is-active]="isActive('videos')"
         [attr.aria-current]="isActive('videos') ? 'page' : null"
         (click)="navigateTo('videos'); $event.preventDefault()"
-        >Videos</a
-      >
-    </li>
-    <li class="desktop-only">
-      <a
-        [class.is-active]="isActive('trivia')"
-        [attr.aria-current]="isActive('trivia') ? 'page' : null"
-        (click)="navigateTo('trivia'); $event.preventDefault()"
-        >Trivia</a
+        >Galería</a
       >
     </li>
     <li class="desktop-only">
@@ -51,13 +43,53 @@
         >Stats</a
       >
     </li>
-    <li class="menu-more-item">
+    <li class="desktop-only menu-dropdown-item menu-games-item">
+      <button
+        type="button"
+        class="more-menu-btn"
+        [class.is-open]="isGamesMenuOpen"
+        [class.is-active]="isGamesActive()"
+        (click)="toggleGamesMenu($event)"
+        [attr.aria-expanded]="isGamesMenuOpen"
+      >
+        <span>{{ isGamesMenuOpen ? 'Menos' : 'Juegos' }}</span>
+        <svg class="more-menu-icon" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+          <path
+            d="M2 4L6 8L10 4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </button>
+      <div class="extra-menu-panel games-menu-panel" [class.open]="isGamesMenuOpen">
+        <a
+          [class.is-active]="isActive('trivia')"
+          (click)="navigateTo('trivia'); $event.preventDefault()"
+          >Trivia</a
+        >
+        <a
+          [class.is-active]="isActive('juego')"
+          (click)="navigateTo('juego'); $event.preventDefault()"
+          >Jonrón al toque</a
+        >
+        <a
+          [class.is-active]="isActive('rebote')"
+          (click)="navigateTo('rebote'); $event.preventDefault()"
+          >Hockey de rebote</a
+        >
+      </div>
+    </li>
+    <li class="menu-dropdown-item menu-more-item">
       <button
         type="button"
         class="more-menu-btn"
         [class.is-open]="isExtraMenuOpen"
         [class.is-active]="isMoreActive()"
         (click)="toggleExtraMenu($event)"
+        [attr.aria-expanded]="isExtraMenuOpen"
       >
         <span>{{ isExtraMenuOpen ? 'Menos' : 'Más' }}</span>
         <svg class="more-menu-icon" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
@@ -71,6 +103,28 @@
           ></path>
         </svg>
       </button>
+      <div class="extra-menu-panel more-menu-panel" [class.open]="isExtraMenuOpen">
+        <a
+          [class.is-active]="isActive('modelos')"
+          (click)="navigateTo('modelos'); $event.preventDefault()"
+          >Modelos 3D</a
+        >
+        <a
+          [class.is-active]="isActive('marcadores')"
+          (click)="navigateTo('marcadores'); $event.preventDefault()"
+          >Marcadores</a
+        >
+        <a
+          [class.is-active]="isActive('historia')"
+          (click)="navigateTo('historia'); $event.preventDefault()"
+          >Historia</a
+        >
+        <a
+          [class.is-active]="isActive('recompensas')"
+          (click)="navigateTo('recompensas'); $event.preventDefault()"
+          >Recompensas</a
+        >
+      </div>
     </li>
 
     <li class="mobile-secondary-item">
@@ -84,14 +138,7 @@
       <a
         [class.is-active]="isActive('videos')"
         (click)="navigateTo('videos'); $event.preventDefault()"
-        >Videos + filtros</a
-      >
-    </li>
-    <li class="mobile-secondary-item">
-      <a
-        [class.is-active]="isActive('trivia')"
-        (click)="navigateTo('trivia'); $event.preventDefault()"
-        >Trivia</a
+        >Galería</a
       >
     </li>
     <li class="mobile-secondary-item">
@@ -101,46 +148,118 @@
         >Estadísticas</a
       >
     </li>
-    <li class="mobile-secondary-item">
-      <a
-        [class.is-active]="isActive('marcadores')"
-        (click)="navigateTo('marcadores'); $event.preventDefault()"
-        >Marcadores</a
+    <li class="mobile-secondary-item mobile-dropdown-item">
+      <button
+        type="button"
+        class="mobile-submenu-toggle"
+        [class.is-active]="isGamesActive()"
+        [attr.aria-expanded]="isMobileGamesOpen"
+        (click)="toggleMobileGames($event)"
       >
+        <span>{{ isMobileGamesOpen ? 'Menos' : 'Juegos' }}</span>
+        <svg
+          class="mobile-submenu-icon"
+          [class.is-open]="isMobileGamesOpen"
+          viewBox="0 0 12 12"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M2 4L6 8L10 4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </button>
+      @if (isMobileGamesOpen) {
+        <ul class="mobile-submenu">
+          <li>
+            <a
+              [class.is-active]="isActive('trivia')"
+              (click)="navigateTo('trivia'); $event.preventDefault()"
+              >Trivia</a
+            >
+          </li>
+          <li>
+            <a
+              [class.is-active]="isActive('juego')"
+              (click)="navigateTo('juego'); $event.preventDefault()"
+              >Jonrón al toque</a
+            >
+          </li>
+          <li>
+            <a
+              [class.is-active]="isActive('rebote')"
+              (click)="navigateTo('rebote'); $event.preventDefault()"
+              >Hockey de rebote</a
+            >
+          </li>
+        </ul>
+      }
     </li>
-    <li class="mobile-secondary-item">
-      <a
-        [class.is-active]="isActive('juego')"
-        (click)="navigateTo('juego'); $event.preventDefault()"
-        >Juego: Jonrón</a
+    <li class="mobile-secondary-item mobile-dropdown-item">
+      <button
+        type="button"
+        class="mobile-submenu-toggle"
+        [class.is-active]="isMoreActive()"
+        [attr.aria-expanded]="isMobileMoreOpen"
+        (click)="toggleMobileMore($event)"
       >
-    </li>
-    <li class="mobile-secondary-item">
-      <a
-        [class.is-active]="isActive('rebote')"
-        (click)="navigateTo('rebote'); $event.preventDefault()"
-        >Juego: Rebote</a
-      >
+        <span>{{ isMobileMoreOpen ? 'Menos' : 'Más' }}</span>
+        <svg
+          class="mobile-submenu-icon"
+          [class.is-open]="isMobileMoreOpen"
+          viewBox="0 0 12 12"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M2 4L6 8L10 4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </button>
+      @if (isMobileMoreOpen) {
+        <ul class="mobile-submenu">
+          <li>
+            <a
+              [class.is-active]="isActive('modelos')"
+              (click)="navigateTo('modelos'); $event.preventDefault()"
+              >Modelos 3D</a
+            >
+          </li>
+          <li>
+            <a
+              [class.is-active]="isActive('marcadores')"
+              (click)="navigateTo('marcadores'); $event.preventDefault()"
+              >Marcadores</a
+            >
+          </li>
+          <li>
+            <a
+              [class.is-active]="isActive('historia')"
+              (click)="navigateTo('historia'); $event.preventDefault()"
+              >Historia</a
+            >
+          </li>
+          <li>
+            <a
+              [class.is-active]="isActive('recompensas')"
+              (click)="navigateTo('recompensas'); $event.preventDefault()"
+              >Recompensas</a
+            >
+          </li>
+        </ul>
+      }
     </li>
   </ul>
-
-  <div class="extra-menu-panel" [class.open]="isExtraMenuOpen">
-    <a
-      [class.is-active]="isActive('juego')"
-      (click)="navigateTo('juego'); $event.preventDefault()"
-      >Juego: Jonrón</a
-    >
-    <a
-      [class.is-active]="isActive('rebote')"
-      (click)="navigateTo('rebote'); $event.preventDefault()"
-      >Juego: Rebote</a
-    >
-    <a
-      [class.is-active]="isActive('marcadores')"
-      (click)="navigateTo('marcadores'); $event.preventDefault()"
-      >Marcadores</a
-    >
-  </div>
 
   <div class="button-container"></div>
 

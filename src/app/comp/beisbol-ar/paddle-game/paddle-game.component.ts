@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ParticleFxService } from '../../shared/particle-fx/particle-fx.service';
+import { RewardsService } from '../rewards.service';
 
 type GameState = 'ready' | 'playing' | 'paused' | 'over' | 'won';
 
@@ -31,6 +32,7 @@ export class PaddleGameComponent implements AfterViewInit, OnDestroy {
 
   private readonly fx = inject(ParticleFxService);
   private readonly zone = inject(NgZone);
+  private readonly rewards = inject(RewardsService);
 
   readonly goal = 5;
   state = signal<GameState>('ready');
@@ -50,6 +52,7 @@ export class PaddleGameComponent implements AfterViewInit, OnDestroy {
   private speedMul = 1;
 
   ngAfterViewInit(): void {
+    this.rewards.loadCatalog().subscribe();
     const canvas = this.courtRef?.nativeElement;
     if (!canvas) return;
     this.ctx = canvas.getContext('2d');
@@ -257,6 +260,7 @@ export class PaddleGameComponent implements AfterViewInit, OnDestroy {
       this.vibrate(18);
       if (this.score() >= this.goal) {
         this.state.set('won');
+        this.rewards.recordReboteWin();
         this.fx.burstCenter('homer');
         this.star = null;
         return;

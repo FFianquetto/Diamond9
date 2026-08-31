@@ -20,6 +20,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'galeria',
+    redirectTo: 'videos',
+    pathMatch: 'full',
+  },
+  {
     path: 'videos',
     loadComponent: () =>
       import('./comp/beisbol-ar/video-filters/video-filters.component').then(
@@ -38,6 +43,27 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./comp/beisbol-ar/stats/stats.component').then(
         (m) => m.StatsComponent,
+      ),
+  },
+  {
+    path: 'historia',
+    loadComponent: () =>
+      import('./comp/beisbol-ar/historia/historia.component').then(
+        (m) => m.HistoriaComponent,
+      ),
+  },
+  {
+    path: 'recompensas',
+    loadComponent: () =>
+      import('./comp/beisbol-ar/recompensas/recompensas.component').then(
+        (m) => m.RecompensasComponent,
+      ),
+  },
+  {
+    path: 'modelos',
+    loadComponent: () =>
+      import('./comp/beisbol-ar/modelos-3d/modelos-3d.component').then(
+        (m) => m.Modelos3dComponent,
       ),
   },
   {

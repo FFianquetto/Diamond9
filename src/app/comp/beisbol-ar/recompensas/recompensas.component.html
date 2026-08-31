@@ -1,0 +1,66 @@
+<section class="rewards-page page-shell">
+  <header>
+    <p class="eyebrow">Premios</p>
+    <h1>Mi colección</h1>
+    <p class="lede">
+      Gana insignias al escanear marcadores, jugar los mini juegos o terminar la
+      trivia. Sin reglas complicadas.
+    </p>
+  </header>
+
+  <div class="progress-bar" role="status">
+    <span class="progress-label">
+      {{ totalPremios() }} / {{ premios.length }} premios
+    </span>
+    <div class="track">
+      <div
+        class="fill"
+        [style.width.%]="premios.length ? (totalPremios() / premios.length) * 100 : 0"
+      ></div>
+    </div>
+    <span class="scan-count">{{ totalScans() }} escaneos</span>
+  </div>
+
+  <section class="how-to" aria-label="Cómo ganar premios">
+    <h2 class="section-title">Cómo ganar</h2>
+    <ul>
+      <li><mat-icon aria-hidden="true">document_scanner</mat-icon> Escanea cartas o escudos en <a routerLink="/ar">AR</a></li>
+      <li><mat-icon aria-hidden="true">sports_baseball</mat-icon> Juega <a routerLink="/juego">Jonrón</a> o <a routerLink="/rebote">Rebote</a></li>
+      <li><mat-icon aria-hidden="true">quiz</mat-icon> Termina la <a routerLink="/trivia">Trivia</a></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="premios-title">
+    <h2 id="premios-title" class="section-title">Insignias</h2>
+    <div class="premios-grid">
+      @for (p of premios; track p.id) {
+        <article class="premio-card" [class.unlocked]="tienePremio(p.id)">
+          <mat-icon aria-hidden="true">{{ tienePremio(p.id) ? p.icono : 'lock' }}</mat-icon>
+          <h3>{{ p.titulo }}</h3>
+          <p>{{ p.descripcion }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  @if (escaneados.length) {
+    <section aria-labelledby="cartas-title">
+      <h2 id="cartas-title" class="section-title">Cartas escaneadas</h2>
+      <div class="scans-grid">
+        @for (m of escaneados; track m.id) {
+          <article class="scan-card" [style.--team-color]="m.color">
+            @if (m.targetImage) {
+              <img [src]="m.targetImage" [alt]="m.nombre" loading="lazy" />
+            }
+            <span>{{ m.nombre }}</span>
+          </article>
+        }
+      </div>
+    </section>
+  }
+
+  <div class="actions">
+    <a routerLink="/ar" class="btn-primary">Ir al escáner AR</a>
+    <a routerLink="/juego" class="btn-secondary">Jugar</a>
+  </div>
+</section>

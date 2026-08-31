@@ -1,12 +1,12 @@
 <section class="ar-page page-shell">
   <header class="ar-header">
-    <p class="eyebrow">Experiencia AR · Beisbol LMB</p>
+    <p class="eyebrow">Experiencia AR · Liga Norte de México</p>
     <h1>Escáner de marcadores</h1>
     <p class="lede">
-      Activa la cámara, apunta a un póster o selecciona un marcador para desplegar
-      modelos, stats, video y animaciones del diamante.
+      Escanea libremente (sin bloqueo). Al <strong>detener la cámara</strong>,
+      la ficha se queda y pasa al historial hasta el próximo escaneo.
     </p>
-    <a routerLink="/marcadores" class="guide-link">Ver guía de marcadores</a>
+    <a routerLink="/marcadores" class="guide-link">Ver equipos escaneables</a>
   </header>
 
   <div class="ar-layout">
@@ -18,43 +18,56 @@
             <mat-icon>photo_camera</mat-icon>
             <p>Cámara inactiva</p>
             <span class="placeholder-hint">
-              Toca para activar la cámara o simula un marcador
+              @if (activeMarker(); as kept) {
+                Última ficha: {{ kept.nombre }}. Toca para volver a escanear.
+              } @else {
+                Toca para activar la cámara y escanear un marcador
+              }
             </span>
           </div>
         }
 
-        @if (activeMarker(); as marker) {
+        @if (scanning()) {
+          <div class="scan-badge" aria-live="polite">
+            <span class="scan-dot"></span>
+            Escaneando…
+          </div>
+        }
+
+        <!-- Overlay AR solo con cámara activa (no bloquea el matching) -->
+        @if (cameraActive() && activeMarker(); as marker) {
           <div
             class="ar-overlay"
-            [class.is-animating]="animating()"
             [style.--marker-color]="marker.color"
           >
-            <div class="ar-model" aria-hidden="true">
-              <span class="diamond"></span>
-              <span class="pulse"></span>
+            <div class="ar-scene" aria-hidden="true">
+              <div class="ar-floor"></div>
+              <app-ar-model-viewer
+                class="ar-model-canvas-wrap"
+                [markerId]="marker.id"
+                [markerTipo]="marker.tipo"
+                [accentColor]="marker.color"
+                [animMode]="animMode()"
+                [active]="true"
+              />
             </div>
-            <p class="ar-label">{{ marker.name }}</p>
+            <p class="ar-label">{{ marker.nombre }}</p>
 
             @if (showInfo()) {
-              <div class="ar-panel info-panel">
+              <div class="ar-panel info-panel panel-enter">
                 <h3>Información</h3>
                 <p>{{ marker.info }}</p>
               </div>
             }
-            @if (showStats()) {
-              <div class="ar-panel stats-panel">
-                <h3>Stats</h3>
-                <ul>
-                  @for (s of marker.stats; track s.label) {
-                    <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
-                  }
-                </ul>
-              </div>
-            }
             @if (videoPlaying()) {
-              <div class="ar-panel video-panel">
+              <div class="ar-panel video-panel panel-enter">
                 <mat-icon>play_circle</mat-icon>
-                <p>{{ marker.videoHint }}</p>
+                <div class="video-copy">
+                  <p>{{ marker.videoHint }}</p>
+                  <div class="video-bar" aria-hidden="true">
+                    <span [style.width.%]="videoProgress()"></span>
+                  </div>
+                </div>
               </div>
             }
           </div>
@@ -67,26 +80,19 @@
             Activar cámara
           </button>
         } @else {
-          <button type="button" class="btn-secondary" (click)="stopCamera()">
+          <button type="button" class="btn-secondary" (click)="stopCamera($event)">
             Detener cámara
           </button>
         }
 
         @if (activeMarker(); as marker) {
+          <p class="actions-label">Acciones AR · {{ marker.nombre }}</p>
           <div class="action-row" role="group" aria-label="Acciones AR">
             <button
               type="button"
               class="action-btn"
-              [class.pressed]="btnPressed() === 'info'"
-              (click)="pressAction('info', $event)"
-            >
-              <mat-icon>info</mat-icon>
-              Info
-            </button>
-            <button
-              type="button"
-              class="action-btn"
               [class.pressed]="btnPressed() === 'stats'"
+              [class.active]="activeAction() === 'stats'"
               (click)="pressAction('stats', $event)"
             >
               <mat-icon>bar_chart</mat-icon>
@@ -96,6 +102,7 @@
               type="button"
               class="action-btn"
               [class.pressed]="btnPressed() === 'video'"
+              [class.active]="activeAction() === 'video'"
               (click)="pressAction('video', $event)"
             >
               <mat-icon>videocam</mat-icon>
@@ -105,15 +112,23 @@
               type="button"
               class="action-btn"
               [class.pressed]="btnPressed() === 'anim'"
+              [class.active]="activeAction() === 'anim'"
               (click)="pressAction('anim', $event)"
             >
-              <mat-icon>animation</mat-icon>
+              <mat-icon>view_in_ar</mat-icon>
               Animar
             </button>
+            <button
+              type="button"
+              class="action-btn"
+              [class.pressed]="btnPressed() === 'info'"
+              [class.active]="activeAction() === 'info'"
+              (click)="pressAction('info', $event)"
+            >
+              <mat-icon>info</mat-icon>
+              Info
+            </button>
           </div>
-          <button type="button" class="btn-ghost" (click)="clearMarker()">
-            Cerrar marcador · {{ marker.name }}
-          </button>
         }
       </div>
 
@@ -126,26 +141,98 @@
     </div>
 
     <aside class="markers-pick" aria-labelledby="markers-heading">
-      <h2 id="markers-heading">Simular escaneo</h2>
-      <p>Sin póster físico: elige un detonador y abre la ventana AR.</p>
-      <div class="marker-grid">
-        @for (m of markers; track m.id) {
+      @if (activeMarker(); as detected) {
+        <div class="detected-card" [style.--marker-color]="detected.color">
+          <p class="detected-eyebrow">
+            <mat-icon>check_circle</mat-icon>
+            @if (cameraActive()) {
+              Escaneo en vivo · JSON
+            } @else {
+              Última ficha · cámara apagada
+            }
+          </p>
+          <h2 id="markers-heading">{{ detected.nombre }}</h2>
+          <p class="detected-sub">{{ detected.subtitle }}</p>
+          <span class="tipo-chip">{{ tipoLabel(detected.tipo) }}</span>
+
+          <ul class="detected-stats">
+            @for (s of detected.stats; track s.label) {
+              <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
+            }
+          </ul>
+
+          @if (detected.equipo) {
+            <p class="detected-meta"><strong>Equipo:</strong> {{ detected.equipo }}</p>
+          }
+          @if (detected.abrev) {
+            <p class="detected-meta"><strong>Clave:</strong> {{ detected.abrev }}</p>
+          }
+          @if (detected.filialLmb) {
+            <p class="detected-meta"><strong>Filial LMB:</strong> {{ detected.filialLmb }}</p>
+          }
+          @if (detected.destacados?.length) {
+            <p class="detected-meta">
+              <strong>Figuras:</strong> {{ detected.destacados!.join(' · ') }}
+            </p>
+          }
+
+          <p class="detected-info">{{ detected.info }}</p>
+        </div>
+      } @else {
+        <div class="waiting-panel">
+          <mat-icon class="waiting-icon">qr_code_scanner</mat-icon>
+          <h2 id="markers-heading">Sin marcador detectado</h2>
+          <p class="sidebar-hint">
+            @if (scanning()) {
+              Apunta a una carta, escudo o cartel LNM.
+            } @else {
+              Activa la cámara para escanear. Al apagarla, la ficha se queda aquí.
+            }
+          </p>
+        </div>
+      }
+    </aside>
+  </div>
+
+  <section class="history-section" aria-label="Historial de escaneos">
+    <div class="history-head">
+      <h2>Escaneos más recientes</h2>
+      <p>
+        Hasta 2 fichas. Se llenan al cambiar de marcador o al
+        <strong>detener la cámara</strong>.
+      </p>
+    </div>
+
+    @if (recentScans().length) {
+      <div class="history-grid">
+        @for (r of recentScans(); track r.id; let i = $index) {
           <button
             type="button"
-            class="marker-card"
-            [class.selected]="activeMarker()?.id === m.id"
-            (click)="simulateScan(m, $event)"
+            class="history-card"
+            [style.--marker-color]="r.color"
+            (click)="openRecent(r, $event)"
           >
-            <span class="swatch" [style.background]="m.color"></span>
-            <span class="marker-copy">
-              <span class="marker-name">{{ m.name }}</span>
-              <span class="marker-sub">{{ m.subtitle }}</span>
+            <span class="history-idx">0{{ i + 1 }}</span>
+            <span class="swatch" [style.background]="r.color"></span>
+            <span class="history-copy">
+              <span class="history-name">{{ r.nombre }}</span>
+              <span class="history-sub">{{ r.subtitle }}</span>
+              <span class="tipo-chip mini">{{ tipoLabel(r.tipo) }}</span>
             </span>
+            <span class="history-cta">Ver</span>
           </button>
         }
       </div>
-    </aside>
-  </div>
+    } @else {
+      <div class="history-empty">
+        <mat-icon>history</mat-icon>
+        <p>
+          Aún vacío. Escanea un marcador y luego detén la cámara (o apunta a
+          otro): la ficha pasará al historial.
+        </p>
+      </div>
+    }
+  </section>
 </section>
 
 @if (showCameraModal()) {
@@ -164,14 +251,13 @@
       <mat-icon class="cam-modal-icon">photo_camera</mat-icon>
       <h2 id="cam-modal-title">Acceso a la cámara</h2>
       <p>
-        Diamante 9 necesita usar la cámara de tu teléfono para escanear
-        marcadores de realidad aumentada. El video se muestra solo en este
-        dispositivo: no se graba, no se guarda y no se envía a ningún servidor.
+        Diamante 9 necesita la cámara para escanear marcadores AR.
+        El video no se graba ni se envía a ningún servidor.
       </p>
       <ul>
-        <li>Tu navegador te pedirá confirmar el permiso.</li>
-        <li>Puedes cerrar la cámara en cualquier momento.</li>
-        <li>Si lo niegas, igual puedes simular un marcador.</li>
+        <li>El escaneo sigue activo (sin bloqueo).</li>
+        <li>Al detener la cámara, la ficha se guarda en historial.</li>
+        <li>Stats, Video y Animar siguen disponibles.</li>
       </ul>
       <div class="cam-modal-actions">
         <button type="button" class="btn-secondary" (click)="cancelCameraModal()">

@@ -1,0 +1,331 @@
+{
+  "tipo": "jugador",
+  "temporada": 2026,
+  "liga": "Liga Norte de México",
+  "nota": "Líderes y figuras populares LNM 2026 (datos públicos temporada regular).",
+  "items": [
+    {
+      "id": "andres-garza",
+      "nombre": "Andrés Garza",
+      "equipo": "Bucaneros de Los Cabos",
+      "posicion": "Bateador",
+      "color": "#8BEAF2",
+      "subtitle": "Líder de bateo · AVG .361",
+      "info": "Andrés Garza fue el líder de promedio de bateo de la LNM 2026 (.361) con los Bucaneros, campeones del circuito.",
+      "stats": [
+        { "label": "AVG", "value": ".361" },
+        { "label": "Equipo", "value": "CAB" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Garza con Bucaneros",
+      "animationLabel": "Swing / celebración",
+      "tip": "Carta o foto de Andrés Garza.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/andres-garza.png"
+    },
+    {
+      "id": "miguel-palos",
+      "nombre": "Miguel Palos",
+      "equipo": "Tiburones de Puerto Peñasco",
+      "posicion": "Bateador",
+      "color": "#0277BD",
+      "subtitle": "2° bateo · AVG .346",
+      "info": "Miguel Palos terminó segundo en promedio de bateo (.346) con Tiburones de Puerto Peñasco en 2026.",
+      "stats": [
+        { "label": "AVG", "value": ".346" },
+        { "label": "Equipo", "value": "PCO" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Palos con Tiburones",
+      "animationLabel": "Swing / celebración",
+      "tip": "Carta o foto de Miguel Palos.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/miguel-palos.png"
+    },
+    {
+      "id": "jose-cecena",
+      "nombre": "José Ceceña",
+      "equipo": "Algodoneros de San Luis",
+      "posicion": "Bateador",
+      "color": "#F9A825",
+      "subtitle": "3° bateo · AVG .345",
+      "info": "José Ceceña cerró la temporada entre los mejores bateadores de la LNM con Algodoneros de San Luis.",
+      "stats": [
+        { "label": "AVG", "value": ".345" },
+        { "label": "Equipo", "value": "SLRC" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Ceceña bateando",
+      "animationLabel": "Swing / celebración",
+      "tip": "Carta o foto de José Ceceña.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/jose-cecena.png"
+    },
+    {
+      "id": "oliver-carrillo",
+      "nombre": "Oliver Carrillo",
+      "equipo": "Bucaneros de Los Cabos",
+      "posicion": "Bateador",
+      "color": "#00C2D7",
+      "subtitle": "Líder RBI · 35 carreras",
+      "info": "Oliver Carrillo lideró las carreras producidas (35 RBI) y sumó 8 jonrones con Bucaneros, campeones 2026.",
+      "stats": [
+        { "label": "RBI", "value": "35" },
+        { "label": "HR", "value": "8" },
+        { "label": "Equipo", "value": "CAB" }
+      ],
+      "videoHint": "Highlight: Carrillo empuja carreras",
+      "animationLabel": "Celebración en el plato",
+      "tip": "Carta o foto de Oliver Carrillo.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/oliver-carrillo.png"
+    },
+    {
+      "id": "rigoberto-armenta",
+      "nombre": "Rigoberto Armenta",
+      "equipo": "Barbanegras de Tijuana",
+      "posicion": "Bateador",
+      "color": "#212121",
+      "subtitle": "Líder jonrones · 9 HR",
+      "info": "Rigoberto Armenta compartió el liderato de jonrones (9) y aportó 32 RBI con Barbanegras, subcampeón 2026.",
+      "stats": [
+        { "label": "HR", "value": "9" },
+        { "label": "RBI", "value": "32" },
+        { "label": "Equipo", "value": "TIJ" }
+      ],
+      "videoHint": "Highlight: Armenta conecta jonrón",
+      "animationLabel": "Celebración / trote",
+      "tip": "Carta o foto de Rigoberto Armenta.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/rigoberto-armenta.png"
+    },
+    {
+      "id": "jorge-martinez",
+      "nombre": "Jorge Martínez",
+      "equipo": "Barbanegras de Tijuana",
+      "posicion": "Bateador",
+      "color": "#424242",
+      "subtitle": "Líder jonrones · 9 HR",
+      "info": "Jorge Martínez empató el liderato de jonrones de la LNM 2026 con 9 HR para Barbanegras de Tijuana.",
+      "stats": [
+        { "label": "HR", "value": "9" },
+        { "label": "Equipo", "value": "TIJ" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Martínez jonronea",
+      "animationLabel": "Celebración / trote",
+      "tip": "Carta o foto de Jorge Martínez.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/jorge-martinez.png"
+    },
+    {
+      "id": "sergio-barthelemy",
+      "nombre": "Sergio Barthelemy",
+      "equipo": "Marineros de Ensenada",
+      "posicion": "Bateador",
+      "color": "#1565C0",
+      "subtitle": "30 RBI · 13 bases robadas",
+      "info": "Sergio Barthelemy fue pieza ofensiva clave de Marineros: 30 RBI y 13 bases robadas en la temporada regular 2026.",
+      "stats": [
+        { "label": "RBI", "value": "30" },
+        { "label": "SB", "value": "13" },
+        { "label": "Equipo", "value": "ENS" }
+      ],
+      "videoHint": "Highlight: Barthelemy en bases",
+      "animationLabel": "Robo de base / sprint",
+      "tip": "Carta o foto de Sergio Barthelemy.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/sergio-barthelemy.png"
+    },
+    {
+      "id": "javier-macias",
+      "nombre": "Javier Macías",
+      "equipo": "Algodoneros de San Luis",
+      "posicion": "Bateador",
+      "color": "#FFB300",
+      "subtitle": "Líder bases robadas · 15 SB",
+      "info": "Javier Macías lideró las bases robadas de la LNM 2026 con 15 SB para Algodoneros de San Luis.",
+      "stats": [
+        { "label": "SB", "value": "15" },
+        { "label": "Equipo", "value": "SLRC" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Macías roba base",
+      "animationLabel": "Robo de base / sprint",
+      "tip": "Carta o foto de Javier Macías.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/javier-macias.png"
+    },
+    {
+      "id": "victor-rodriguez",
+      "nombre": "Víctor Rodríguez",
+      "equipo": "Marineros de Ensenada",
+      "posicion": "Bateador",
+      "color": "#1976D2",
+      "subtitle": "2° bases robadas · 14 SB",
+      "info": "Víctor Rodríguez terminó segundo en bases robadas (14) con Marineros de Ensenada en 2026.",
+      "stats": [
+        { "label": "SB", "value": "14" },
+        { "label": "Equipo", "value": "ENS" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Rodríguez en el diamante",
+      "animationLabel": "Robo de base / sprint",
+      "tip": "Carta o foto de Víctor Rodríguez.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/victor-rodriguez.png"
+    },
+    {
+      "id": "alejandro-carrillo",
+      "nombre": "Alejandro Carrillo",
+      "equipo": "Marineros de Ensenada",
+      "posicion": "Pitcher",
+      "color": "#0D47A1",
+      "subtitle": "Líder victorias · 6 W · 71 K",
+      "info": "Alejandro Carrillo compartió el liderato de victorias (6) y sumó 71 ponches con Marineros, 1° de la temporada regular.",
+      "stats": [
+        { "label": "Victorias", "value": "6" },
+        { "label": "Ponches", "value": "71" },
+        { "label": "Equipo", "value": "ENS" }
+      ],
+      "videoHint": "Highlight: Carrillo desde la loma",
+      "animationLabel": "Entrega / ponche",
+      "tip": "Carta o foto de Alejandro Carrillo.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/alejandro-carrillo.png"
+    },
+    {
+      "id": "sebastian-granados",
+      "nombre": "Sebastián Granados",
+      "equipo": "Barbanegras de Tijuana",
+      "posicion": "Pitcher",
+      "color": "#616161",
+      "subtitle": "6 victorias · Barbanegras",
+      "info": "Sebastián Granados empató el liderato de victorias en 2026 con Barbanegras de Tijuana.",
+      "stats": [
+        { "label": "Victorias", "value": "6" },
+        { "label": "Equipo", "value": "TIJ" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Granados en el montículo",
+      "animationLabel": "Entrega / ponche",
+      "tip": "Carta o foto de Sebastián Granados.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/sebastian-granados.png"
+    },
+    {
+      "id": "josepth-silverio",
+      "nombre": "Josepth Silverio",
+      "equipo": "Bucaneros de Los Cabos",
+      "posicion": "Pitcher",
+      "color": "#00838F",
+      "subtitle": "4 victorias · campeón CAB",
+      "info": "Josepth Silverio fue uno de los brazos destacados de Bucaneros en el camino al título LNM 2026.",
+      "stats": [
+        { "label": "Victorias", "value": "4" },
+        { "label": "Equipo", "value": "CAB" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Silverio con Bucaneros",
+      "animationLabel": "Entrega / ponche",
+      "tip": "Carta o foto de Josepth Silverio.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/josepth-silverio.png"
+    },
+    {
+      "id": "luke-krkovski",
+      "nombre": "Luke Krkovski",
+      "equipo": "Barbanegras de Tijuana",
+      "posicion": "Pitcher",
+      "color": "#37474F",
+      "subtitle": "Líder ponches · 73 K",
+      "info": "Luke Krkovski lideró los ponches de la LNM 2026 con 73 K para Barbanegras de Tijuana.",
+      "stats": [
+        { "label": "Ponches", "value": "73" },
+        { "label": "Equipo", "value": "TIJ" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Krkovski poncha",
+      "animationLabel": "Entrega / ponche",
+      "tip": "Carta o foto de Luke Krkovski.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/luke-krkovski.png"
+    },
+    {
+      "id": "evan-massie",
+      "nombre": "Evan Massie",
+      "equipo": "Tiburones de Puerto Peñasco",
+      "posicion": "Pitcher",
+      "color": "#01579B",
+      "subtitle": "Líder salvamentos · 6 SV",
+      "info": "Evan Massie lideró los salvamentos de la LNM 2026 con 6 SV para Tiburones de Puerto Peñasco.",
+      "stats": [
+        { "label": "Salvamentos", "value": "6" },
+        { "label": "Equipo", "value": "PCO" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Massie cierra el juego",
+      "animationLabel": "Entrega / cierre",
+      "tip": "Carta o foto de Evan Massie.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/evan-massie.png"
+    },
+    {
+      "id": "tyler-thornton",
+      "nombre": "Tyler Thornton",
+      "equipo": "Barbanegras de Tijuana",
+      "posicion": "Pitcher",
+      "color": "#263238",
+      "subtitle": "ERA 0.43 · 5 salvamentos",
+      "info": "Tyler Thornton destacó con ERA 0.43 y 5 salvamentos con Barbanegras en la LNM 2026.",
+      "stats": [
+        { "label": "ERA", "value": "0.43" },
+        { "label": "SV", "value": "5" },
+        { "label": "Equipo", "value": "TIJ" }
+      ],
+      "videoHint": "Highlight: Thornton desde el bullpen",
+      "animationLabel": "Entrega / cierre",
+      "tip": "Carta o foto de Tyler Thornton.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/tyler-thornton.png"
+    },
+    {
+      "id": "giovany-lucero",
+      "nombre": "Giovany Lucero",
+      "equipo": "Algodoneros de San Luis",
+      "posicion": "Pitcher",
+      "color": "#F57F17",
+      "subtitle": "Mejor ERA · 0.00",
+      "info": "Giovany Lucero encabezó el porcentaje de carreras limpias de la LNM 2026 con Algodoneros.",
+      "stats": [
+        { "label": "ERA", "value": "0.00" },
+        { "label": "Equipo", "value": "SLRC" },
+        { "label": "Temporada", "value": "2026" }
+      ],
+      "videoHint": "Highlight: Lucero desde la loma",
+      "animationLabel": "Entrega / ponche",
+      "tip": "Carta o foto de Giovany Lucero.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/giovany-lucero.png"
+    },
+    {
+      "id": "walter-silva",
+      "nombre": "Walter Silva",
+      "equipo": "Carta coleccionable",
+      "posicion": "Pitcher",
+      "color": "#C62828",
+      "subtitle": "Lanzador · carta coleccionable",
+      "info": "Walter Silva es una figura reconocida del beisbol mexicano. Su carta coleccionable sirve como marcador AR de jugador.",
+      "stats": [
+        { "label": "Posición", "value": "P" },
+        { "label": "Tipo", "value": "Carta AR" },
+        { "label": "Uso", "value": "Demo escaneo" }
+      ],
+      "videoHint": "Highlight: dominio desde el montículo",
+      "animationLabel": "Entrega / ponche",
+      "tip": "Apunta la cámara a la carta de Walter Silva.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/walter-silva.png"
+    }
+  ]
+}

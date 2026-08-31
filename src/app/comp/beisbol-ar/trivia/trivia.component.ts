@@ -1,6 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ParticleFxService } from '../../shared/particle-fx/particle-fx.service';
+import { RewardsService } from '../rewards.service';
 
 interface TriviaQ {
   id: number;
@@ -17,8 +18,9 @@ interface TriviaQ {
   templateUrl: './trivia.component.html',
   styleUrl: './trivia.component.scss',
 })
-export class TriviaComponent {
+export class TriviaComponent implements OnInit {
   private readonly fx = inject(ParticleFxService);
+  private readonly rewards = inject(RewardsService);
   readonly questions: TriviaQ[] = [
     {
       id: 1,
@@ -64,6 +66,10 @@ export class TriviaComponent {
 
   current = computed(() => this.questions[this.index()]);
 
+  ngOnInit(): void {
+    this.rewards.loadCatalog().subscribe();
+  }
+
   pick(optionIndex: number, event?: Event): void {
     if (this.answered() || this.finished()) return;
     this.selected.set(optionIndex);
@@ -82,10 +88,12 @@ export class TriviaComponent {
   next(event?: Event): void {
     if (this.index() >= this.questions.length - 1) {
       this.finished.set(true);
+      const score = this.score();
+      this.rewards.recordTriviaDone();
       this.feedback.set(
-        `Trivia terminada: ${this.score()} / ${this.questions.length} aciertos.`,
+        `Trivia terminada: ${score} / ${this.questions.length} aciertos.`,
       );
-      this.fx.burstCenter(this.score() >= 3 ? 'homer' : 'confetti');
+      this.fx.burstCenter(score >= 3 ? 'homer' : 'confetti');
       return;
     }
     this.index.update((i) => i + 1);

@@ -1,0 +1,55 @@
+{
+  "nota": "Rutas a los modelos en public/assets/models/<carpeta>/. texture/normalMap opcionales (png, jpg, jpeg).",
+  "formatoRecomendado": "glb",
+  "formatoAlternativo": "obj",
+  "noUsar": "fbx / max",
+  "defaults": {
+    "jugador": "bate",
+    "equipo": "pelota",
+    "liga": "trofeo"
+  },
+  "overrides": {
+    "liga-lnm": "trofeo"
+  },
+  "models": {
+    "bate": {
+      "label": "Bate",
+      "file": "assets/models/bate/Baseball_Bat.glb",
+      "format": "glb",
+      "scale": 1.15,
+      "fallback": "bate",
+      "normalMap": "assets/models/bate/bat_normal.png"
+    },
+    "pelota": {
+      "label": "Pelota",
+      "file": "assets/models/pelota/baseball.glb",
+      "format": "glb",
+      "scale": 1.0,
+      "fallback": "pelota",
+      "texture": "assets/models/pelota/bola.jpg",
+      "normalMap": "assets/models/pelota/bola_Normal.jpg"
+    },
+    "gorra": {
+      "label": "Gorra",
+      "file": "assets/models/gorra/baseball_cap.glb",
+      "format": "glb",
+      "scale": 1.1,
+      "fallback": "gorra"
+    },
+    "guante": {
+      "label": "Guante",
+      "file": "assets/models/guante/glove.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "guante"
+    },
+    "trofeo": {
+      "label": "Trofeo",
+      "file": "",
+      "format": "glb",
+      "scale": 1.0,
+      "fallback": "trofeo",
+      "texture": "assets/models/trofeo/Trophy1_Basetexture.jpg"
+    }
+  }
+}

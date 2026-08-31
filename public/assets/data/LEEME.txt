@@ -1,0 +1,21 @@
+Datos LNM para el escáner AR
+============================
+
+jugadores.json      → cartas de jugadores populares / líderes 2026
+equipos.json        → 6 equipos activos LNM 2026 (completos)
+liga.json           → Cartel LNM (póster oficial de la liga)
+scan-profiles.json  → colores del logo + palabras/letras para escaneo preciso
+
+Escaneo (colores + letras)
+--------------------------
+Cada ítem en scan-profiles.json define:
+  - colors: paleta del logo (hex)
+  - keywords: texto visible (nombre, abreviatura, ciudad)
+
+El matcher exige coincidencia de colores Y de letras/texto.
+Si un logo físico no detecta bien, ajusta colors/keywords ahí.
+
+¿Qué es el Cartel LNM?
+Un póster o escudo de la LIGA completa (no de un equipo).
+Al escanearlo muestra standing, campeón y resumen de temporada.
+Archivo: public/assets/markers/liga-lnm.png

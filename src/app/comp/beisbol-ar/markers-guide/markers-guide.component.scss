@@ -24,50 +24,143 @@ h1 {
   @include d9-editorial-subtitle;
 }
 
+.section-title {
+  margin: 1.5rem 0 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $rebase-10;
+}
+
+.cartel-explain {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba($rebase-10, 0.4);
+  background: rgba($rebase-10, 0.08);
+  color: $rebase-14;
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  code {
+    color: $rebase-12;
+    font-size: 0.85em;
+  }
+}
+
+.destacados {
+  margin-top: 0.45rem !important;
+}
+
 .list {
-  /* Tres detonadores: 1 por renglón en móvil y los 3 en fila desde tablet
-     para no dejar una tarjeta suelta con hueco al costado */
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.85rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 
-  @media (min-width: 700px) {
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 960px) {
     grid-template-columns: repeat(3, 1fr);
-    align-items: stretch;
   }
 }
 
 .card {
   @include comic-surface;
-  padding: 1.15rem 1.25rem;
+  padding: 1rem 1.1rem;
   position: relative;
+  border-left: 4px solid var(--team-color, $rebase-10);
 
   .idx {
     color: $rebase-10;
     font-weight: 900;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+    display: block;
+    margin-bottom: 0.35rem;
   }
 
-  h2 {
-    margin: 0.25rem 0 0.5rem;
-    font-size: 1.2rem;
-    text-transform: uppercase;
+  .card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin-bottom: 0.65rem;
   }
 
-  p {
+  .swatch {
+    flex: 0 0 auto;
+    width: 8px;
+    align-self: stretch;
+    border-radius: 4px;
+    min-height: 2.5rem;
+  }
+
+  h3 {
     margin: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    line-height: 1.25;
+  }
+
+  .abrev {
+    margin: 0.2rem 0 0;
+    font-size: 0.82rem;
     color: $rebase-14;
-    line-height: 1.5;
+  }
+
+  .meta {
+    margin: 0 0 0.35rem;
+    font-size: 0.82rem;
+    color: $rebase-14;
+    line-height: 1.4;
+  }
+
+  .mini-stats {
+    list-style: none;
+    margin: 0.5rem 0;
+    padding: 0;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.2rem 0;
+      font-size: 0.82rem;
+      border-bottom: 1px solid rgba($rebase-14, 0.15);
+
+      span {
+        color: $rebase-14;
+      }
+      strong {
+        color: $rebase-7;
+      }
+    }
+  }
+
+  .tip {
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: rgba($rebase-14, 0.9);
+    line-height: 1.45;
   }
 
   .actions {
-    margin-top: 0.65rem;
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
     color: $rebase-7;
 
     strong {
       color: $rebase-12;
     }
+  }
+}
+
+.liga-card {
+  @media (min-width: 640px) {
+    grid-column: 1 / -1;
+    max-width: 480px;
   }
 }
 
@@ -80,6 +173,7 @@ h1 {
     width: 100%;
     padding: 0.85rem 1.25rem;
     text-decoration: none;
+    margin-top: 0.5rem;
   }
 
   @media (min-width: 640px) {

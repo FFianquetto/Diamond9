@@ -1,0 +1,140 @@
+{
+  "tipo": "equipo",
+  "temporada": 2026,
+  "liga": "Liga Norte de México",
+  "nota": "6 equipos activos al cierre de la temporada regular LNM 2026.",
+  "items": [
+    {
+      "id": "marineros-ensenada",
+      "nombre": "Marineros de Ensenada",
+      "abrev": "ENS",
+      "ciudad": "Ensenada, B.C.",
+      "estadio": "Deportivo Antonio Palacios",
+      "filialLmb": "Pericos de Puebla · Algodoneros de Unión Laguna",
+      "color": "#1565C0",
+      "subtitle": "1° temporada regular · 33-19",
+      "info": "Marineros de Ensenada encabezó la tabla regular 2026 (33-19, .635). Filial de Pericos de Puebla y Algodoneros de Unión Laguna. Figuras: Alejandro Carrillo, Sergio Barthelemy, Víctor Rodríguez.",
+      "stats": [
+        { "label": "G-P", "value": "33-19" },
+        { "label": "Pct", "value": ".635" },
+        { "label": "Posición", "value": "1°" }
+      ],
+      "destacados": ["Alejandro Carrillo", "Sergio Barthelemy", "Víctor Rodríguez"],
+      "videoHint": "Clip: Marineros temporada 2026",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Escudo o logo de Marineros de Ensenada.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/marineros-ensenada.png"
+    },
+    {
+      "id": "barbanegras-tijuana",
+      "nombre": "Barbanegras de Tijuana",
+      "abrev": "TIJ",
+      "ciudad": "Tijuana, B.C.",
+      "estadio": "Estadio Ángel Camarena / Chevron",
+      "filialLmb": "Toros de Tijuana",
+      "color": "#212121",
+      "subtitle": "Subcampeón LNM 2026 · 31-20",
+      "info": "Barbanegras de Tijuana fue 2° en temporada regular (31-20) y llegó a la final 2026. Filial de Toros de Tijuana. Figuras: Rigoberto Armenta, Jorge Martínez, Luke Krkovski, Sebastián Granados.",
+      "stats": [
+        { "label": "G-P", "value": "31-20" },
+        { "label": "Pct", "value": ".608" },
+        { "label": "Resultado", "value": "Subcampeón" }
+      ],
+      "destacados": ["Rigoberto Armenta", "Jorge Martínez", "Luke Krkovski", "Sebastián Granados"],
+      "videoHint": "Clip: Barbanegras en playoffs",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Escudo o logo de Barbanegras de Tijuana.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/barbanegras-tijuana.png"
+    },
+    {
+      "id": "bucaneros-cabos",
+      "nombre": "Bucaneros de Los Cabos",
+      "abrev": "CAB",
+      "ciudad": "Los Cabos, B.C.S.",
+      "estadio": "Estadio Leonardo Gastélum",
+      "filialLmb": "Leones de Yucatán",
+      "color": "#00C2D7",
+      "subtitle": "Campeón LNM 2026 · 33-24",
+      "info": "Bucaneros de Los Cabos se coronó campeón 2026 al vencer a Barbanegras en la final. Filial de Leones de Yucatán. Figuras: Andrés Garza, Oliver Carrillo, Josepth Silverio.",
+      "stats": [
+        { "label": "G-P", "value": "33-24" },
+        { "label": "Pct", "value": ".579" },
+        { "label": "Título", "value": "Campeón" }
+      ],
+      "destacados": ["Andrés Garza", "Oliver Carrillo", "Josepth Silverio"],
+      "videoHint": "Clip: camino al campeonato",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Escudo o logo de Bucaneros de Los Cabos.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/bucaneros-cabos.png"
+    },
+    {
+      "id": "algodoneros-slrc",
+      "nombre": "Algodoneros de San Luis",
+      "abrev": "SLRC",
+      "ciudad": "San Luis Río Colorado, Son.",
+      "estadio": "Estadio Andrés Mena Montijo",
+      "filialLmb": "Sultanes de Monterrey",
+      "color": "#F9A825",
+      "subtitle": "4° lugar · 26-27",
+      "info": "Algodoneros de San Luis Río Colorado terminó 4° (26-27) y avanzó a playoffs. Filial de Sultanes de Monterrey. Figuras: José Ceceña, Javier Macías, Giovany Lucero.",
+      "stats": [
+        { "label": "G-P", "value": "26-27" },
+        { "label": "Pct", "value": ".491" },
+        { "label": "Posición", "value": "4°" }
+      ],
+      "destacados": ["José Ceceña", "Javier Macías", "Giovany Lucero"],
+      "videoHint": "Clip: Algodoneros en acción",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Escudo o logo de Algodoneros de San Luis.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/algodoneros-slrc.png"
+    },
+    {
+      "id": "tiburones-penasco",
+      "nombre": "Tiburones de Puerto Peñasco",
+      "abrev": "PCO",
+      "ciudad": "Puerto Peñasco, Son.",
+      "estadio": "Estadio Francisco León García",
+      "filialLmb": "Charros de Jalisco · Acereros de Monclova",
+      "color": "#0277BD",
+      "subtitle": "5° lugar · 20-25",
+      "info": "Tiburones de Puerto Peñasco cerró 5° (20-25). Filial de Charros de Jalisco y Acereros de Monclova. Figuras: Miguel Palos, Evan Massie.",
+      "stats": [
+        { "label": "G-P", "value": "20-25" },
+        { "label": "Pct", "value": ".444" },
+        { "label": "Posición", "value": "5°" }
+      ],
+      "destacados": ["Miguel Palos", "Evan Massie"],
+      "videoHint": "Clip: Tiburones en la loma",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Escudo o logo de Tiburones de Puerto Peñasco.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/tiburones-penasco.png"
+    },
+    {
+      "id": "cerveceros-tecate",
+      "nombre": "Cerveceros de Tecate",
+      "abrev": "TEC",
+      "ciudad": "Tecate, B.C.",
+      "estadio": "Estadio Municipal de Tecate",
+      "filialLmb": "Saraperos de Saltillo",
+      "color": "#FF8F00",
+      "subtitle": "6° lugar · 5-33",
+      "info": "Cerveceros de Tecate ingresó en 2026 sustituyendo la plaza de Maneadero y cerró 6° (5-33). Filial de Saraperos de Saltillo.",
+      "stats": [
+        { "label": "G-P", "value": "5-33" },
+        { "label": "Pct", "value": ".132" },
+        { "label": "Posición", "value": "6°" }
+      ],
+      "destacados": ["Plantel 2026"],
+      "videoHint": "Clip: Cerveceros debut LNM",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Escudo o logo de Cerveceros de Tecate.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/markers/cerveceros-tecate.png"
+    }
+  ]
+}

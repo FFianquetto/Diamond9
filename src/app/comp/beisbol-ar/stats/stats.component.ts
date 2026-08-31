@@ -1,83 +1,125 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { LnmScanItem } from '../lnm-catalog.types';
+import { LeyendaBeisbol } from '../content.types';
+import { LnmDataService } from '../lnm-data.service';
 import { ParticleFxService } from '../../shared/particle-fx/particle-fx.service';
 
-interface LiveGame {
-  home: string;
-  away: string;
-  homeScore: number;
-  awayScore: number;
-  inning: number;
-  half: 'alta' | 'baja';
-  outs: number;
-  pitcher: string;
-  batter: string;
+interface StandingRow {
+  pos: number;
+  nombre: string;
+  abrev: string;
+  record: string;
+  pct: string;
+  color: string;
+  pctNum?: number;
+}
+
+interface LeaderRow {
+  nombre: string;
+  equipo: string;
+  stat: string;
+  value: string;
 }
 
 @Component({
   selector: 'app-stats',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss',
 })
-export class StatsComponent implements OnInit, OnDestroy {
+export class StatsComponent implements OnInit {
+  private readonly lnm = inject(LnmDataService);
   private readonly fx = inject(ParticleFxService);
-  game = signal<LiveGame>({
-    home: 'Sultanes',
-    away: 'Diablos Rojos',
-    homeScore: 3,
-    awayScore: 2,
-    inning: 6,
-    half: 'baja',
-    outs: 1,
-    pitcher: 'R. Mendoza',
-    batter: 'A. Cruz',
-  });
 
-  leaders = [
-    { name: 'A. Cruz', team: 'Sultanes', stat: 'AVG .341' },
-    { name: 'L. Vargas', team: 'Diablos', stat: 'HR 11' },
-    { name: 'R. Mendoza', team: 'Diablos', stat: 'ERA 2.18' },
-  ];
-
-  feedback = signal('Marcador simulado en vivo · prototipo');
-  private timer: ReturnType<typeof setInterval> | null = null;
+  standing = signal<StandingRow[]>([]);
+  lnmLeaders = signal<LeaderRow[]>([]);
+  leyendas = signal<LeyendaBeisbol[]>([]);
+  ligaResumen = signal<{ label: string; value: string }[]>([]);
+  tab = signal<'lnm' | 'leyendas'>('lnm');
 
   ngOnInit(): void {
-    this.timer = setInterval(() => this.tick(), 4500);
-  }
+    this.lnm.loadCatalog().subscribe((bundle) => {
+      const rows: StandingRow[] = bundle.equipos
+        .map((e) => {
+          const gp = e.stats.find((s) => s.label === 'G-P')?.value ?? '—';
+          const pct = e.stats.find((s) => s.label === 'Pct')?.value ?? '—';
+          const pctNum = parseFloat(pct.replace(/^\./, '0.')) || 0;
+          return {
+            pos: 0,
+            nombre: e.nombre,
+            abrev: e.abrev ?? '—',
+            record: gp,
+            pct,
+            color: e.color,
+            pctNum,
+          };
+        })
+        .sort((a, b) => b.pctNum - a.pctNum)
+        .map((row, i) => ({ ...row, pos: i + 1 }));
+      this.standing.set(rows);
 
-  ngOnDestroy(): void {
-    if (this.timer) clearInterval(this.timer);
-  }
+      const leaders = this.buildLnmLeaders(bundle.jugadores);
+      this.lnmLeaders.set(leaders);
 
-  private tick(): void {
-    this.game.update((g) => {
-      const next = { ...g };
-      const roll = Math.random();
-      if (roll > 0.72) {
-        if (g.half === 'baja') next.homeScore += 1;
-        else next.awayScore += 1;
-        this.feedback.set('¡Carrera anotada!');
-        this.fx.burstCenter('homer');
-      } else if (roll > 0.4) {
-        next.outs = Math.min(3, g.outs + 1);
-        if (next.outs >= 3) {
-          next.outs = 0;
-          if (g.half === 'alta') next.half = 'baja';
-          else {
-            next.half = 'alta';
-            next.inning = Math.min(9, g.inning + 1);
-          }
-          this.feedback.set('Cambio de media entrada');
-        } else {
-          this.feedback.set(`Outs: ${next.outs}`);
-        }
-      } else {
-        this.feedback.set('Conteo en juego…');
+      const liga = bundle.liga[0];
+      if (liga) {
+        this.ligaResumen.set(liga.stats);
       }
-      return next;
     });
+
+    this.lnm.loadHistoria().subscribe((data) => {
+      this.leyendas.set(data.leyendas.slice(0, 6));
+    });
+  }
+
+  setTab(t: 'lnm' | 'leyendas'): void {
+    this.tab.set(t);
+    this.fx.burstCenter('spark');
+  }
+
+  private buildLnmLeaders(jugadores: LnmScanItem[]): LeaderRow[] {
+    const rows: LeaderRow[] = [];
+    for (const j of jugadores) {
+      const avg = j.stats.find((s) => s.label === 'AVG');
+      const rbi = j.stats.find((s) => s.label === 'RBI');
+      const hr = j.stats.find((s) => s.label === 'HR');
+      const era = j.stats.find((s) => s.label === 'ERA');
+      if (avg) {
+        rows.push({
+          nombre: j.nombre,
+          equipo: j.equipo ?? '—',
+          stat: 'AVG',
+          value: avg.value,
+        });
+      }
+      if (rbi) {
+        rows.push({
+          nombre: j.nombre,
+          equipo: j.equipo ?? '—',
+          stat: 'RBI',
+          value: rbi.value,
+        });
+      }
+      if (hr) {
+        rows.push({
+          nombre: j.nombre,
+          equipo: j.equipo ?? '—',
+          stat: 'HR',
+          value: hr.value,
+        });
+      }
+      if (era) {
+        rows.push({
+          nombre: j.nombre,
+          equipo: j.equipo ?? '—',
+          stat: 'ERA',
+          value: era.value,
+        });
+      }
+    }
+    return rows.slice(0, 8);
   }
 }

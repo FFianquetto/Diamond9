@@ -1,51 +1,110 @@
 <section class="stats-page page-shell">
   <header>
-    <p class="eyebrow">Tiempo real (simulado)</p>
-    <h1>Estadísticas en vivo</h1>
+    <p class="eyebrow">Temporada 2026 · datos LNM</p>
+    <h1>Estadísticas</h1>
     <p class="lede">
-      Marcador y líderes del día para el prototipo. Los valores se actualizan
-      automáticamente para demostrar la interfaz de stats.
+      Standing de la Liga Norte de México, líderes individuales y récords de
+      las leyendas del béisbol mundial y mexicano.
     </p>
   </header>
 
-  <article class="scoreboard">
-    <div class="team away">
-      <span class="name">{{ game().away }}</span>
-      <span class="runs">{{ game().awayScore }}</span>
-    </div>
-    <div class="meta">
-      <span>{{ game().half === 'alta' ? 'Alta' : 'Baja' }} {{ game().inning }}ª</span>
-      <span>{{ game().outs }} out{{ game().outs === 1 ? '' : 's' }}</span>
-    </div>
-    <div class="team home">
-      <span class="name">{{ game().home }}</span>
-      <span class="runs">{{ game().homeScore }}</span>
-    </div>
-  </article>
-
-  <p class="feedback" role="status">{{ feedback() }}</p>
-
-  <div class="detail-grid">
-    <div class="detail">
-      <h3>Pitcher</h3>
-      <p>{{ game().pitcher }}</p>
-    </div>
-    <div class="detail">
-      <h3>Al bat</h3>
-      <p>{{ game().batter }}</p>
-    </div>
+  <div class="tabs" role="tablist">
+    <button
+      type="button"
+      role="tab"
+      [class.active]="tab() === 'lnm'"
+      [attr.aria-selected]="tab() === 'lnm'"
+      (click)="setTab('lnm')"
+    >
+      LNM 2026
+    </button>
+    <button
+      type="button"
+      role="tab"
+      [class.active]="tab() === 'leyendas'"
+      [attr.aria-selected]="tab() === 'leyendas'"
+      (click)="setTab('leyendas')"
+    >
+      Leyendas históricas
+    </button>
   </div>
 
-  <section class="leaders" aria-labelledby="leaders-title">
-    <h2 id="leaders-title">Líderes del día</h2>
-    <ul>
-      @for (l of leaders; track l.name) {
-        <li>
-          <strong>{{ l.name }}</strong>
-          <span>{{ l.team }}</span>
-          <em>{{ l.stat }}</em>
-        </li>
-      }
-    </ul>
-  </section>
+  @if (tab() === 'lnm') {
+    @if (ligaResumen().length) {
+      <div class="liga-resumen">
+        @for (s of ligaResumen(); track s.label) {
+          <div class="chip">
+            <span>{{ s.label }}</span>
+            <strong>{{ s.value }}</strong>
+          </div>
+        }
+      </div>
+    }
+
+    <section aria-labelledby="standing-title">
+      <h2 id="standing-title" class="section-title">Standing temporada regular</h2>
+      <div class="standing-table">
+        <div class="standing-head">
+          <span>#</span>
+          <span>Equipo</span>
+          <span>G-P</span>
+          <span>Pct</span>
+        </div>
+        @for (row of standing(); track row.abrev) {
+          <div class="standing-row" [style.--team-color]="row.color">
+            <span class="pos">{{ row.pos }}°</span>
+            <span class="team">
+              <span class="dot" [style.background]="row.color"></span>
+              {{ row.nombre }}
+              <em>{{ row.abrev }}</em>
+            </span>
+            <span>{{ row.record }}</span>
+            <span class="pct">{{ row.pct }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="leaders" aria-labelledby="lnm-leaders-title">
+      <h2 id="lnm-leaders-title">Líderes individuales LNM</h2>
+      <ul>
+        @for (l of lnmLeaders(); track l.nombre + l.stat) {
+          <li>
+            <strong>{{ l.nombre }}</strong>
+            <span>{{ l.equipo }}</span>
+            <em>{{ l.stat }} {{ l.value }}</em>
+          </li>
+        }
+      </ul>
+    </section>
+  } @else {
+    <section class="leyendas-stats" aria-labelledby="leyendas-stats-title">
+      <h2 id="leyendas-stats-title" class="section-title">Grandes de la historia</h2>
+      <p class="hint">
+        Récords y estadísticas de referencia de figuras del Salón de la Fama y
+        leyendas mexicanas.
+        <a routerLink="/historia">Ver biografías completas →</a>
+      </p>
+      <div class="leyendas-table">
+        @for (l of leyendas(); track l.id) {
+          <article class="leyenda-row" [style.--team-color]="l.color">
+            <header>
+              <h3>{{ l.nombre }}</h3>
+              <p>{{ l.posicion }} · {{ l.liga }} · {{ l.era }}</p>
+            </header>
+            <ul class="mini-stats">
+              @for (s of l.stats; track s.label) {
+                <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
+              }
+            </ul>
+          </article>
+        }
+      </div>
+    </section>
+  }
+
+  <div class="actions">
+    <a routerLink="/historia" class="btn-secondary">Historia del béisbol</a>
+    <a routerLink="/recompensas" class="btn-primary">Mi colección</a>
+  </div>
 </section>

@@ -1,23 +1,81 @@
 <section class="guide-page page-shell">
   <header>
-    <p class="eyebrow">Guía de uso</p>
-    <h1>Marcadores AR</h1>
+    <p class="eyebrow">Guía de uso · LNM 2026</p>
+    <h1>Equipos escaneables</h1>
     <p class="lede">
-      Tres detonadores distintos, cada uno con contenido propio. Imprímelos o
-      ábrelos en otra pantalla y úsalos con el escáner.
+      Los 6 equipos activos de la Liga Norte de México. Imprime o muestra el
+      escudo: el escáner AR mostrará standing, filial LMB y figuras destacadas.
     </p>
   </header>
 
+  <h2 class="section-title">Equipos Liga Norte de México</h2>
   <div class="list">
-    @for (m of markers; track m.id; let i = $index) {
-      <article class="card">
+    @for (m of equipos; track m.id; let i = $index) {
+      <article class="card" [style.--team-color]="m.color">
         <span class="idx">0{{ i + 1 }}</span>
-        <h2>{{ m.name }}</h2>
-        <p>{{ m.tip }}</p>
-        <p class="actions"><strong>Acciones:</strong> {{ m.actions }}</p>
+        <div class="card-head">
+          <span class="swatch" [style.background]="m.color"></span>
+          <div>
+            <h3>{{ m.nombre }}</h3>
+            <p class="abrev">{{ m.abrev }} · {{ m.subtitle }}</p>
+          </div>
+        </div>
+        @if (m.ciudad) {
+          <p class="meta"><strong>Ciudad:</strong> {{ m.ciudad }}</p>
+        }
+        @if (m.estadio) {
+          <p class="meta"><strong>Estadio:</strong> {{ m.estadio }}</p>
+        }
+        @if (m.filialLmb) {
+          <p class="meta"><strong>Filial LMB:</strong> {{ m.filialLmb }}</p>
+        }
+        <ul class="mini-stats">
+          @for (s of m.stats; track s.label) {
+            <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
+          }
+        </ul>
+        @if (m.destacados?.length) {
+          <p class="meta destacados">
+            <strong>Figuras:</strong> {{ m.destacados!.join(' · ') }}
+          </p>
+        }
+        <p class="tip">{{ m.tip }}</p>
       </article>
     }
   </div>
+
+  @if (ligaItems.length) {
+    <h2 class="section-title">Tercer marcador · Cartel LNM</h2>
+    <p class="cartel-explain">
+      <strong>¿Qué es el Cartel LNM?</strong>
+      Es un póster o escudo oficial de la <em>liga completa</em> (no de un
+      equipo ni de un jugador). Al escanearlo ves el resumen de la temporada:
+      standing, campeón y líderes. Usa el archivo
+      <code>liga-lnm.png</code> o cualquier cartel con el logo de la Liga Norte
+      de México.
+    </p>
+    <div class="list">
+      @for (m of ligaItems; track m.id) {
+        <article class="card liga-card" [style.--team-color]="m.color">
+          <div class="card-head">
+            <span class="swatch" [style.background]="m.color"></span>
+            <div>
+              <h3>{{ m.nombre }}</h3>
+              <p class="abrev">{{ m.subtitle }}</p>
+            </div>
+          </div>
+          <p>{{ m.info }}</p>
+          <ul class="mini-stats">
+            @for (s of m.stats; track s.label) {
+              <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
+            }
+          </ul>
+          <p class="tip">{{ m.tip }}</p>
+          <p class="actions"><strong>Acciones AR:</strong> {{ m.actions }}</p>
+        </article>
+      }
+    </div>
+  }
 
   <a routerLink="/ar" class="btn-primary">Ir al escáner AR</a>
 </section>
