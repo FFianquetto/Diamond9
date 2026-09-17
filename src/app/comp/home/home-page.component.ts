@@ -1,9 +1,16 @@
-import { Component, HostListener, inject } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { RevealOnScrollDirective } from '../shared/reveal-on-scroll.directive';
 import { ParticleFxService } from '../shared/particle-fx/particle-fx.service';
+import { ProfileService } from '../beisbol-ar/profile.service';
 
 @Component({
   selector: 'app-home',
@@ -17,74 +24,31 @@ import { ParticleFxService } from '../shared/particle-fx/particle-fx.service';
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   atTop = true;
   private readonly fx = inject(ParticleFxService);
+  private readonly profile = inject(ProfileService);
+  private readonly router = inject(Router);
 
-  readonly modes = [
-    {
-      index: '01',
-      title: 'Escáner AR',
-      subtitle: 'Cámara, marcadores y acciones interactivas en el diamante.',
-      link: '/ar',
-    },
-    {
-      index: '02',
-      title: 'Galería',
-      subtitle: 'Imágenes LNM y videos de béisbol embebidos desde YouTube.',
-      link: '/videos',
-    },
-    {
-      index: '03',
-      title: 'Trivia',
-      subtitle: 'Retos sobre historia y reglas del beisbol mexicano.',
-      link: '/trivia',
-    },
-    {
-      index: '04',
-      title: 'Estadísticas',
-      subtitle: 'Standing LNM 2026, líderes y récords de leyendas del béisbol.',
-      link: '/estadisticas',
-    },
-    {
-      index: '05',
-      title: 'Historia del béisbol',
-      subtitle: 'Línea de tiempo y perfiles de las figuras más importantes.',
-      link: '/historia',
-    },
-    {
-      index: '06',
-      title: 'Recompensas',
-      subtitle: 'Gana insignias al escanear, jugar o completar la trivia.',
-      link: '/recompensas',
-    },
-    {
-      index: '07',
-      title: 'Modelos 3D',
-      subtitle: 'Galería de props rotando: bate, pelota, gorra, guante y trofeo.',
-      link: '/modelos',
-    },
-    {
-      index: '08',
-      title: 'Jonrón al toque',
-      subtitle: 'Mini juego para celular: batea en el momento justo.',
-      link: '/juego',
-    },
-    {
-      index: '09',
-      title: 'Hockey de rebote',
-      subtitle: 'Desliza la tabla y no dejes caer la pelota.',
-      link: '/rebote',
-    },
-  ];
+  readonly perfil = this.profile.state;
+  readonly displayName = this.profile.displayName;
+  readonly gearOpen = signal(false);
+  readonly draftName = signal('');
 
-  constructor(private router: Router) {
+  ngOnInit(): void {
     this.checkScrollPosition();
+    this.profile.load().subscribe();
   }
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
     this.checkScrollPosition();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocClick(event: Event): void {
+    const t = event.target as HTMLElement;
+    if (!t.closest('.hero-user-chip')) this.gearOpen.set(false);
   }
 
   private checkScrollPosition(): void {
@@ -96,11 +60,24 @@ export class HomeComponent {
     void this.router.navigateByUrl(path);
   }
 
-  onModeClick(event: Event): void {
-    this.fx.burst('spark', event);
+  toggleGear(event: Event): void {
+    event.stopPropagation();
+    const next = !this.gearOpen();
+    this.gearOpen.set(next);
+    if (next) this.draftName.set(this.displayName());
   }
 
-  scrollToModes(): void {
-    document.getElementById('modos')?.scrollIntoView({ behavior: 'smooth' });
+  closeGear(): void {
+    this.gearOpen.set(false);
+  }
+
+  onDraft(event: Event): void {
+    this.draftName.set((event.target as HTMLInputElement).value);
+  }
+
+  saveName(): void {
+    this.profile.setNombreUsuario(this.draftName());
+    this.gearOpen.set(false);
+    this.fx.burstCenter('spark');
   }
 }

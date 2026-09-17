@@ -1,14 +1,14 @@
-<section class="guide-page page-shell">
-  <header>
-    <p class="eyebrow">Liga Norte de México · 2026</p>
-    <h1>Equipos</h1>
-    <p class="lede">
-      Los 6 equipos activos de la temporada. Escanea su escudo en el AR para ver
-      standing, filial LMB y figuras destacadas.
-    </p>
-  </header>
+<app-section-shell
+  eyebrow="Equipos · Diamante 9"
+  title="Equipos"
+  [lede]="lede"
+  [pills]="pills"
+  [activePill]="filtro"
+  pillsAriaLabel="Liga"
+  (pillChange)="setFiltro($event)"
+>
+  <h2 class="section-title">{{ tituloLista }}</h2>
 
-  <h2 class="section-title">Equipos Liga Norte de México</h2>
   <div class="list">
     @for (m of equipos; track m.id; let i = $index) {
       <article class="card" [style.--team-color]="m.color">
@@ -20,6 +20,12 @@
             [alt]="'Escudo ' + m.nombre"
             loading="lazy"
           />
+        } @else {
+          <div
+            class="team-logo team-logo--swatch"
+            [style.background]="m.color"
+            aria-hidden="true"
+          ></div>
         }
         <div class="card-head">
           <span class="swatch" [style.background]="m.color"></span>
@@ -51,7 +57,7 @@
     }
   </div>
 
-  @if (ligaItems.length) {
+  @if (filtro === 'lnm' && ligaItems.length) {
     <h2 class="section-title">Liga</h2>
     <div class="list">
       @for (m of ligaItems; track m.id) {
@@ -81,6 +87,4 @@
       }
     </div>
   }
-
-  <a routerLink="/ar" class="btn-primary">Ir al escáner AR</a>
-</section>
+</app-section-shell>

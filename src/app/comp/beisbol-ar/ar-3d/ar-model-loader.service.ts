@@ -36,6 +36,7 @@ export class ArModelLoaderService {
             equipo: 'pelota',
             liga: 'trofeo',
             gorra: 'gorra',
+            logo: 'pelota',
             pelota: 'pelota',
           },
           overrides: {},
@@ -143,29 +144,49 @@ export class ArModelLoaderService {
       case 'static':
         model.position.set(0, 0, 0);
         model.rotation.set(0, 0, 0);
+        model.scale.setScalar(1);
         break;
       case 'spinAxis':
         model.position.set(0, 0, 0);
-        model.rotation.set(0, t * 0.35, 0);
+        model.rotation.set(0, t * 0.2, 0);
+        model.scale.setScalar(1);
         break;
       case 'spin':
-        model.rotation.y = t * 0.35;
-        model.rotation.x = 0.08;
+        model.rotation.y = t * 0.55;
+        model.rotation.x = 0.12 + Math.sin(t * 0.9) * 0.05;
+        model.position.y = Math.sin(t * 1.1) * 0.03;
+        model.scale.setScalar(1);
         break;
+      case 'showcase': {
+        // Presentación al detectar gorra: giro + leve bounce
+        model.rotation.y = t * 0.75;
+        model.rotation.x = 0.18 + Math.sin(t * 1.2) * 0.08;
+        model.rotation.z = Math.sin(t * 0.8) * 0.04;
+        model.position.y = 0.04 + Math.sin(t * 1.6) * 0.045;
+        const s = 1 + Math.sin(t * 2.4) * 0.04;
+        model.scale.setScalar(s);
+        break;
+      }
       case 'swing':
         model.rotation.z = Math.sin(t * 6) * 0.55;
         model.rotation.y = -0.35 + Math.sin(t * 3) * 0.2;
         model.position.y = Math.sin(t * 5) * 0.06;
+        model.scale.setScalar(1);
         break;
       case 'pulse3d': {
         const s = 1 + Math.sin(t * 4) * 0.08;
         model.scale.setScalar(s);
-        model.rotation.y = t * 1.2;
+        model.rotation.y = t * 0.6;
+        model.position.y = Math.sin(t * 3) * 0.03;
         break;
       }
       default:
-        model.rotation.y = t * 0.25;
-        model.rotation.x = 0.08;
+        // Idle: giro lento continuo para que el modelo no se vea estático
+        model.rotation.y = t * 0.28;
+        model.rotation.x = 0.12;
+        model.rotation.z = 0;
+        model.position.y = Math.sin(t * 0.9) * 0.02;
+        model.scale.setScalar(1);
         break;
     }
   }
@@ -434,7 +455,9 @@ export class ArModelLoaderService {
     const box = new THREE.Box3().setFromObject(model);
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    const fit = (1.35 / maxDim) * Math.min(Math.max(scale || 1, 0.6), 1.4);
+    // scale del manifiesto: gorras ~1.3 → un poco más grandes en escena
+    const scaleFactor = Math.min(Math.max(scale || 1, 0.6), 1.85);
+    const fit = (1.55 / maxDim) * scaleFactor;
     model.scale.setScalar(fit);
 
     box.setFromObject(model);

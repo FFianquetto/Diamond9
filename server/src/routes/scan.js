@@ -8,17 +8,33 @@ export const scanRouter = Router();
 
 const MODE_MODEL = {
   tarjeta: 'bate',
-  gorra: 'gorra-yankees',
+  gorra: null,
   pelota: 'pelota',
 };
 
 function withModelKey(team, preferredMode) {
   if (!team) return null;
+  // Nunca inventar gorra-yankees para otro equipo (causaba modelo NY + texto Giants)
   const modelKey =
     team.modelKey ||
     MODE_MODEL[preferredMode] ||
-    (preferredMode === 'gorra' ? 'gorra-diablos' : 'pelota');
+    null;
   return { ...team, modelKey };
+}
+
+function teamPayload(team) {
+  if (!team) return null;
+  return {
+    id: team.id,
+    nombre: team.nombre,
+    liga: team.liga,
+    abrev: team.abrev,
+    color: team.color,
+    modelKey: team.modelKey || null,
+    info:
+      team.info ||
+      `Equipo ${team.nombre}${team.liga ? ` · ${team.liga}` : ''}.`,
+  };
 }
 
 /**
@@ -101,7 +117,12 @@ scanRouter.post('/', async (req, res) => {
         'gorra',
       );
 
-      if (team) {
+      if (logoMatch?.rejected === 'too_far') {
+        recognized = false;
+        message =
+          logoMatch.proximity?.hint ||
+          'Acerca más la gorra y centra el logo en el cuadro.';
+      } else if (team) {
         recognized = true;
         message = `Sí · gorra de ${team.nombre} (${team.liga || 'liga'})`;
       } else {
@@ -177,24 +198,22 @@ scanRouter.post('/', async (req, res) => {
             stats: player.stats,
           }
         : null,
-      team: team
-        ? {
-            id: team.id,
-            nombre: team.nombre,
-            liga: team.liga,
-            abrev: team.abrev,
-            color: team.color,
-            modelKey: team.modelKey || null,
-          }
-        : null,
+      team: teamPayload(team),
       logoMatch: logoMatch
         ? {
             colorScore: logoMatch.colorScore,
             textScore: logoMatch.textScore,
             templateScore: logoMatch.templateScore ?? null,
             combined: logoMatch.combined,
+            margin: logoMatch.margin ?? null,
+            rejected: logoMatch.rejected || null,
+            proximity: logoMatch.proximity || null,
+            accents: logoMatch.accents || null,
+            duoReason: logoMatch.duoReason || null,
+            runnersUp: logoMatch.runnersUp ?? null,
           }
         : null,
+      proximity: logoMatch?.proximity || null,
       detection: {
         enabled: detection.enabled,
         predictions: detection.predictions,

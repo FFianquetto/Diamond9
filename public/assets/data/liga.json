@@ -11,13 +11,13 @@
       "color": "#3E688C",
       "info": "El Cartel LNM es un póster o escudo oficial de la Liga Norte de México (no de un equipo). Al escanearlo, la app muestra el resumen de la liga: standing, campeón y líderes de la temporada. La LNM es la principal filial de la Liga Mexicana de Beisbol.",
       "stats": [
-        { "label": "1° regular", "value": "ENS 33-19" },
-        { "label": "Campeón", "value": "Bucaneros" },
+        { "label": "Campeón", "value": "Bucaneros 4-2" },
+        { "label": "Subcampeón", "value": "Barbanegras" },
         { "label": "Equipos", "value": "6" }
       ],
       "videoHint": "Resumen temporada LNM 2026",
       "animationLabel": "Trofeo / pulse de la liga",
-      "tip": "Imprime o muestra en pantalla public/assets/markers/liga-lnm.png (cartel LNM). Debe verse distinto a cualquier escudo de equipo.",
+      "tip": "Cartel oficial LNM.",
       "actions": "Info · Stats · Video · Animación",
       "targetImage": "assets/markers/liga-lnm.png"
     }

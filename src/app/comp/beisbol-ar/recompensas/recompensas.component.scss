@@ -1,53 +1,15 @@
 @use "../../../../styles/variables.scss" as *;
 @use "../../../../styles/page-shell" as *;
 
-.rewards-page {
-  @include d9-page-shell;
-  padding: 1.25rem 1rem 3.5rem;
-  max-width: 864px;
-  margin: 0 auto;
-
-  @media (min-width: 640px) {
-    padding: 2rem 1.25rem 4rem;
-  }
-}
-
-.eyebrow {
-  color: $rebase-10;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-}
-
-h1 {
-  @include d9-editorial-title;
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
-}
-
-.lede {
-  @include d9-editorial-subtitle;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-}
-
-.section-title {
-  margin: 1.25rem 0 0.65rem;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: $rebase-10;
-}
-
 .progress-bar {
   @include comic-surface;
   padding: 0.85rem 1rem;
-  margin: 1rem 0;
+  margin: 0 0 1rem;
 
   .progress-label {
     display: block;
     font-weight: 800;
-    font-size: 0.9rem;
+    font-size: clamp(0.88rem, 2.2vw, 1rem);
     margin-bottom: 0.5rem;
   }
 
@@ -60,7 +22,7 @@ h1 {
 
   .fill {
     height: 100%;
-    background: $rebase-10;
+    background: linear-gradient(90deg, $rebase-10, #7ad4e0);
     border-radius: 999px;
     transition: width 0.3s ease;
   }
@@ -68,156 +30,315 @@ h1 {
   .scan-count {
     display: block;
     margin-top: 0.45rem;
-    font-size: 0.8rem;
+    font-size: clamp(0.78rem, 2vw, 0.88rem);
     color: $rebase-14;
   }
 }
 
-.how-to ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.5rem;
+.how-line {
+  margin: 0 0 1.1rem;
+  font-size: clamp(0.88rem, 2.2vw, 1rem);
+  color: $rebase-14;
+  line-height: 1.5;
 
-  li {
-    @include comic-surface;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.75rem 0.9rem;
-    font-size: 0.88rem;
-    line-height: 1.4;
+  em.gold {
+    font-style: normal;
+    color: #f0c14b;
+    font-weight: 800;
+  }
 
-    mat-icon {
-      flex-shrink: 0;
-      color: $rebase-10;
-    }
-
-    a {
-      color: $rebase-10;
-      font-weight: 700;
-      text-decoration: none;
-    }
+  em.silver {
+    font-style: normal;
+    color: #c5d0dc;
+    font-weight: 800;
   }
 }
 
-.premios-grid {
+.section-title {
+  margin: 0 0 0.85rem;
+  font-size: clamp(0.8rem, 2vw, 0.92rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $rebase-10;
+}
+
+.cartas-grid {
   display: grid;
-  gap: 0.65rem;
+  gap: 0.9rem;
   grid-template-columns: 1fr;
 
-  @media (min-width: 480px) {
+  @media (min-width: 520px) {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-.premio-card {
-  @include comic-surface;
-  padding: 1rem;
-  text-align: center;
-  opacity: 0.55;
-
-  &.unlocked {
-    opacity: 1;
-    border-top: 3px solid $rebase-10;
-  }
-
-  mat-icon {
-    font-size: 2rem;
-    width: 2rem;
-    height: 2rem;
-    color: $rebase-10;
-    margin-bottom: 0.35rem;
-  }
-
-  h3 {
-    margin: 0;
-    font-size: 0.92rem;
-    text-transform: uppercase;
-  }
-
-  p {
-    margin: 0.35rem 0 0;
-    font-size: 0.8rem;
-    color: $rebase-14;
-    line-height: 1.4;
-  }
-}
-
-.scans-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.65rem;
-
-  @media (min-width: 520px) {
+  @media (min-width: 900px) {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.scan-card {
+.carta-card {
   @include comic-surface;
-  padding: 0.65rem;
-  text-align: center;
+  padding: 0;
+  overflow: hidden;
   border-top: 3px solid var(--team-color, $rebase-10);
+  opacity: 0.72;
+  position: relative;
+  transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
-  img {
-    display: block;
-    max-height: 72px;
-    max-width: 100%;
-    margin: 0 auto 0.4rem;
-    object-fit: contain;
+  &.unlocked {
+    opacity: 1;
   }
 
-  span {
-    display: block;
-    font-size: 0.72rem;
-    font-weight: 700;
+  &.source-juego {
+    box-shadow:
+      0 0 0 1px rgba(240, 193, 75, 0.55),
+      0 10px 28px rgba(240, 193, 75, 0.12);
+  }
+
+  &.source-scanner {
+    box-shadow:
+      0 0 0 1px rgba(197, 208, 220, 0.55),
+      0 10px 28px rgba(180, 190, 205, 0.1);
+  }
+
+  &.source-completo {
+    box-shadow:
+      0 0 0 1px rgba(103, 232, 249, 0.75),
+      0 0 28px rgba(103, 232, 249, 0.28),
+      0 12px 32px rgba(236, 254, 255, 0.12);
+  }
+
+  .carta-num {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 2;
+    background: rgba(8, 16, 24, 0.78);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.2rem 0.45rem;
+    border-radius: 6px;
+  }
+
+  .source-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 2;
+    max-width: min(62%, 9.5rem);
+    font-size: clamp(0.55rem, 1.6vw, 0.68rem);
+    font-weight: 800;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    line-height: 1.25;
-    word-break: break-word;
-  }
-}
-
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1.75rem;
-
-  @media (min-width: 480px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-}
-
-.btn-primary {
-  @include d9-primary-btn;
-  & {
-    text-decoration: none;
-    padding: 0.85rem 1.25rem;
+    padding: 0.28rem 0.5rem;
+    border-radius: 999px;
+    line-height: 1.2;
     text-align: center;
-    width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+
+    @media (max-width: 420px) {
+      max-width: 58%;
+      font-size: 0.52rem;
+      padding: 0.22rem 0.4rem;
+    }
+
+    &.gold {
+      color: #1a1200;
+      background: linear-gradient(135deg, #ffe9a8, #d4a017 55%, #f5d76e);
+      border: 1px solid rgba(255, 220, 120, 0.9);
+    }
+
+    &.silver {
+      color: #101820;
+      background: linear-gradient(135deg, #f4f7fa, #9eabb8 50%, #dde5ec);
+      border: 1px solid rgba(220, 230, 240, 0.95);
+    }
+
+    &.starter {
+      color: $rebase-6;
+      background: rgba($rebase-10, 0.92);
+      border: 1px solid $rebase-10;
+    }
+
+    &.cyan {
+      color: #042f2e;
+      background: linear-gradient(135deg, #ecfeff, #67e8f9 45%, #f8fafc);
+      border: 1px solid rgba(165, 243, 252, 0.95);
+    }
   }
 
-  @media (min-width: 480px) {
-    width: auto;
-  }
-}
+  .carta-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: rgba($rebase-14, 0.12);
+    overflow: hidden;
 
-.btn-secondary {
-  @include d9-primary-btn;
-  & {
-    text-decoration: none;
-    padding: 0.85rem 1.25rem;
-    background: transparent;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: filter 0.3s ease;
+    }
+
+    .foil {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: soft-light;
+      opacity: 0.55;
+    }
+  }
+
+  /* Filtro dorado: cartas de juegos */
+  &.source-juego .carta-media {
+    img {
+      filter: sepia(0.55) saturate(1.45) hue-rotate(2deg) brightness(1.08)
+        contrast(1.12);
+    }
+
+    .foil {
+      background: linear-gradient(
+        125deg,
+        rgba(255, 236, 160, 0.15) 0%,
+        rgba(212, 160, 23, 0.45) 40%,
+        rgba(255, 248, 210, 0.2) 55%,
+        rgba(180, 120, 20, 0.35) 100%
+      );
+      animation: foil-shine 4.5s ease-in-out infinite;
+    }
+  }
+
+  /* Filtro plateado: cartas del escáner */
+  &.source-scanner .carta-media {
+    img {
+      filter: grayscale(0.35) brightness(1.12) contrast(1.18) saturate(0.55);
+    }
+
+    .foil {
+      background: linear-gradient(
+        125deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(170, 185, 200, 0.5) 42%,
+        rgba(240, 245, 250, 0.25) 58%,
+        rgba(120, 135, 150, 0.4) 100%
+      );
+      animation: foil-shine 5s ease-in-out infinite;
+    }
+  }
+
+  /* Filtro cyan / blanco brilloso: emblemas por colección completa */
+  &.source-completo .carta-media {
+    img {
+      filter: brightness(1.12) contrast(1.08) saturate(1.15);
+    }
+
+    .foil {
+      background: linear-gradient(
+        125deg,
+        rgba(236, 254, 255, 0.2) 0%,
+        rgba(103, 232, 249, 0.55) 40%,
+        rgba(248, 250, 252, 0.45) 58%,
+        rgba(34, 211, 238, 0.35) 100%
+      );
+      animation: foil-shine 3.8s ease-in-out infinite;
+      opacity: 0.75;
+    }
+  }
+
+  &.source-inicial .carta-media img {
+    filter: saturate(1.08) contrast(1.05);
+  }
+
+  .carta-locked {
+    height: 100%;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 1rem;
+    text-align: center;
+    color: $rebase-14;
+    background: radial-gradient(
+      ellipse at center,
+      rgba($rebase-10, 0.08),
+      transparent 70%
+    );
+
+    mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    span {
+      font-size: clamp(0.72rem, 2vw, 0.82rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.35;
+      max-width: 14rem;
+    }
+  }
+
+  .carta-body {
+    padding: 0.85rem 1rem 1rem;
+  }
+
+  .serie {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: $rebase-10;
-    border: 2px solid $rebase-10;
-    text-align: center;
-    width: 100%;
   }
 
-  @media (min-width: 480px) {
-    width: auto;
+  h3 {
+    margin: 0.25rem 0 0;
+    font-size: clamp(0.92rem, 2.2vw, 1.05rem);
+    text-transform: uppercase;
+
+    &.mystery {
+      letter-spacing: 0.28em;
+      color: $rebase-14;
+    }
+  }
+
+  .liga {
+    margin: 0.15rem 0 0;
+    font-size: 0.78rem;
+    color: $rebase-14;
+  }
+
+  .resumen {
+    margin: 0.45rem 0 0;
+    font-size: clamp(0.8rem, 2vw, 0.88rem);
+    line-height: 1.4;
+    color: $rebase-7;
+  }
+}
+
+@keyframes foil-shine {
+  0%,
+  100% {
+    opacity: 0.4;
+    background-position: 0% 50%;
+  }
+  50% {
+    opacity: 0.7;
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carta-card .foil {
+    animation: none;
   }
 }

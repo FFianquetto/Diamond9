@@ -136,11 +136,6 @@ footer{
   text-align: center;
   gap: clamp(0.4rem, 1.5vw, 1rem);
 
-  @media (min-width: 640px) {
-    justify-content: space-between;
-    text-align: left;
-  }
-
   p {
     font-size: clamp(0.7rem, 1.5vw, 0.8rem);
     opacity: 0.7;
@@ -151,27 +146,6 @@ footer{
     letter-spacing: 0.08em;
     color: $rebase-10;
     opacity: 1;
-  }
-
-  .footer-bottom-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(0.75rem, 2vw, 1.5rem);
-
-    a {
-      color: white;
-      opacity: 0.75;
-      text-decoration: none;
-      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
-      transition: color 0.25s ease, opacity 0.25s ease;
-
-      &:hover,
-      &:focus-visible {
-        opacity: 1;
-        color: $rebase-10;
-      }
-    }
   }
 }
 

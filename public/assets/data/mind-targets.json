@@ -1,0 +1,43 @@
+{
+  "version": 3,
+  "nota": "MindAR oficial (MindARThree). El orden de targets[] = índices del .mind.",
+  "modes": {
+    "tarjeta": {
+      "label": "Tarjeta",
+      "mindFile": "assets/mind/tarjeta.mind",
+      "hint": "Escanea algo de baseball y ve lo que sucede.",
+      "targets": [
+        { "id": "andres-garza", "image": "assets/markers/andres-garza.png" },
+        { "id": "miguel-palos", "image": "assets/markers/miguel-palos.png" },
+        { "id": "walter-silva", "image": "assets/markers/walter-silva.png" },
+        { "id": "bucaneros-cabos", "image": "assets/markers/bucaneros-cabos.jpg" },
+        { "id": "marineros-ensenada", "image": "assets/markers/marineros-ensenada.png" },
+        { "id": "liga-lnm", "image": "assets/markers/liga-lnm.png" }
+      ]
+    },
+    "gorra": {
+      "label": "Gorra",
+      "mindFile": "assets/mind/gorra.mind",
+      "hint": "Escanea algo de baseball y ve lo que sucede.",
+      "targets": [
+        { "id": "gorra-yankees", "image": "assets/markers/mind/yankees.png" },
+        { "id": "gorra-redsox", "image": "assets/markers/mind/redsox.png" },
+        { "id": "gorra-bucaneros", "image": "assets/markers/mind/bucaneros-cabos.png" },
+        { "id": "gorra-marineros", "image": "assets/markers/mind/marineros-ensenada.png" }
+      ]
+    },
+    "logo": {
+      "label": "Logo",
+      "mindFile": "assets/mind/logo.mind",
+      "hint": "Escanea algo de baseball y ve lo que sucede.",
+      "targets": [
+        { "id": "logo-demo", "image": "assets/mind/demo/card.png" },
+        { "id": "logo-yankees", "image": "assets/markers/mind/yankees.png" },
+        { "id": "logo-redsox", "image": "assets/markers/mind/redsox.png" },
+        { "id": "logo-dodgers", "image": "assets/markers/mind/dodgers.png" },
+        { "id": "logo-bucaneros", "image": "assets/markers/mind/bucaneros-cabos.png" },
+        { "id": "logo-lnm", "image": "assets/markers/mind/liga-lnm.png" }
+      ]
+    }
+  }
+}

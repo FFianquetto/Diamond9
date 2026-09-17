@@ -39,11 +39,12 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input({ required: false }) markerId = '';
   @Input({ required: false }) markerTipo: LnmItemType = 'jugador';
-  /** Si se define, carga el modelo directo por clave (galería 3D). */
   @Input() modelKey = '';
   @Input() accentColor = '#00e5ff';
   @Input() animMode: ArAnimMode = 'idle';
   @Input() active = true;
+  /** Partículas 3D (se intensifican con video / animación). */
+  @Input() particles = false;
 
   private readonly loader = inject(ArModelLoaderService);
 
@@ -51,6 +52,8 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
   private scene: THREE.Scene | null = null;
   private camera: THREE.PerspectiveCamera | null = null;
   private model: THREE.Object3D | null = null;
+  private particleSystem: THREE.Points | null = null;
+  private particleVel: Float32Array | null = null;
   private raf = 0;
   private startedAt = 0;
   private resizeObs: ResizeObserver | null = null;
@@ -63,17 +66,34 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       this.ready = true;
       this.initScene();
       void this.swapModel();
+      this.syncParticles();
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.ready) return;
+
+    if (changes['particles'] || changes['accentColor']) {
+      this.syncParticles();
+    }
+
+    if (
+      changes['animMode'] &&
+      !changes['markerId'] &&
+      !changes['markerTipo'] &&
+      !changes['modelKey'] &&
+      !changes['accentColor'] &&
+      !changes['active']
+    ) {
+      this.startedAt = performance.now();
+      return;
+    }
+
     if (
       changes['markerId'] ||
       changes['markerTipo'] ||
       changes['modelKey'] ||
       changes['accentColor'] ||
-      changes['animMode'] ||
       changes['active']
     ) {
       void this.swapModel();
@@ -83,9 +103,15 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.stopLoop();
     this.resizeObs?.disconnect();
+    this.disposeParticles();
     if (this.model) this.loader.disposeObject(this.model);
     this.renderer?.dispose();
     this.renderer = null;
+  }
+
+  /** Canvas WebGL para composición de fotos. */
+  getCanvas(): HTMLCanvasElement | null {
+    return this.canvasRef?.nativeElement ?? null;
   }
 
   private initScene(): void {
@@ -94,6 +120,7 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       canvas,
       alpha: true,
       antialias: true,
+      preserveDrawingBuffer: true,
       powerPreference: 'high-performance',
       failIfMajorPerformanceCaveat: false,
     });
@@ -127,6 +154,82 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     this.startLoop();
   }
 
+  private syncParticles(): void {
+    if (!this.scene) return;
+    if (!this.particles) {
+      this.disposeParticles();
+      return;
+    }
+    if (this.particleSystem) {
+      const mat = this.particleSystem.material as THREE.PointsMaterial;
+      mat.color = new THREE.Color(this.accentColor || '#00e5ff');
+      return;
+    }
+
+    const count = 160;
+    const positions = new Float32Array(count * 3);
+    const velocities = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const i3 = i * 3;
+      const r = 0.35 + Math.random() * 1.4;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      positions[i3] = r * Math.sin(phi) * Math.cos(theta);
+      positions[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      positions[i3 + 2] = r * Math.cos(phi);
+      velocities[i3] = (Math.random() - 0.5) * 0.012;
+      velocities[i3 + 1] = 0.008 + Math.random() * 0.018;
+      velocities[i3 + 2] = (Math.random() - 0.5) * 0.012;
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({
+      size: 0.045,
+      color: new THREE.Color(this.accentColor || '#00e5ff'),
+      transparent: true,
+      opacity: 0.85,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true,
+    });
+    const points = new THREE.Points(geo, mat);
+    points.frustumCulled = false;
+    this.particleSystem = points;
+    this.particleVel = velocities;
+    this.scene.add(points);
+  }
+
+  private disposeParticles(): void {
+    if (!this.particleSystem) return;
+    this.scene?.remove(this.particleSystem);
+    this.particleSystem.geometry.dispose();
+    (this.particleSystem.material as THREE.PointsMaterial).dispose();
+    this.particleSystem = null;
+    this.particleVel = null;
+  }
+
+  private tickParticles(): void {
+    if (!this.particleSystem || !this.particleVel) return;
+    const pos = this.particleSystem.geometry.getAttribute(
+      'position',
+    ) as THREE.BufferAttribute;
+    const arr = pos.array as Float32Array;
+    const vel = this.particleVel;
+    for (let i = 0; i < arr.length; i += 3) {
+      arr[i] += vel[i];
+      arr[i + 1] += vel[i + 1];
+      arr[i + 2] += vel[i + 2];
+      if (arr[i + 1] > 1.8) {
+        arr[i + 1] = -1.2;
+        arr[i] = (Math.random() - 0.5) * 2.2;
+        arr[i + 2] = (Math.random() - 0.5) * 2.2;
+      }
+    }
+    pos.needsUpdate = true;
+    this.particleSystem.rotation.y += 0.004;
+  }
+
   private async swapModel(): Promise<void> {
     if (!this.scene || !this.active) return;
     if (!this.modelKey && !this.markerId) return;
@@ -144,13 +247,15 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     this.pendingKey = key;
     const token = ++this.loadToken;
 
-    // Placeholder inmediato para no dejar la card vacía mientras carga un GLB pesado.
     if (this.model) {
       this.scene.remove(this.model);
       this.loader.disposeObject(this.model);
       this.model = null;
     }
-    const placeholder = this.loader.createPlaceholder(resolved.entry.fallback, this.accentColor);
+    const placeholder = this.loader.createPlaceholder(
+      resolved.entry.fallback,
+      this.accentColor,
+    );
     this.model = placeholder;
     this.scene.add(placeholder);
     this.frameModel(placeholder);
@@ -182,9 +287,17 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     const maxDim = Math.max(size.x, size.y, size.z, 0.001);
     const fov = THREE.MathUtils.degToRad(this.camera.fov);
     const dist = (maxDim * 0.55) / Math.tan(fov * 0.5);
-    const zoom = this.modelKey === 'guante' ? 1.5 : 1;
+    const isGorra =
+      this.modelKey === 'gorra' ||
+      this.modelKey.startsWith('gorra-') ||
+      this.markerTipo === 'gorra';
+    const zoom = this.modelKey === 'guante' ? 1.5 : isGorra ? 1.45 : 1.15;
 
-    this.camera.position.set(center.x, center.y + maxDim * 0.02, center.z + (dist * 1.35) / zoom);
+    this.camera.position.set(
+      center.x,
+      center.y + maxDim * 0.02,
+      center.z + (dist * 1.2) / zoom,
+    );
     this.camera.near = Math.max(dist / 100, 0.01);
     this.camera.far = Math.max(dist * 40, 50);
     this.camera.lookAt(center.x, center.y, center.z);
@@ -208,8 +321,13 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       if (!this.renderer || !this.scene || !this.camera) return;
       if (this.active) {
         if (this.model) {
-          this.loader.applyAnimation(this.model, this.animMode, now - this.startedAt);
+          this.loader.applyAnimation(
+            this.model,
+            this.animMode,
+            now - this.startedAt,
+          );
         }
+        if (this.particles) this.tickParticles();
         this.renderer.render(this.scene, this.camera);
       }
       this.raf = requestAnimationFrame(tick);

@@ -1,42 +1,13 @@
 @use "../../../../styles/variables.scss" as *;
 @use "../../../../styles/page-shell" as *;
 
-.modelos-page {
-  @include d9-page-shell;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: clip;
-  padding: 1.25rem clamp(0.85rem, 3vw, 1.5rem) 3.5rem;
-  box-sizing: border-box;
-
-  @media (min-width: 640px) {
-    padding: 2rem clamp(1rem, 3vw, 2rem) 4rem;
-  }
-}
-
-.modelos-inner {
-  width: 100%;
-  max-width: 1296px;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-.eyebrow {
-  color: $rebase-10;
-  font-weight: 700;
+.section-title {
+  margin: 1.25rem 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-size: 0.75rem;
-}
-
-h1 {
-  @include d9-editorial-title;
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
-}
-
-.lede {
-  @include d9-editorial-subtitle;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  color: $rebase-10;
 }
 
 .section-title {

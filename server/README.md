@@ -1,8 +1,19 @@
-# Diamante 9 — Scan API (Node + OCR + logos + DB)
+# Diamante 9 — API Node (opcional)
 
-## Arrancar el proyecto (2 terminales)
+El escáner AR usa **MindAR en el navegador** y **no requiere** este backend.
 
-**Terminal 1 — API (puerto 5000)**
+La API sigue disponible si quieres catálogo HTTP, OCR legacy o experimentos con Roboflow.
+
+## Arrancar solo el frontend (recomendado)
+
+```bash
+npm install
+npm start
+```
+
+→ http://localhost:2000
+
+## Arrancar el backend (opcional)
 
 ```bash
 cd server
@@ -10,79 +21,18 @@ npm install
 npm start
 ```
 
-**Terminal 2 — Angular (puerto 2000)**
+→ http://localhost:5000
 
-```bash
-cd ..
-npm install
-npm start
-```
-
-Abre: http://localhost:2000  
-El proxy `/api` apunta a `http://localhost:5000`.
-
-Atajos desde la raíz del repo:
+Desde la raíz del repo:
 
 ```bash
 npm run start:api
-npm start
 ```
 
-Arquitectura:
+Endpoints:
 
-```
-Cámara (Angular)
-    │
-    ▼
-Node.js  /api/scan
-    │
-    ├─► Roboflow  (opcional: gorra / carta / pelota)
-    │
-    ├─► OCR + match de logo (plantilla + colores)
-    │     → Tarjeta, Gorra y Pelota
-    │
-    └─► JSON / Mongo → jugador + equipo + modelKey
-```
+- `GET  /api/scan/health`
+- `GET  /api/scan/catalog`
+- `POST /api/scan` (legacy OCR/logo; el front ya no lo usa)
 
-Modelos 3D: únicamente `public/assets/modelos/`.
-
-## Arranque rápido API (sin Roboflow ni Mongo)
-
-```bash
-cd server
-cp .env.example .env
-npm install
-npm start
-```
-
-API en `http://localhost:5000`
-
-## Con MongoDB
-
-En `.env`:
-
-```
-DB_MODE=mongo
-MONGODB_URI=mongodb://127.0.0.1:27017/diamante9
-```
-
-## Con Roboflow
-
-1. Crea/entrena un modelo con clases `baseball_cap`, `baseball_card`, `baseball`
-2. Publica Hosted Inference
-3. En `.env`:
-
-```
-ROBOFLOW_API_KEY=tu_clave
-ROBOFLOW_MODEL=nombre-del-modelo
-ROBOFLOW_VERSION=1
-```
-
-Sin clave, el modo de la app (Tarjeta / Gorra / Pelota) + OCR + logos + DB resuelven el **equipo**.
-
-## Probar
-
-```bash
-curl http://localhost:5000/api/scan/health
-curl http://localhost:5000/api/scan/catalog
-```
+Copia `server/.env.example` a `server/.env` si usas Roboflow o Mongo.

@@ -1,0 +1,349 @@
+{
+  "tipo": "logo",
+  "temporada": 2026,
+  "liga": "MLB / LNM",
+  "nota": "Modo Logo: imagen plana del escudo → ficha del equipo + modelo 3D (gorra del equipo).",
+  "items": [
+    {
+      "id": "logo-demo",
+      "nombre": "Demo MindAR (card oficial)",
+      "subtitle": "Target de prueba de la documentación MindAR",
+      "color": "#1565C0",
+      "info": "Marcador de ejemplo oficial de MindAR. Si este se detecta, el motor funciona. Descarga/abre assets/mind/demo/card.png.",
+      "stats": [
+        {
+          "label": "Tipo",
+          "value": "Demo"
+        },
+        {
+          "label": "Origen",
+          "value": "MindAR docs"
+        },
+        {
+          "label": "Match",
+          "value": "MindARThree"
+        }
+      ],
+      "videoHint": "Demo AR",
+      "animationLabel": "Pulse",
+      "tip": "Abre card.png a pantalla completa.",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "MindAR Demo",
+      "abrev": "DEMO",
+      "equipoReconocido": true,
+      "ligaOrigen": "Demo",
+      "targetImage": "assets/mind/demo/card.png"
+    },
+    {
+      "id": "logo-yankees",
+      "nombre": "New York Yankees",
+      "subtitle": "Logo NY · MLB",
+      "color": "#0C2340",
+      "info": "Logo interlocking NY de los New York Yankees. Escanea la imagen plana del logo para ver ficha y modelo 3D.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Yankees"
+        },
+        {
+          "label": "Liga",
+          "value": "MLB"
+        },
+        {
+          "label": "Abrev",
+          "value": "NYY"
+        }
+      ],
+      "videoHint": "Clip: Yankees",
+      "animationLabel": "Rotación del logo / gorra",
+      "tip": "Muestra yankees-ny-clean.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "gorra-yankees",
+      "equipo": "New York Yankees",
+      "abrev": "NYY",
+      "equipoReconocido": true,
+      "ligaOrigen": "MLB",
+      "targetImage": "assets/markers/mind/yankees.png"
+    },
+    {
+      "id": "logo-redsox",
+      "nombre": "Boston Red Sox",
+      "subtitle": "Logo B · MLB",
+      "color": "#BD3039",
+      "info": "Logo B de los Boston Red Sox. Imagen plana del escudo → ficha del equipo.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Red Sox"
+        },
+        {
+          "label": "Liga",
+          "value": "MLB"
+        },
+        {
+          "label": "Abrev",
+          "value": "BOS"
+        }
+      ],
+      "videoHint": "Clip: Red Sox",
+      "animationLabel": "Rotación del logo / gorra",
+      "tip": "Muestra redsox-b.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "gorra-redsox",
+      "equipo": "Boston Red Sox",
+      "abrev": "BOS",
+      "equipoReconocido": true,
+      "ligaOrigen": "MLB",
+      "targetImage": "assets/markers/mind/redsox.png"
+    },
+    {
+      "id": "logo-dodgers",
+      "nombre": "Los Angeles Dodgers",
+      "subtitle": "Logo LA · MLB",
+      "color": "#005A9C",
+      "info": "Logo LA de los Los Angeles Dodgers. Escanea la imagen plana del logo para la ficha del equipo y el modelo 3D.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Dodgers"
+        },
+        {
+          "label": "Liga",
+          "value": "MLB"
+        },
+        {
+          "label": "Abrev",
+          "value": "LAD"
+        }
+      ],
+      "videoHint": "Clip: Dodgers",
+      "animationLabel": "Rotación del logo / gorra",
+      "tip": "Muestra dodgers.jpg (logo LA)",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "gorra-dodgers",
+      "equipo": "Los Angeles Dodgers",
+      "abrev": "LAD",
+      "equipoReconocido": true,
+      "ligaOrigen": "MLB",
+      "targetImage": "assets/markers/mind/dodgers.png"
+    },
+    {
+      "id": "logo-marineros",
+      "nombre": "Marineros de Ensenada",
+      "subtitle": "Escudo · LNM",
+      "color": "#1565C0",
+      "info": "Escudo de Marineros de Ensenada (LNM). Logo plano → ficha del equipo.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Marineros"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Abrev",
+          "value": "ENS"
+        }
+      ],
+      "videoHint": "Clip: Marineros",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador marineros-ensenada.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "gorra-marineros",
+      "equipo": "Marineros de Ensenada",
+      "abrev": "ENS",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/mind/marineros-ensenada.png"
+    },
+    {
+      "id": "logo-bucaneros",
+      "nombre": "Bucaneros de Los Cabos",
+      "subtitle": "Escudo · LNM · Campeón 2026",
+      "color": "#00C2D7",
+      "info": "Escudo de Bucaneros de Los Cabos, campeones LNM 2026.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Bucaneros"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Abrev",
+          "value": "CAB"
+        }
+      ],
+      "videoHint": "Clip: Bucaneros",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador bucaneros-cabos.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "gorra-bucaneros",
+      "equipo": "Bucaneros de Los Cabos",
+      "abrev": "CAB",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/mind/bucaneros-cabos.png"
+    },
+    {
+      "id": "logo-tiburones",
+      "nombre": "Tiburones de Puerto Peñasco",
+      "subtitle": "Escudo · LNM",
+      "color": "#0277BD",
+      "info": "Escudo de Tiburones de Puerto Peñasco (LNM).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Tiburones"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Abrev",
+          "value": "PCO"
+        }
+      ],
+      "videoHint": "Clip: Tiburones",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador tiburones-penasco.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "gorra-tiburones",
+      "equipo": "Tiburones de Puerto Peñasco",
+      "abrev": "PCO",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/mind/tiburones-penasco.png"
+    },
+    {
+      "id": "logo-algodoneros",
+      "nombre": "Algodoneros de San Luis",
+      "subtitle": "Escudo · LNM",
+      "color": "#F9A825",
+      "info": "Escudo de Algodoneros de San Luis Río Colorado (LNM).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Algodoneros"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Abrev",
+          "value": "SLRC"
+        }
+      ],
+      "videoHint": "Clip: Algodoneros",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador algodoneros-slrc.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "gorra-algodoneros",
+      "equipo": "Algodoneros de San Luis",
+      "abrev": "SLRC",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/mind/algodoneros-slrc.png"
+    },
+    {
+      "id": "logo-cerveceros",
+      "nombre": "Cerveceros de Tecate",
+      "subtitle": "Escudo · LNM",
+      "color": "#6D4C41",
+      "info": "Escudo de Cerveceros de Tecate (LNM).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Cerveceros"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Abrev",
+          "value": "TEC"
+        }
+      ],
+      "videoHint": "Clip: Cerveceros",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador cerveceros-tecate.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "gorra-cerveceros",
+      "equipo": "Cerveceros de Tecate",
+      "abrev": "TEC",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/mind/cerveceros-tecate.png"
+    },
+    {
+      "id": "logo-barbanegras",
+      "nombre": "Barbanegras de Tijuana",
+      "subtitle": "Escudo · LNM",
+      "color": "#212121",
+      "info": "Escudo de Barbanegras de Tijuana (LNM).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Barbanegras"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Abrev",
+          "value": "TIJ"
+        }
+      ],
+      "videoHint": "Clip: Barbanegras",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador barbanegras-tijuana.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Barbanegras de Tijuana",
+      "abrev": "TIJ",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/mind/barbanegras-tijuana.png"
+    },
+    {
+      "id": "logo-lnm",
+      "nombre": "Liga Norte de México",
+      "subtitle": "Cartel / logo oficial LNM",
+      "color": "#3E688C",
+      "info": "Logo oficial de la Liga Norte de México.",
+      "stats": [
+        {
+          "label": "Tipo",
+          "value": "Liga"
+        },
+        {
+          "label": "Campeón",
+          "value": "Bucaneros"
+        },
+        {
+          "label": "Equipos",
+          "value": "6"
+        }
+      ],
+      "videoHint": "Resumen LNM",
+      "animationLabel": "Pulse de liga",
+      "tip": "Marcador liga-lnm.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Liga Norte de México",
+      "abrev": "LNM",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/mind/liga-lnm.png"
+    }
+  ]
+}

@@ -6,7 +6,6 @@ import {
   LnmCatalogFile,
   LnmItemType,
   LnmScanItem,
-  ScanProfile,
 } from './lnm-catalog.types';
 import { HistoriaFile } from './content.types';
 
@@ -15,6 +14,7 @@ interface CatalogBundle {
   equipos: LnmScanItem[];
   liga: LnmScanItem[];
   gorras: LnmScanItem[];
+  logos: LnmScanItem[];
   pelotas: LnmScanItem[];
   all: LnmScanItem[];
 }
@@ -90,25 +90,29 @@ export class LnmDataService {
       equipos: this.http.get<LnmCatalogFile>(`${this.base}/equipos.json`),
       liga: this.http.get<LnmCatalogFile>(`${this.base}/liga.json`),
       gorras: this.http.get<LnmCatalogFile>(`${this.base}/gorras.json`),
+      logos: this.http.get<LnmCatalogFile>(`${this.base}/logos.json`),
       pelotas: this.http.get<LnmCatalogFile>(`${this.base}/pelotas.json`),
     }).pipe(
-      map(({ jugadores, equipos, liga, gorras, pelotas }) => {
+      map(({ jugadores, equipos, liga, gorras, logos, pelotas }) => {
         const jugadorItems = this.mapFile(jugadores, 'jugador');
         const equipoItems = this.mapFile(equipos, 'equipo');
         const ligaItems = this.mapFile(liga, 'liga');
         const gorraItems = this.mapFile(gorras, 'gorra');
+        const logoItems = this.mapFile(logos, 'logo');
         const pelotaItems = this.mapFile(pelotas, 'pelota');
         return {
           jugadores: jugadorItems,
           equipos: equipoItems,
           liga: ligaItems,
           gorras: gorraItems,
+          logos: logoItems,
           pelotas: pelotaItems,
           all: [
             ...jugadorItems,
             ...equipoItems,
             ...ligaItems,
             ...gorraItems,
+            ...logoItems,
             ...pelotaItems,
           ],
         };
@@ -122,6 +126,7 @@ export class LnmDataService {
           equipos,
           liga,
           gorras: [],
+          logos: [],
           pelotas: [],
           all: [...FALLBACK],
         });
@@ -144,38 +149,6 @@ export class LnmDataService {
         }),
       ),
     );
-  }
-
-  loadScanProfiles(): Observable<ScanProfile[]> {
-    return this.http
-      .get<{ profiles: ScanProfile[] }>(`${this.base}/scan-profiles.json`)
-      .pipe(
-        map((file) => file.profiles),
-        catchError(() => of(this.fallbackScanProfiles())),
-      );
-  }
-
-  private fallbackScanProfiles(): ScanProfile[] {
-    return [
-      {
-        id: 'barbanegras-tijuana',
-        modo: 'tarjeta',
-        colors: ['#050505', '#c62828', '#ffffff'],
-        keywords: ['BARBANEGRAS', 'TIJ'],
-      },
-      {
-        id: 'gorra-diablos',
-        modo: 'gorra',
-        colors: ['#7f0000', '#c62828', '#ffffff'],
-        keywords: ['DIABLOS', 'MEXICO'],
-      },
-      {
-        id: 'pelota-beisbol',
-        modo: 'pelota',
-        colors: ['#f5f5f5', '#c62828', '#eeeeee'],
-        keywords: ['LMB', 'BALL'],
-      },
-    ];
   }
 
   private mapFile(file: LnmCatalogFile, tipo: LnmItemType): LnmScanItem[] {

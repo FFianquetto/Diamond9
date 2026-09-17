@@ -1,52 +1,13 @@
 @use "../../../../styles/variables.scss" as *;
 @use "../../../../styles/page-shell" as *;
 
-.guide-page {
-  @include d9-page-shell;
-  padding: 2rem 1.25rem 4rem;
-  max-width: 1152px;
-  margin: 0 auto;
-}
-
-.eyebrow {
-  color: $rebase-10;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-}
-
-h1 {
-  @include d9-editorial-title;
-}
-
-.lede {
-  @include d9-editorial-subtitle;
-}
-
 .section-title {
-  margin: 1.5rem 0 0.85rem;
+  margin: 0 0 0.85rem;
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: $rebase-10;
-}
-
-.cartel-explain {
-  margin: 0 0 1rem;
-  padding: 0.85rem 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba($rebase-10, 0.4);
-  background: rgba($rebase-10, 0.08);
-  color: $rebase-14;
-  font-size: 0.9rem;
-  line-height: 1.5;
-
-  code {
-    color: $rebase-12;
-    font-size: 0.85em;
-  }
 }
 
 .destacados {
@@ -148,23 +109,11 @@ h1 {
       }
     }
   }
+}
 
-  .tip {
-    margin: 0.5rem 0 0;
-    font-size: 0.8rem;
-    color: rgba($rebase-14, 0.9);
-    line-height: 1.45;
-  }
-
-  .actions {
-    margin-top: 0.5rem;
-    font-size: 0.82rem;
-    color: $rebase-7;
-
-    strong {
-      color: $rebase-12;
-    }
-  }
+.team-logo--swatch {
+  border-radius: 8px;
+  min-height: 72px;
 }
 
 .liga-card {

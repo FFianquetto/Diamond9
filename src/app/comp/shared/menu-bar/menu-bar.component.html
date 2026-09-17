@@ -120,9 +120,9 @@
           >Historia</a
         >
         <a
-          [class.is-active]="isActive('recompensas')"
-          (click)="navigateTo('recompensas'); $event.preventDefault()"
-          >Recompensas</a
+          [class.is-active]="isActive('coleccion') || isActive('recompensas')"
+          (click)="navigateTo('coleccion'); $event.preventDefault()"
+          >Mi colección</a
         >
       </div>
     </li>
@@ -251,9 +251,9 @@
           </li>
           <li>
             <a
-              [class.is-active]="isActive('recompensas')"
-              (click)="navigateTo('recompensas'); $event.preventDefault()"
-              >Recompensas</a
+              [class.is-active]="isActive('coleccion') || isActive('recompensas')"
+              (click)="navigateTo('coleccion'); $event.preventDefault()"
+              >Mi colección</a
             >
           </li>
         </ul>
@@ -261,7 +261,12 @@
     </li>
   </ul>
 
-  <div class="button-container"></div>
+  <div class="button-container">
+    <div class="nav-user" aria-label="Usuario">
+      <span class="nav-user-dot" aria-hidden="true"></span>
+      <span class="nav-user-name">{{ displayName() }}</span>
+    </div>
+  </div>
 
   <div class="menu-toggle" [class.active]="isMenuOpen" (click)="toggleMenu()">
     <span></span>

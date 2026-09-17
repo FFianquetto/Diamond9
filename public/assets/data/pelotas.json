@@ -2,47 +2,183 @@
   "tipo": "pelota",
   "temporada": 2026,
   "liga": "Beisbol",
-  "nota": "Detección de pelota por cuero blanco + costuras rojas (y texto LMB si aparece).",
+  "nota": "Targets MindAR: logos planos impresos. Al detectar se muestra el modelo 3D de pelota + ficha del equipo/liga.",
   "items": [
     {
-      "id": "pelota-beisbol",
-      "nombre": "Pelota de beisbol",
-      "subtitle": "Objeto reconocido · cuero y costuras",
-      "color": "#F5F5F5",
-      "info": "Sí: se detectó una pelota de beisbol (tono de cuero + costuras rojas). Puedes ver el modelo 3D y datos básicos.",
-      "stats": [
-        { "label": "Tipo", "value": "Pelota" },
-        { "label": "Costuras", "value": "Rojas" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: fildeo / rolling",
-      "animationLabel": "Giro de pelota",
-      "tip": "Acerca la pelota al centro del cuadro.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "pelota",
-      "equipoReconocido": true,
-      "ligaOrigen": "General"
-    },
-    {
       "id": "pelota-lmb",
-      "nombre": "Pelota oficial LMB",
+      "nombre": "Pelota oficial LNM / LMB",
       "subtitle": "Marca de liga detectada",
       "color": "#C62828",
-      "info": "Sí: pelota con marcas asociadas a la Liga Mexicana de Beisbol (texto/colores oficiales).",
+      "info": "Pelota asociada al cartel oficial de la Liga Norte de México / LMB. Escanea el marcador liga-lnm.",
       "stats": [
-        { "label": "Tipo", "value": "Pelota LMB" },
-        { "label": "Liga", "value": "LMB" },
+        { "label": "Tipo", "value": "Pelota LNM" },
+        { "label": "Liga", "value": "LNM / LMB" },
         { "label": "Match", "value": "Sí" }
       ],
-      "videoHint": "Resumen LMB",
+      "videoHint": "Resumen LNM",
       "animationLabel": "Giro de pelota",
-      "tip": "Muestra el sello o logo si lo tiene.",
+      "tip": "Muestra el cartel LNM (assets/markers/liga-lnm.png).",
       "actions": "Info · Stats · Video · Animación",
       "modelKey": "pelota",
-      "equipo": "Liga Mexicana de Beisbol",
-      "abrev": "LMB",
+      "equipo": "Liga Norte de México",
+      "abrev": "LNM",
       "equipoReconocido": true,
-      "ligaOrigen": "LMB"
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/liga-lnm.png"
+    },
+    {
+      "id": "pelota-beisbol",
+      "nombre": "Pelota New York Yankees",
+      "subtitle": "Logo de equipo · pelota 3D",
+      "color": "#0C2340",
+      "info": "Marcador del logo NY detectado. Se muestra el modelo 3D de pelota con identidad Yankees.",
+      "stats": [
+        { "label": "Tipo", "value": "Pelota" },
+        { "label": "Equipo", "value": "Yankees" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Clip: Yankees",
+      "animationLabel": "Giro de pelota",
+      "tip": "Muestra el logo NY limpio (galería equipos).",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipo": "New York Yankees",
+      "abrev": "NYY",
+      "equipoReconocido": true,
+      "ligaOrigen": "MLB",
+      "targetImage": "assets/galeria/imagenes/equipos/yankees-ny-clean.jpg"
+    },
+    {
+      "id": "pelota-marineros",
+      "nombre": "Pelota Marineros de Ensenada",
+      "subtitle": "Escudo LNM · pelota 3D",
+      "color": "#1565C0",
+      "info": "Escudo de Marineros detectado. Modelo 3D de pelota + ficha del equipo.",
+      "stats": [
+        { "label": "Equipo", "value": "Marineros" },
+        { "label": "Liga", "value": "LNM" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Clip: Marineros",
+      "animationLabel": "Giro de pelota",
+      "tip": "Escudo Marineros (markers).",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipo": "Marineros de Ensenada",
+      "abrev": "ENS",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/marineros-ensenada.png"
+    },
+    {
+      "id": "pelota-bucaneros",
+      "nombre": "Pelota Bucaneros de Los Cabos",
+      "subtitle": "Escudo LNM · pelota 3D",
+      "color": "#00C2D7",
+      "info": "Escudo de Bucaneros detectado. Modelo 3D de pelota + ficha del campeón LNM 2026.",
+      "stats": [
+        { "label": "Equipo", "value": "Bucaneros" },
+        { "label": "Liga", "value": "LNM" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Clip: Bucaneros",
+      "animationLabel": "Giro de pelota",
+      "tip": "Escudo Bucaneros (markers).",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipo": "Bucaneros de Los Cabos",
+      "abrev": "CAB",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/bucaneros-cabos.jpg"
+    },
+    {
+      "id": "pelota-tiburones",
+      "nombre": "Pelota Tiburones de Puerto Peñasco",
+      "subtitle": "Escudo LNM · pelota 3D",
+      "color": "#0277BD",
+      "info": "Escudo de Tiburones detectado. Modelo 3D de pelota + ficha del equipo.",
+      "stats": [
+        { "label": "Equipo", "value": "Tiburones" },
+        { "label": "Liga", "value": "LNM" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Clip: Tiburones",
+      "animationLabel": "Giro de pelota",
+      "tip": "Escudo Tiburones (markers).",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipo": "Tiburones de Puerto Peñasco",
+      "abrev": "PCO",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/tiburones-penasco.jpg"
+    },
+    {
+      "id": "pelota-algodoneros",
+      "nombre": "Pelota Algodoneros de San Luis",
+      "subtitle": "Escudo LNM · pelota 3D",
+      "color": "#F9A825",
+      "info": "Escudo de Algodoneros detectado. Modelo 3D de pelota + ficha del equipo.",
+      "stats": [
+        { "label": "Equipo", "value": "Algodoneros" },
+        { "label": "Liga", "value": "LNM" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Clip: Algodoneros",
+      "animationLabel": "Giro de pelota",
+      "tip": "Escudo Algodoneros (markers).",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipo": "Algodoneros de San Luis",
+      "abrev": "SLRC",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/algodoneros-slrc.jpg"
+    },
+    {
+      "id": "pelota-cerveceros",
+      "nombre": "Pelota Cerveceros de Tecate",
+      "subtitle": "Escudo LNM · pelota 3D",
+      "color": "#6D4C41",
+      "info": "Escudo de Cerveceros detectado. Modelo 3D de pelota + ficha del equipo.",
+      "stats": [
+        { "label": "Equipo", "value": "Cerveceros" },
+        { "label": "Liga", "value": "LNM" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Clip: Cerveceros",
+      "animationLabel": "Giro de pelota",
+      "tip": "Escudo Cerveceros (markers).",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipo": "Cerveceros de Tecate",
+      "abrev": "TEC",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/cerveceros-tecate.jpg"
+    },
+    {
+      "id": "pelota-barbanegras",
+      "nombre": "Pelota Barbanegras de Tijuana",
+      "subtitle": "Escudo LNM · pelota 3D",
+      "color": "#212121",
+      "info": "Escudo de Barbanegras detectado. Modelo 3D de pelota + ficha del equipo.",
+      "stats": [
+        { "label": "Equipo", "value": "Barbanegras" },
+        { "label": "Liga", "value": "LNM" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Clip: Barbanegras",
+      "animationLabel": "Giro de pelota",
+      "tip": "Escudo Barbanegras (markers).",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipo": "Barbanegras de Tijuana",
+      "abrev": "TIJ",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/barbanegras-tijuana.jpg"
     }
   ]
 }

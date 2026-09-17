@@ -1,38 +1,32 @@
-<section class="ar-page page-shell">
-  <header class="ar-header">
-    <p class="eyebrow">Experiencia AR · Liga Norte de México</p>
-    <h1>Escáner AR</h1>
-    <p class="lede">
-      Elige el tipo de objeto. Con la API Node activa, el flujo es Roboflow → OCR →
-      base de datos y te muestra el <strong>equipo</strong>.
-    </p>
-    <a routerLink="/equipos" class="guide-link">Ver equipos escaneables</a>
-    <p class="api-status" [class.on]="apiOnline()" [class.off]="!apiOnline()">
-      {{ apiOnline() ? 'API Node · DB conectada' : 'API offline · escaneo local' }}
-    </p>
-  </header>
-
-  <div class="mode-switch" role="tablist" aria-label="Tipo de escáner">
-    @for (m of scanModes; track m.id) {
-      <button
-        type="button"
-        role="tab"
-        class="mode-btn"
-        [class.active]="scanMode() === m.id"
-        [attr.aria-selected]="scanMode() === m.id"
-        (click)="setScanMode(m.id, $event)"
-      >
-        <mat-icon>{{ m.icon }}</mat-icon>
-        <span>{{ m.label }}</span>
-      </button>
+<app-section-shell
+  eyebrow="Experiencia AR · Liga Norte de México"
+  title="Escáner AR"
+  lede="Escanea algo de baseball y ve lo que sucede."
+  [pills]="modePills"
+  [activePill]="scanMode()"
+  pillsAriaLabel="Tipo de escáner"
+  (pillChange)="onModePill($event)"
+>
+  <p class="api-status" [class.on]="scanning()" [class.off]="!scanning()">
+    @if (scanning()) {
+      MindAR activo · {{ modeShortLabel() }}
+    } @else if (cameraActive()) {
+      Preparando motor…
+    } @else {
+      Cámara inactiva
     }
-  </div>
-  <p class="mode-hint">{{ modeHint() }}</p>
+  </p>
 
   <div class="ar-layout">
     <div class="ar-stage">
-      <div class="camera-frame">
-        <video #videoEl playsinline muted class="camera-video" [class.active]="cameraActive()"></video>
+      <div class="camera-frame" #cameraFrame>
+        <!-- Contenedor oficial MindARThree (él crea el <video>) -->
+        <div
+          #mindarHost
+          class="mindar-host"
+          [class.active]="cameraActive()"
+          aria-hidden="true"
+        ></div>
         @if (!cameraActive()) {
           <div class="camera-placeholder" (click)="openCameraModal($event)">
             <mat-icon>photo_camera</mat-icon>
@@ -41,7 +35,7 @@
               @if (activeMarker(); as kept) {
                 Última ficha: {{ kept.nombre }}. Toca para volver a escanear.
               } @else {
-                Toca para activar la cámara y escanear un marcador
+                Toca para activar la cámara y escanear un marcador MindAR
               }
             </span>
           </div>
@@ -50,7 +44,47 @@
         @if (scanning()) {
           <div class="scan-badge" aria-live="polite">
             <span class="scan-dot"></span>
-            Escaneando {{ modeShortLabel() }}…
+            MindAR · {{ modeShortLabel() }}
+          </div>
+        }
+
+        @if (engineStatus(); as st) {
+          <div class="engine-badge" aria-live="polite">
+            <span>{{ st }}</span>
+            @if (compileProgress() !== null) {
+              <span class="engine-pct">{{ compileProgress() }}%</span>
+            }
+          </div>
+        }
+
+        @if (cameraActive()) {
+          <div
+            class="detect-guide"
+            [attr.data-mode]="scanMode()"
+            aria-hidden="true"
+          >
+            <div class="detect-guide-dim"></div>
+            <div class="detect-guide-box">
+              <span class="corner tl"></span>
+              <span class="corner tr"></span>
+              <span class="corner bl"></span>
+              <span class="corner br"></span>
+              <span class="guide-cross-h"></span>
+              <span class="guide-cross-v"></span>
+              <p class="guide-label">
+                @switch (scanMode()) {
+                  @case ('logo') {
+                    Centra el logo / escudo aquí
+                  }
+                  @case ('gorra') {
+                    Centra el logo / marcador aquí
+                  }
+                  @default {
+                    Centra la tarjeta / escudo aquí
+                  }
+                }
+              </p>
+            </div>
           </div>
         }
 
@@ -58,16 +92,16 @@
           <div class="scan-miss" role="status">
             <mat-icon>help_outline</mat-icon>
             <div>
-              <strong>No reconocido</strong>
+              <strong>Buscando marcador</strong>
               <p>{{ miss }}</p>
             </div>
           </div>
         }
 
-        <!-- Overlay AR solo con cámara activa (no bloquea el matching) -->
         @if (cameraActive() && activeMarker(); as marker) {
           <div
-            class="ar-overlay"
+            class="ar-overlay ar-overlay--reveal"
+            [class.ar-overlay--animating]="animating()"
             [style.--marker-color]="marker.color"
           >
             <div class="ar-scene" aria-hidden="true">
@@ -80,9 +114,18 @@
                 [accentColor]="marker.color"
                 [animMode]="animMode()"
                 [active]="true"
+                [particles]="showParticles() || videoPlaying()"
               />
             </div>
-            <p class="ar-label">{{ marker.nombre }}</p>
+            <p class="ar-label">
+              {{ marker.nombre }}
+              @if (animating()) {
+                <span class="ar-anim-badge">Animando</span>
+              }
+              @if (videoPlaying()) {
+                <span class="ar-anim-badge">Video · FX</span>
+              }
+            </p>
 
             @if (showInfo()) {
               <div class="ar-panel info-panel panel-enter">
@@ -95,6 +138,7 @@
                 <mat-icon>play_circle</mat-icon>
                 <div class="video-copy">
                   <p>{{ marker.videoHint }}</p>
+                  <p class="video-fx-note">Partículas 3D activas alrededor del modelo</p>
                   <div class="video-bar" aria-hidden="true">
                     <span [style.width.%]="videoProgress()"></span>
                   </div>
@@ -111,14 +155,32 @@
             Activar cámara
           </button>
         } @else {
-          <button type="button" class="btn-secondary" (click)="stopCamera($event)">
-            Detener cámara
-          </button>
+          <div class="cam-actions">
+            <button type="button" class="btn-secondary" (click)="stopCamera($event)">
+              Detener cámara
+            </button>
+            <button
+              type="button"
+              class="btn-photo"
+              [disabled]="!activeMarker() || capturing()"
+              (click)="capturePhoto($event)"
+            >
+              <mat-icon>photo_camera</mat-icon>
+              {{ capturing() ? 'Capturando…' : 'Tomar foto' }}
+            </button>
+          </div>
+        }
+
+        @if (lastPhotoUrl(); as photo) {
+          <div class="photo-preview">
+            <img [src]="photo" alt="Última captura del escáner" />
+            <a [href]="photo" download class="photo-dl">Descargar de nuevo</a>
+          </div>
         }
 
         @if (activeMarker(); as marker) {
           <p class="actions-label">Acciones AR · {{ marker.nombre }}</p>
-          <div class="action-row" role="group" aria-label="Acciones AR">
+          <div class="action-row action-row--5" role="group" aria-label="Acciones AR">
             <button
               type="button"
               class="action-btn"
@@ -159,6 +221,17 @@
               <mat-icon>info</mat-icon>
               Info
             </button>
+            <button
+              type="button"
+              class="action-btn"
+              [class.pressed]="btnPressed() === 'foto'"
+              [class.active]="activeAction() === 'foto'"
+              [disabled]="!cameraActive() || capturing()"
+              (click)="pressAction('foto', $event)"
+            >
+              <mat-icon>camera_alt</mat-icon>
+              Foto
+            </button>
           </div>
         }
       </div>
@@ -177,7 +250,7 @@
           <p class="detected-eyebrow">
             <mat-icon>check_circle</mat-icon>
             @if (cameraActive()) {
-              Escaneo en vivo · {{ modeShortLabel() }}
+              MindAR · {{ modeShortLabel() }}
             } @else {
               Última ficha · cámara apagada
             }
@@ -186,7 +259,7 @@
           <p class="detected-sub">{{ detected.subtitle }}</p>
           <span class="tipo-chip">{{ tipoLabel(detected.tipo) }}</span>
 
-          @if (detected.tipo === 'gorra' || detected.tipo === 'pelota') {
+          @if (detected.tipo === 'gorra' || detected.tipo === 'logo' || detected.tipo === 'pelota') {
             <p
               class="verdict"
               [class.ok]="detected.equipoReconocido !== false"
@@ -228,15 +301,50 @@
         </div>
       } @else {
         <div class="waiting-panel">
-          <mat-icon class="waiting-icon">qr_code_scanner</mat-icon>
+          <mat-icon class="waiting-icon">view_in_ar</mat-icon>
           <h2 id="markers-heading">Sin marcador detectado</h2>
           <p class="sidebar-hint">
             @if (scanning()) {
-              {{ modeHint() }}
+              Escanea algo de baseball y ve lo que sucede.
             } @else {
-              Elige un modo, activa la cámara y apunta al objeto.
+              Elige un modo y activa la cámara.
             }
           </p>
+        </div>
+      }
+
+      @if (currentTargets().length) {
+        <div class="targets-block">
+          <h3 class="group-title">Targets de este modo</h3>
+          <p class="targets-hint">
+            Abre o imprime el marcador del sidebar.
+          </p>
+          <ul class="targets-list">
+            @for (t of currentTargets(); track t.image) {
+              <li>
+                <div class="target-row">
+                  <button
+                    type="button"
+                    class="target-open"
+                    (click)="openTargetImage(t.image, $event)"
+                  >
+                    <img [src]="t.image" [alt]="t.id" loading="lazy" width="48" height="48" />
+                    <span>
+                      <strong>{{ t.id }}</strong>
+                      <em>Abrir imagen</em>
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    class="target-force"
+                    (click)="forceDetectTarget(t.id, $event)"
+                  >
+                    Detectar ahora
+                  </button>
+                </div>
+              </li>
+            }
+          </ul>
         </div>
       }
     </aside>
@@ -281,7 +389,7 @@
       </div>
     }
   </section>
-</section>
+</app-section-shell>
 
 @if (showCameraModal()) {
   <div
@@ -299,13 +407,13 @@
       <mat-icon class="cam-modal-icon">photo_camera</mat-icon>
       <h2 id="cam-modal-title">Acceso a la cámara</h2>
       <p>
-        Diamante 9 necesita la cámara para escanear tarjetas, gorras o pelotas.
-        El video no se graba ni se envía a ningún servidor.
+        Diamante 9 usa <strong>MindAR</strong> (Image Tracking) para reconocer
+        marcadores planos. El video no se graba ni se envía a un servidor.
       </p>
       <ul>
-        <li>El escaneo sigue activo (sin bloqueo).</li>
+        <li>Solo necesita el PNG exacto (sidebar → Abrir imagen).</li>
         <li>Al detener la cámara, la ficha se guarda en historial.</li>
-        <li>Stats, Video y Animar siguen disponibles.</li>
+        <li>Stats, Video, Animar y Foto siguen disponibles.</li>
       </ul>
       <div class="cam-modal-actions">
         <button type="button" class="btn-secondary" (click)="cancelCameraModal()">

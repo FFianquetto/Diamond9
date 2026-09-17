@@ -1,35 +1,6 @@
 @use "../../../../styles/variables.scss" as *;
 @use "../../../../styles/page-shell" as *;
 
-.historia-page {
-  @include d9-page-shell;
-  padding: 1.25rem 1rem 3.5rem;
-  max-width: 1152px;
-  margin: 0 auto;
-
-  @media (min-width: 640px) {
-    padding: 2rem 1.25rem 4rem;
-  }
-}
-
-.eyebrow {
-  color: $rebase-10;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-}
-
-h1 {
-  @include d9-editorial-title;
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
-}
-
-.lede {
-  @include d9-editorial-subtitle;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-}
-
 .section-title {
   margin: 0 0 0.85rem;
   font-size: 0.8rem;
@@ -40,7 +11,7 @@ h1 {
 }
 
 .timeline {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .timeline-list {
@@ -86,43 +57,6 @@ h1 {
   }
 }
 
-.leyendas-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  width: 100%;
-
-  @media (min-width: 640px) {
-    width: auto;
-  }
-
-  button {
-    padding: 0.4rem 0.75rem;
-    border-radius: 999px;
-    border: 1.5px solid rgba($rebase-14, 0.4);
-    background: $rebase-11;
-    color: $rebase-7;
-    font-weight: 700;
-    font-size: 0.78rem;
-    cursor: pointer;
-
-    &.active,
-    &:hover {
-      border-color: $rebase-10;
-      color: $rebase-10;
-    }
-  }
-}
-
 .leyendas-grid {
   display: grid;
   gap: 0.85rem;
@@ -131,18 +65,35 @@ h1 {
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  @media (min-width: 960px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .leyenda-card {
   @include comic-surface;
   padding: 1rem 1.1rem;
   border-left: 4px solid var(--team-color, $rebase-10);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.leyenda-foto {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 8px;
+  margin-bottom: 0.25rem;
+  border: 2px solid rgba($rebase-14, 0.2);
+  display: block;
 }
 
 .leyenda-head {
   display: flex;
   gap: 0.65rem;
-  margin-bottom: 0.65rem;
 
   .swatch {
     width: 8px;
@@ -171,7 +122,7 @@ h1 {
 }
 
 .resumen {
-  margin: 0 0 0.65rem;
+  margin: 0;
   font-size: 0.88rem;
   line-height: 1.5;
   color: $rebase-7;
@@ -179,7 +130,7 @@ h1 {
 
 .mini-stats {
   list-style: none;
-  margin: 0 0 0.65rem;
+  margin: 0;
   padding: 0;
 
   li {
@@ -220,6 +171,44 @@ h1 {
   }
 }
 
+.btn-collect {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 2px solid $rebase-10;
+  background: rgba($rebase-10, 0.12);
+  color: $rebase-12;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 1.15rem;
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  &.owned {
+    border-color: rgba($rebase-14, 0.35);
+    background: rgba($rebase-6, 0.5);
+    color: $rebase-14;
+  }
+}
+
+.feedback {
+  @include comic-surface;
+  padding: 0.65rem 0.9rem;
+  margin: 0 0 0.85rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: $rebase-12;
+}
+
 .actions {
   display: flex;
   flex-direction: column;
@@ -247,13 +236,10 @@ h1 {
 }
 
 .btn-secondary {
-  @include d9-primary-btn;
+  @include d9-secondary-btn;
   & {
     text-decoration: none;
     padding: 0.85rem 1.25rem;
-    background: transparent;
-    color: $rebase-10;
-    border: 2px solid $rebase-10;
     text-align: center;
     width: 100%;
   }

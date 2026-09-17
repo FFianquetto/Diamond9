@@ -1,0 +1,139 @@
+{
+  "tipo": "equipo",
+  "temporada": 2026,
+  "liga": "MLB",
+  "nota": "Seis franquicias icónicas de Grandes Ligas (referencia cultural / AR).",
+  "items": [
+    {
+      "id": "mlb-yankees",
+      "nombre": "New York Yankees",
+      "abrev": "NYY",
+      "ciudad": "Nueva York, NY",
+      "estadio": "Yankee Stadium",
+      "color": "#0C2340",
+      "subtitle": "27 Series Mundiales · AL Este",
+      "info": "La franquicia más ganadora de la MLB. Ícono global del béisbol estadounidense.",
+      "stats": [
+        { "label": "Series", "value": "27" },
+        { "label": "Liga", "value": "AL" },
+        { "label": "División", "value": "Este" }
+      ],
+      "destacados": ["Babe Ruth", "Derek Jeter", "Mariano Rivera"],
+      "videoHint": "Clip: Yankees historia",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Logo NY de Yankees.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/yankees-ny-clean.jpg",
+      "ligaOrigen": "MLB"
+    },
+    {
+      "id": "mlb-redsox",
+      "nombre": "Boston Red Sox",
+      "abrev": "BOS",
+      "ciudad": "Boston, MA",
+      "estadio": "Fenway Park",
+      "color": "#BD3039",
+      "subtitle": "9 Series Mundiales · AL Este",
+      "info": "Rivales históricos de los Yankees. Fenway Park es uno de los estadios más emblemáticos del mundo.",
+      "stats": [
+        { "label": "Series", "value": "9" },
+        { "label": "Liga", "value": "AL" },
+        { "label": "División", "value": "Este" }
+      ],
+      "destacados": ["Ted Williams", "David Ortiz", "Pedro Martínez"],
+      "videoHint": "Clip: Red Sox",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Logo B de Red Sox.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/redsox.jpg",
+      "ligaOrigen": "MLB"
+    },
+    {
+      "id": "mlb-dodgers",
+      "nombre": "Los Angeles Dodgers",
+      "abrev": "LAD",
+      "ciudad": "Los Ángeles, CA",
+      "estadio": "Dodger Stadium",
+      "color": "#005A9C",
+      "subtitle": "Fernandomania · NL Oeste",
+      "info": "Franquicia ligada a México por Fernando Valenzuela y la era moderna de estrellas latinas.",
+      "stats": [
+        { "label": "Series", "value": "8" },
+        { "label": "Liga", "value": "NL" },
+        { "label": "División", "value": "Oeste" }
+      ],
+      "destacados": ["Fernando Valenzuela", "Sandy Koufax", "Shohei Ohtani"],
+      "videoHint": "Clip: Dodgers",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Logo LA de Dodgers.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/dodgers.jpg",
+      "ligaOrigen": "MLB"
+    },
+    {
+      "id": "mlb-cubs",
+      "nombre": "Chicago Cubs",
+      "abrev": "CHC",
+      "ciudad": "Chicago, IL",
+      "estadio": "Wrigley Field",
+      "color": "#0E3386",
+      "subtitle": "Serie 2016 · NL Central",
+      "info": "Los «Cubbies» de Wrigley Field. Rompieron una sequía de 108 años al ganar la Serie Mundial 2016.",
+      "stats": [
+        { "label": "Series", "value": "3" },
+        { "label": "Liga", "value": "NL" },
+        { "label": "División", "value": "Central" }
+      ],
+      "destacados": ["Ernie Banks", "Ryne Sandberg", "Kris Bryant"],
+      "videoHint": "Clip: Cubs",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Logo Cubs.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/cubs.png",
+      "ligaOrigen": "MLB"
+    },
+    {
+      "id": "mlb-giants",
+      "nombre": "San Francisco Giants",
+      "abrev": "SF",
+      "ciudad": "San Francisco, CA",
+      "estadio": "Oracle Park",
+      "color": "#FD5A1E",
+      "subtitle": "3 Series 2010–14 · NL Oeste",
+      "info": "Dinastía reciente en la costa oeste. Oracle Park es uno de los estadios más fotogénicos de la MLB.",
+      "stats": [
+        { "label": "Series", "value": "8" },
+        { "label": "Liga", "value": "NL" },
+        { "label": "División", "value": "Oeste" }
+      ],
+      "destacados": ["Willie Mays", "Buster Posey", "Madison Bumgarner"],
+      "videoHint": "Clip: Giants",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Logo Giants.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/gigants.jpg",
+      "ligaOrigen": "MLB"
+    },
+    {
+      "id": "mlb-padres",
+      "nombre": "San Diego Padres",
+      "abrev": "SD",
+      "ciudad": "San Diego, CA",
+      "estadio": "Petco Park",
+      "color": "#2F241D",
+      "subtitle": "Vecinos del noroeste MX · NL Oeste",
+      "info": "Franquicia de California más cercana a la zona LNM (Baja California). Puente cultural binacional del béisbol.",
+      "stats": [
+        { "label": "Series", "value": "0" },
+        { "label": "Liga", "value": "NL" },
+        { "label": "División", "value": "Oeste" }
+      ],
+      "destacados": ["Tony Gwynn", "Trevor Hoffman", "Manny Machado"],
+      "videoHint": "Clip: Padres",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Logo Padres.",
+      "actions": "Info · Stats · Video · Animación",
+      "ligaOrigen": "MLB"
+    }
+  ]
+}

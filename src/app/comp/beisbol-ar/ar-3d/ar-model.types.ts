@@ -2,7 +2,14 @@ import { LnmItemType } from '../lnm-catalog.types';
 
 export type ArModelFormat = 'glb' | 'gltf' | 'obj';
 export type ArModelFallback = 'bate' | 'pelota' | 'gorra' | 'guante' | 'trofeo';
-export type ArAnimMode = 'idle' | 'spin' | 'spinAxis' | 'static' | 'swing' | 'pulse3d';
+export type ArAnimMode =
+  | 'idle'
+  | 'spin'
+  | 'spinAxis'
+  | 'static'
+  | 'swing'
+  | 'pulse3d'
+  | 'showcase';
 
 export interface ArModelEntry {
   label: string;

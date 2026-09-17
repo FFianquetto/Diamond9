@@ -1,34 +1,12 @@
-<section class="stats-page page-shell">
-  <header>
-    <p class="eyebrow">Temporada 2026 · datos LNM</p>
-    <h1>Estadísticas</h1>
-    <p class="lede">
-      Standing de la Liga Norte de México, líderes individuales y récords de
-      las leyendas del béisbol mundial y mexicano.
-    </p>
-  </header>
-
-  <div class="tabs" role="tablist">
-    <button
-      type="button"
-      role="tab"
-      [class.active]="tab() === 'lnm'"
-      [attr.aria-selected]="tab() === 'lnm'"
-      (click)="setTab('lnm')"
-    >
-      LNM 2026
-    </button>
-    <button
-      type="button"
-      role="tab"
-      [class.active]="tab() === 'leyendas'"
-      [attr.aria-selected]="tab() === 'leyendas'"
-      (click)="setTab('leyendas')"
-    >
-      Leyendas históricas
-    </button>
-  </div>
-
+<app-section-shell
+  eyebrow="Temporada 2026"
+  title="Estadísticas"
+  [lede]="lede"
+  [pills]="pills"
+  [activePill]="tab()"
+  pillsAriaLabel="Sección"
+  (pillChange)="setTab($event)"
+>
   @if (tab() === 'lnm') {
     @if (ligaResumen().length) {
       <div class="liga-resumen">
@@ -80,13 +58,15 @@
   } @else {
     <section class="leyendas-stats" aria-labelledby="leyendas-stats-title">
       <h2 id="leyendas-stats-title" class="section-title">Grandes de la historia</h2>
-      <p class="hint">
-        Récords y estadísticas de referencia de figuras del Salón de la Fama y
-        leyendas mexicanas.
-        <a routerLink="/historia">Ver biografías completas →</a>
-      </p>
+      <app-pill-switch
+        [pills]="origenPills"
+        [active]="origen()"
+        ariaLabel="Liga"
+        (activeChange)="setOrigen($event)"
+      />
+      <p class="hint">Récords de las cartas coleccionables.</p>
       <div class="leyendas-table">
-        @for (l of leyendas(); track l.id) {
+        @for (l of leyendasFiltradas; track l.id) {
           <article class="leyenda-row" [style.--team-color]="l.color">
             <header>
               <h3>{{ l.nombre }}</h3>
@@ -102,9 +82,4 @@
       </div>
     </section>
   }
-
-  <div class="actions">
-    <a routerLink="/historia" class="btn-secondary">Historia del béisbol</a>
-    <a routerLink="/recompensas" class="btn-primary">Mi colección</a>
-  </div>
-</section>
+</app-section-shell>

@@ -53,12 +53,13 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'recompensas',
+    path: 'coleccion',
     loadComponent: () =>
       import('./comp/beisbol-ar/recompensas/recompensas.component').then(
         (m) => m.RecompensasComponent,
       ),
   },
+  { path: 'recompensas', redirectTo: 'coleccion', pathMatch: 'full' },
   {
     path: 'modelos',
     loadComponent: () =>

@@ -3,10 +3,12 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { ProfileService } from '../../beisbol-ar/profile.service';
 
 @Component({
   selector: 'app-menu-bar',
@@ -28,6 +30,9 @@ export class MenuBarComponent implements OnInit, OnDestroy {
   public logoClickCount = 0;
   private skipNextDocumentClose = false;
 
+  private readonly profile = inject(ProfileService);
+  readonly displayName = this.profile.displayName;
+
   constructor(private router: Router) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -39,6 +44,7 @@ export class MenuBarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.checkScroll();
     this.checkCurrentRoute(this.router.url);
+    this.profile.load().subscribe();
   }
 
   ngOnDestroy(): void {
@@ -164,6 +170,7 @@ export class MenuBarComponent implements OnInit, OnDestroy {
     return (
       this.isActive('equipos') ||
       this.isActive('historia') ||
+      this.isActive('coleccion') ||
       this.isActive('recompensas') ||
       this.isActive('modelos')
     );

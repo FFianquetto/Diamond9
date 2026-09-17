@@ -1,88 +1,89 @@
-<section class="historia-page page-shell">
-  <header>
-    <p class="eyebrow">Archivo histórico</p>
-    <h1>Historia del béisbol</h1>
-    <p class="lede">
-      Línea de tiempo desde los orígenes del juego hasta la era moderna, más
-      perfiles de las figuras más importantes de MLB y la Liga Mexicana.
-    </p>
-  </header>
-
-  <section class="timeline" aria-labelledby="timeline-title">
-    <h2 id="timeline-title" class="section-title">Línea de tiempo</h2>
-    <ol class="timeline-list">
-      @for (ev of timeline; track ev.year) {
-        <li class="timeline-item">
-          <span class="year">{{ ev.year }}</span>
-          <div class="timeline-body">
-            <h3>{{ ev.titulo }}</h3>
-            <p>{{ ev.descripcion }}</p>
-          </div>
-        </li>
-      }
-    </ol>
-  </section>
-
-  <section class="leyendas" aria-labelledby="leyendas-title">
-    <div class="leyendas-head">
-      <h2 id="leyendas-title" class="section-title">Jugadores legendarios</h2>
-      <div class="filtros" role="tablist">
-        <button
-          type="button"
-          [class.active]="filtroLiga === 'todas'"
-          (click)="setFiltro('todas')"
-        >
-          Todos
-        </button>
-        <button
-          type="button"
-          [class.active]="filtroLiga === 'mlb'"
-          (click)="setFiltro('mlb')"
-        >
-          MLB
-        </button>
-        <button
-          type="button"
-          [class.active]="filtroLiga === 'lmb'"
-          (click)="setFiltro('lmb')"
-        >
-          México / LMB
-        </button>
-      </div>
-    </div>
-
-    <div class="leyendas-grid">
-      @for (l of leyendasFiltradas; track l.id) {
-        <article class="leyenda-card" [style.--team-color]="l.color">
-          <header class="leyenda-head">
-            <span class="swatch" [style.background]="l.color"></span>
-            <div>
-              <h3>{{ l.nombre }}</h3>
-              <p class="meta">{{ l.posicion }} · {{ l.liga }}</p>
-              <p class="era">{{ l.pais }} · {{ l.era }}</p>
+<app-section-shell
+  eyebrow="Archivo histórico"
+  title="Historia del béisbol"
+  [lede]="lede"
+  [pills]="vistaPills"
+  [activePill]="vista"
+  pillsAriaLabel="Vista"
+  (pillChange)="setVista($event)"
+>
+  @if (vista === 'timeline') {
+    <section class="timeline" aria-labelledby="timeline-title">
+      <h2 id="timeline-title" class="section-title">Línea de tiempo</h2>
+      <ol class="timeline-list">
+        @for (ev of timeline; track ev.year) {
+          <li class="timeline-item">
+            <span class="year">{{ ev.year }}</span>
+            <div class="timeline-body">
+              <h3>{{ ev.titulo }}</h3>
+              <p>{{ ev.descripcion }}</p>
             </div>
-          </header>
-          <p class="resumen">{{ l.resumen }}</p>
-          <ul class="mini-stats">
-            @for (s of l.stats; track s.label) {
-              <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
-            }
-          </ul>
-          <ul class="logros">
-            @for (g of l.logros; track g) {
-              <li>
-                <mat-icon aria-hidden="true">emoji_events</mat-icon>
-                {{ g }}
-              </li>
-            }
-          </ul>
-        </article>
-      }
-    </div>
-  </section>
+          </li>
+        }
+      </ol>
+    </section>
+  } @else {
+    <section class="leyendas" aria-labelledby="leyendas-title">
+      <h2 id="leyendas-title" class="section-title">Jugadores históricos</h2>
 
-  <div class="actions">
-    <a routerLink="/estadisticas" class="btn-secondary">Ver estadísticas</a>
-    <a routerLink="/recompensas" class="btn-primary">Mi colección</a>
-  </div>
-</section>
+      <app-pill-switch
+        [pills]="origenPills"
+        [active]="filtroOrigen"
+        ariaLabel="Liga"
+        (activeChange)="setFiltro($event)"
+      />
+
+      <div class="leyendas-grid">
+        @for (l of leyendasFiltradas; track l.id) {
+          <article class="leyenda-card" [style.--team-color]="l.color">
+            @if (l.foto) {
+              <img
+                class="leyenda-foto"
+                [src]="l.foto"
+                [alt]="l.nombre"
+                loading="lazy"
+              />
+            }
+            <header class="leyenda-head">
+              <span class="swatch" [style.background]="l.color"></span>
+              <div>
+                <h3>{{ l.nombre }}</h3>
+                <p class="meta">{{ l.posicion }} · {{ l.liga }}</p>
+                <p class="era">{{ l.pais }} · {{ l.era }}</p>
+              </div>
+            </header>
+            <p class="resumen">{{ l.resumen }}</p>
+            <ul class="mini-stats">
+              @for (s of l.stats; track s.label) {
+                <li>
+                  <span>{{ s.label }}</span><strong>{{ s.value }}</strong>
+                </li>
+              }
+            </ul>
+            <ul class="logros">
+              @for (g of l.logros; track g) {
+                <li>
+                  <mat-icon aria-hidden="true">emoji_events</mat-icon>
+                  {{ g }}
+                </li>
+              }
+            </ul>
+            <button
+              type="button"
+              class="btn-collect"
+              [class.owned]="coleccionada(l.id)"
+              disabled
+            >
+              <mat-icon>{{
+                coleccionada(l.id) ? 'check_circle' : 'lock'
+              }}</mat-icon>
+              {{
+                coleccionada(l.id) ? 'En mi colección' : unlockHint(l.id)
+              }}
+            </button>
+          </article>
+        }
+      </div>
+    </section>
+  }
+</app-section-shell>

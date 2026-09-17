@@ -1,10 +1,14 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { LnmScanItem } from '../lnm-catalog.types';
 import { LeyendaBeisbol } from '../content.types';
 import { LnmDataService } from '../lnm-data.service';
 import { ParticleFxService } from '../../shared/particle-fx/particle-fx.service';
+import {
+  SectionPill,
+  SectionShellComponent,
+} from '../../shared/section-shell/section-shell.component';
+import { PillSwitchComponent } from '../../shared/pill-switch/pill-switch.component';
 
 interface StandingRow {
   pos: number;
@@ -26,7 +30,11 @@ interface LeaderRow {
 @Component({
   selector: 'app-stats',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule,
+    SectionShellComponent,
+    PillSwitchComponent,
+  ],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss',
 })
@@ -39,6 +47,17 @@ export class StatsComponent implements OnInit {
   leyendas = signal<LeyendaBeisbol[]>([]);
   ligaResumen = signal<{ label: string; value: string }[]>([]);
   tab = signal<'lnm' | 'leyendas'>('lnm');
+  origen = signal<'mlb' | 'mex'>('mex');
+
+  readonly pills: SectionPill[] = [
+    { id: 'lnm', label: 'Liga Norte' },
+    { id: 'leyendas', label: 'Leyendas' },
+  ];
+
+  readonly origenPills: SectionPill[] = [
+    { id: 'mex', label: 'México' },
+    { id: 'mlb', label: 'MLB' },
+  ];
 
   ngOnInit(): void {
     this.lnm.loadCatalog().subscribe((bundle) => {
@@ -71,13 +90,29 @@ export class StatsComponent implements OnInit {
     });
 
     this.lnm.loadHistoria().subscribe((data) => {
-      this.leyendas.set(data.leyendas.slice(0, 6));
+      this.leyendas.set(data.leyendas);
     });
   }
 
-  setTab(t: 'lnm' | 'leyendas'): void {
+  setTab(t: string): void {
+    if (t !== 'lnm' && t !== 'leyendas') return;
     this.tab.set(t);
     this.fx.burstCenter('spark');
+  }
+
+  setOrigen(t: string): void {
+    if (t !== 'mlb' && t !== 'mex') return;
+    this.origen.set(t);
+  }
+
+  get leyendasFiltradas(): LeyendaBeisbol[] {
+    return this.leyendas().filter((l) => l.origen === this.origen());
+  }
+
+  get lede(): string {
+    return this.tab() === 'lnm'
+      ? 'Standing y líderes reales de la LNM 2026. Campeón: Bucaneros (4-2 vs Barbanegras).'
+      : 'Récords de las 10 leyendas coleccionables (MLB y México).';
   }
 
   private buildLnmLeaders(jugadores: LnmScanItem[]): LeaderRow[] {

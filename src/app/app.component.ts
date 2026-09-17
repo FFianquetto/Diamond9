@@ -3,12 +3,19 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { MenuBarComponent } from './comp/shared/menu-bar/menu-bar.component';
 import { footerButton } from './comp/shared/footer-button/footer-button.component';
 import { ParticleFxComponent } from './comp/shared/particle-fx/particle-fx.component';
+import { CartaUnlockOverlayComponent } from './comp/shared/carta-unlock-overlay/carta-unlock-overlay.component';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MenuBarComponent, footerButton, ParticleFxComponent],
+  imports: [
+    RouterOutlet,
+    MenuBarComponent,
+    footerButton,
+    ParticleFxComponent,
+    CartaUnlockOverlayComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

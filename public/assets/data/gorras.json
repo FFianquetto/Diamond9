@@ -1,281 +1,436 @@
-{
-  "tipo": "gorra",
-  "temporada": 2026,
-  "liga": "MLB / LMB / LNM",
-  "nota": "Gorras reconocibles por logo (plantilla + color). Modelos en public/assets/modelos/gorra/.",
-  "items": [
-    {
-      "id": "gorra-yankees",
-      "nombre": "Gorra New York Yankees",
-      "subtitle": "Equipo reconocido · MLB",
-      "color": "#0C2340",
-      "info": "Sí: gorra de los New York Yankees (MLB). Logo NY / navy reconocible.",
-      "stats": [
-        { "label": "Equipo", "value": "Yankees" },
-        { "label": "Liga", "value": "MLB" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Yankees",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Centra el logo NY con buena luz.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-yankees",
-      "equipo": "New York Yankees",
-      "abrev": "NYY",
-      "equipoReconocido": true,
-      "ligaOrigen": "MLB"
-    },
-    {
-      "id": "gorra-dodgers",
-      "nombre": "Gorra Los Angeles Dodgers",
-      "subtitle": "Equipo reconocido · MLB",
-      "color": "#005A9C",
-      "info": "Sí: gorra de los Los Angeles Dodgers (MLB).",
-      "stats": [
-        { "label": "Equipo", "value": "Dodgers" },
-        { "label": "Liga", "value": "MLB" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Dodgers",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Apunta al logo azul frontal.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-dodgers",
-      "equipo": "Los Angeles Dodgers",
-      "abrev": "LAD",
-      "equipoReconocido": true,
-      "ligaOrigen": "MLB"
-    },
-    {
-      "id": "gorra-bucaneros",
-      "nombre": "Gorra Bucaneros",
-      "subtitle": "Equipo reconocido · LNM",
-      "color": "#00C2D7",
-      "info": "Sí: gorra de Bucaneros de Los Cabos (LNM).",
-      "stats": [
-        { "label": "Equipo", "value": "Bucaneros" },
-        { "label": "Liga", "value": "LNM" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Bucaneros",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Apunta al logo turquesa.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-bucaneros",
-      "equipo": "Bucaneros de Los Cabos",
-      "abrev": "CAB",
-      "equipoReconocido": true,
-      "ligaOrigen": "LNM"
-    },
-    {
-      "id": "gorra-marineros",
-      "nombre": "Gorra Marineros",
-      "subtitle": "Equipo reconocido · LNM",
-      "color": "#1565C0",
-      "info": "Sí: gorra de Marineros de Ensenada (Liga Norte de México).",
-      "stats": [
-        { "label": "Equipo", "value": "Marineros" },
-        { "label": "Liga", "value": "LNM" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Marineros 2026",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Centra el logo frontal.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-marineros",
-      "equipo": "Marineros de Ensenada",
-      "abrev": "ENS",
-      "equipoReconocido": true,
-      "ligaOrigen": "LNM"
-    },
-    {
-      "id": "gorra-tiburones",
-      "nombre": "Gorra Tiburones",
-      "subtitle": "Equipo reconocido · LNM",
-      "color": "#0277BD",
-      "info": "Sí: gorra de Tiburones de Puerto Peñasco (LNM).",
-      "stats": [
-        { "label": "Equipo", "value": "Tiburones" },
-        { "label": "Liga", "value": "LNM" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Tiburones",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Logo azul al centro.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-tiburones",
-      "equipo": "Tiburones de Puerto Peñasco",
-      "abrev": "PCO",
-      "equipoReconocido": true,
-      "ligaOrigen": "LNM"
-    },
-    {
-      "id": "gorra-algodoneros",
-      "nombre": "Gorra Algodoneros",
-      "subtitle": "Equipo reconocido · LNM",
-      "color": "#F9A825",
-      "info": "Sí: gorra de Algodoneros de San Luis (LNM).",
-      "stats": [
-        { "label": "Equipo", "value": "Algodoneros" },
-        { "label": "Liga", "value": "LNM" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Algodoneros",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Centra el logo dorado.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-algodoneros",
-      "equipo": "Algodoneros de San Luis",
-      "abrev": "SLRC",
-      "equipoReconocido": true,
-      "ligaOrigen": "LNM"
-    },
-    {
-      "id": "gorra-cerveceros",
-      "nombre": "Gorra Cerveceros",
-      "subtitle": "Equipo reconocido · LNM",
-      "color": "#FF8F00",
-      "info": "Sí: gorra de Cerveceros de Tecate (LNM).",
-      "stats": [
-        { "label": "Equipo", "value": "Cerveceros" },
-        { "label": "Liga", "value": "LNM" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Cerveceros",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Apunta al logo naranja.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-cerveceros",
-      "equipo": "Cerveceros de Tecate",
-      "abrev": "TEC",
-      "equipoReconocido": true,
-      "ligaOrigen": "LNM"
-    },
-    {
-      "id": "gorra-diablos",
-      "nombre": "Gorra Diablos del México",
-      "subtitle": "Equipo reconocido · LMB",
-      "color": "#C62828",
-      "info": "Sí: esta gorra corresponde a Diablos Rojos del México (LMB).",
-      "stats": [
-        { "label": "Equipo", "value": "Diablos" },
-        { "label": "Liga", "value": "LMB" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Diablos en el diamante",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Apunta al frente de la gorra con buena luz.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-diablos",
-      "equipo": "Diablos Rojos del México",
-      "abrev": "CDM",
-      "equipoReconocido": true,
-      "ligaOrigen": "LMB"
-    },
-    {
-      "id": "gorra-diablos-alt",
-      "nombre": "Gorra Diablos Onfield",
-      "subtitle": "Equipo reconocido · LMB",
-      "color": "#B71C1C",
-      "info": "Sí: variante onfield de Diablos del México.",
-      "stats": [
-        { "label": "Equipo", "value": "Diablos" },
-        { "label": "Liga", "value": "LMB" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: onfield Diablos",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Centra el logo en el cuadro.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-diablos-alt",
-      "equipo": "Diablos Rojos del México",
-      "abrev": "CDM",
-      "equipoReconocido": true,
-      "ligaOrigen": "LMB"
-    },
-    {
-      "id": "gorra-bravos",
-      "nombre": "Gorra Bravos de León",
-      "subtitle": "Equipo reconocido · LMB",
-      "color": "#1565C0",
-      "info": "Sí: gorra de Bravos de León (LMB).",
-      "stats": [
-        { "label": "Equipo", "value": "Bravos" },
-        { "label": "Liga", "value": "LMB" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Bravos de León",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Apunta al logo frontal.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-bravos",
-      "equipo": "Bravos de León",
-      "abrev": "LEO",
-      "equipoReconocido": true,
-      "ligaOrigen": "LMB"
-    },
-    {
-      "id": "gorra-conspiradores",
-      "nombre": "Gorra Conspiradores",
-      "subtitle": "Equipo reconocido · LMB",
-      "color": "#2E7D32",
-      "info": "Sí: Conspiradores de Querétaro.",
-      "stats": [
-        { "label": "Equipo", "value": "Conspiradores" },
-        { "label": "Liga", "value": "LMB" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Conspiradores",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Buena iluminación sobre el bordado.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-conspiradores",
-      "equipo": "Conspiradores de Querétaro",
-      "abrev": "QUE",
-      "equipoReconocido": true,
-      "ligaOrigen": "LMB"
-    },
-    {
-      "id": "gorra-saraperos",
-      "nombre": "Gorra Saraperos",
-      "subtitle": "Equipo reconocido · LMB",
-      "color": "#6A1B9A",
-      "info": "Sí: Saraperos de Saltillo.",
-      "stats": [
-        { "label": "Equipo", "value": "Saraperos" },
-        { "label": "Liga", "value": "LMB" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: Saraperos",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Muestra el panel frontal completo.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-saraperos",
-      "equipo": "Saraperos de Saltillo",
-      "abrev": "SAL",
-      "equipoReconocido": true,
-      "ligaOrigen": "LMB"
-    },
-    {
-      "id": "gorra-visor-camo",
-      "nombre": "Gorra LMB Visor Camo",
-      "subtitle": "Marca de liga · LMB",
-      "color": "#558B2F",
-      "info": "Sí: gorra con identidad LMB (visor camo / 59FIFTY).",
-      "stats": [
-        { "label": "Marca", "value": "LMB" },
-        { "label": "Estilo", "value": "Camo" },
-        { "label": "Match", "value": "Sí" }
-      ],
-      "videoHint": "Clip: LMB highlights",
-      "animationLabel": "Rotación de gorra",
-      "tip": "Apunta al visor y al logo LMB.",
-      "actions": "Info · Stats · Video · Animación",
-      "modelKey": "gorra-visor-camo",
-      "equipo": "Liga Mexicana de Beisbol",
-      "abrev": "LMB",
-      "equipoReconocido": true,
-      "ligaOrigen": "LMB"
-    }
-  ]
-}
+{
+  "tipo": "gorra",
+  "temporada": 2026,
+  "liga": "MLB / LMB / LNM",
+  "nota": "Gorras reconocibles por logo (plantilla + color). Modelos en public/assets/modelos/gorra/.",
+  "items": [
+    {
+      "id": "gorra-yankees",
+      "nombre": "Gorra New York Yankees",
+      "subtitle": "Equipo reconocido · MLB",
+      "color": "#0C2340",
+      "info": "Sí: gorra de los New York Yankees (MLB). Logo NY / navy reconocible.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Yankees"
+        },
+        {
+          "label": "Liga",
+          "value": "MLB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Yankees",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Centra el logo NY con buena luz.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-yankees",
+      "equipo": "New York Yankees",
+      "abrev": "NYY",
+      "equipoReconocido": true,
+      "ligaOrigen": "MLB",
+      "targetImage": "assets/galeria/imagenes/equipos/yankees-ny-clean.jpg"
+    },
+    {
+      "id": "gorra-redsox",
+      "nombre": "Gorra Boston Red Sox",
+      "subtitle": "Equipo reconocido · MLB",
+      "color": "#BD3039",
+      "info": "Sí: gorra de los Boston Red Sox (MLB). Logo B / rojo-navy reconocible.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Red Sox"
+        },
+        {
+          "label": "Liga",
+          "value": "MLB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Red Sox",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Centra el logo B rojo con buena luz.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-redsox",
+      "equipo": "Boston Red Sox",
+      "abrev": "BOS",
+      "equipoReconocido": true,
+      "ligaOrigen": "MLB",
+      "targetImage": "assets/galeria/imagenes/equipos/redsox-b.jpg"
+    },
+    {
+      "id": "gorra-dodgers",
+      "nombre": "Gorra Los Angeles Dodgers",
+      "subtitle": "Equipo reconocido · MLB",
+      "color": "#005A9C",
+      "info": "Sí: gorra de los Los Angeles Dodgers (MLB).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Dodgers"
+        },
+        {
+          "label": "Liga",
+          "value": "MLB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Dodgers",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Apunta al logo azul frontal.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-dodgers",
+      "equipo": "Los Angeles Dodgers",
+      "abrev": "LAD",
+      "equipoReconocido": true,
+      "ligaOrigen": "MLB",
+      "targetImage": "assets/galeria/imagenes/equipos/dodgers.webp"
+    },
+    {
+      "id": "gorra-bucaneros",
+      "nombre": "Gorra Bucaneros",
+      "subtitle": "Equipo reconocido · LNM",
+      "color": "#00C2D7",
+      "info": "Sí: gorra de Bucaneros de Los Cabos (LNM).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Bucaneros"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Bucaneros",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Apunta al logo turquesa.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-bucaneros",
+      "equipo": "Bucaneros de Los Cabos",
+      "abrev": "CAB",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/bucaneros-cabos.jpg"
+    },
+    {
+      "id": "gorra-marineros",
+      "nombre": "Gorra Marineros",
+      "subtitle": "Equipo reconocido · LNM",
+      "color": "#1565C0",
+      "info": "Sí: gorra de Marineros de Ensenada (Liga Norte de México).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Marineros"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Marineros 2026",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Centra el logo frontal.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-marineros",
+      "equipo": "Marineros de Ensenada",
+      "abrev": "ENS",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/marineros-ensenada.png"
+    },
+    {
+      "id": "gorra-tiburones",
+      "nombre": "Gorra Tiburones",
+      "subtitle": "Equipo reconocido · LNM",
+      "color": "#0277BD",
+      "info": "Sí: gorra de Tiburones de Puerto Peñasco (LNM).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Tiburones"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Tiburones",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Logo azul al centro.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-tiburones",
+      "equipo": "Tiburones de Puerto Peñasco",
+      "abrev": "PCO",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/tiburones-penasco.jpg"
+    },
+    {
+      "id": "gorra-algodoneros",
+      "nombre": "Gorra Algodoneros",
+      "subtitle": "Equipo reconocido · LNM",
+      "color": "#F9A825",
+      "info": "Sí: gorra de Algodoneros de San Luis (LNM).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Algodoneros"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Algodoneros",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Centra el logo dorado.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-algodoneros",
+      "equipo": "Algodoneros de San Luis",
+      "abrev": "SLRC",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/algodoneros-slrc.jpg"
+    },
+    {
+      "id": "gorra-cerveceros",
+      "nombre": "Gorra Cerveceros",
+      "subtitle": "Equipo reconocido · LNM",
+      "color": "#FF8F00",
+      "info": "Sí: gorra de Cerveceros de Tecate (LNM).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Cerveceros"
+        },
+        {
+          "label": "Liga",
+          "value": "LNM"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Cerveceros",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Apunta al logo naranja.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-cerveceros",
+      "equipo": "Cerveceros de Tecate",
+      "abrev": "TEC",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/cerveceros-tecate.jpg"
+    },
+    {
+      "id": "gorra-diablos",
+      "nombre": "Gorra Diablos del México",
+      "subtitle": "Equipo reconocido · LMB",
+      "color": "#C62828",
+      "info": "Sí: esta gorra corresponde a Diablos Rojos del México (LMB).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Diablos"
+        },
+        {
+          "label": "Liga",
+          "value": "LMB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Diablos en el diamante",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Apunta al frente de la gorra con buena luz.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-diablos",
+      "equipo": "Diablos Rojos del México",
+      "abrev": "CDM",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMB"
+    },
+    {
+      "id": "gorra-diablos-alt",
+      "nombre": "Gorra Diablos Onfield",
+      "subtitle": "Equipo reconocido · LMB",
+      "color": "#B71C1C",
+      "info": "Sí: variante onfield de Diablos del México.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Diablos"
+        },
+        {
+          "label": "Liga",
+          "value": "LMB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: onfield Diablos",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Centra el logo en el cuadro.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-diablos-alt",
+      "equipo": "Diablos Rojos del México",
+      "abrev": "CDM",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMB"
+    },
+    {
+      "id": "gorra-bravos",
+      "nombre": "Gorra Bravos de León",
+      "subtitle": "Equipo reconocido · LMB",
+      "color": "#1565C0",
+      "info": "Sí: gorra de Bravos de León (LMB).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Bravos"
+        },
+        {
+          "label": "Liga",
+          "value": "LMB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Bravos de León",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Apunta al logo frontal.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-bravos",
+      "equipo": "Bravos de León",
+      "abrev": "LEO",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMB"
+    },
+    {
+      "id": "gorra-conspiradores",
+      "nombre": "Gorra Conspiradores",
+      "subtitle": "Equipo reconocido · LMB",
+      "color": "#2E7D32",
+      "info": "Sí: Conspiradores de Querétaro.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Conspiradores"
+        },
+        {
+          "label": "Liga",
+          "value": "LMB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Conspiradores",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Buena iluminación sobre el bordado.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-conspiradores",
+      "equipo": "Conspiradores de Querétaro",
+      "abrev": "QUE",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMB"
+    },
+    {
+      "id": "gorra-saraperos",
+      "nombre": "Gorra Saraperos",
+      "subtitle": "Equipo reconocido · LMB",
+      "color": "#6A1B9A",
+      "info": "Sí: Saraperos de Saltillo.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Saraperos"
+        },
+        {
+          "label": "Liga",
+          "value": "LMB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Saraperos",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Muestra el panel frontal completo.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-saraperos",
+      "equipo": "Saraperos de Saltillo",
+      "abrev": "SAL",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMB"
+    },
+    {
+      "id": "gorra-visor-camo",
+      "nombre": "Gorra LMB Visor Camo",
+      "subtitle": "Marca de liga · LMB",
+      "color": "#558B2F",
+      "info": "Sí: gorra con identidad LMB (visor camo / 59FIFTY).",
+      "stats": [
+        {
+          "label": "Marca",
+          "value": "LMB"
+        },
+        {
+          "label": "Estilo",
+          "value": "Camo"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: LMB highlights",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Apunta al visor y al logo LMB.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-visor-camo",
+      "equipo": "Liga Mexicana de Beisbol",
+      "abrev": "LMB",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMB"
+    }
+  ]
+}

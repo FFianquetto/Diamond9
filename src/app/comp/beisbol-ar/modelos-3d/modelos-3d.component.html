@@ -1,70 +1,63 @@
-<section class="modelos-page page-shell">
-  <div class="modelos-inner">
-    <header>
-      <p class="eyebrow">Galería 3D</p>
-      <h1>Modelos de béisbol</h1>
-      <p class="lede">
-        Todo desde <code>assets/modelos/</code>: bates, pelotas y gorras.
-      </p>
-    </header>
+<app-section-shell
+  eyebrow="Galería 3D"
+  title="Modelos de béisbol"
+  lede="Bates, pelotas y gorras listos para explorar en 3D."
+>
+  @if (bates.length) {
+    <h2 class="section-title">Bates</h2>
+    <div class="modelos-grid">
+      @for (m of bates; track m.key) {
+        <article class="modelo-card" [style.--accent]="m.color">
+          <div class="viewer-wrap">
+            <app-ar-model-viewer
+              [modelKey]="m.key"
+              [accentColor]="m.color"
+              [animMode]="'spin'"
+              [active]="true"
+            />
+          </div>
+          <h3>{{ m.label }}</h3>
+        </article>
+      }
+    </div>
+  }
 
-    @if (bates.length) {
-      <h2 class="section-title">Bates</h2>
-      <div class="modelos-grid">
-        @for (m of bates; track m.key) {
-          <article class="modelo-card" [style.--accent]="m.color">
-            <div class="viewer-wrap">
-              <app-ar-model-viewer
-                [modelKey]="m.key"
-                [accentColor]="m.color"
-                [animMode]="'spin'"
-                [active]="true"
-              />
-            </div>
-            <h3>{{ m.label }}</h3>
-          </article>
-        }
-      </div>
-    }
+  @if (pelotas.length) {
+    <h2 class="section-title">Pelotas</h2>
+    <div class="modelos-grid">
+      @for (m of pelotas; track m.key) {
+        <article class="modelo-card" [style.--accent]="m.color">
+          <div class="viewer-wrap">
+            <app-ar-model-viewer
+              [modelKey]="m.key"
+              [accentColor]="m.color"
+              [animMode]="'spin'"
+              [active]="true"
+            />
+          </div>
+          <h3>{{ m.label }}</h3>
+        </article>
+      }
+    </div>
+  }
 
-    @if (pelotas.length) {
-      <h2 class="section-title">Pelotas</h2>
-      <div class="modelos-grid">
-        @for (m of pelotas; track m.key) {
-          <article class="modelo-card" [style.--accent]="m.color">
-            <div class="viewer-wrap">
-              <app-ar-model-viewer
-                [modelKey]="m.key"
-                [accentColor]="m.color"
-                [animMode]="'spin'"
-                [active]="true"
-              />
-            </div>
-            <h3>{{ m.label }}</h3>
-          </article>
-        }
-      </div>
-    }
+  @if (gorras.length) {
+    <h2 class="section-title">Gorras</h2>
+    <div class="modelos-grid gorras-grid">
+      @for (m of gorras; track m.key) {
+        <article class="modelo-card" [style.--accent]="m.color">
+          <div class="viewer-wrap">
+            <app-ar-model-viewer
+              [modelKey]="m.key"
+              [accentColor]="m.color"
+              [animMode]="'spin'"
+              [active]="true"
+            />
+          </div>
+          <h3>{{ m.label }}</h3>
+        </article>
+      }
+    </div>
+  }
 
-    @if (gorras.length) {
-      <h2 class="section-title">Gorras</h2>
-      <div class="modelos-grid gorras-grid">
-        @for (m of gorras; track m.key) {
-          <article class="modelo-card" [style.--accent]="m.color">
-            <div class="viewer-wrap">
-              <app-ar-model-viewer
-                [modelKey]="m.key"
-                [accentColor]="m.color"
-                [animMode]="'spin'"
-                [active]="true"
-              />
-            </div>
-            <h3>{{ m.label }}</h3>
-          </article>
-        }
-      </div>
-    }
-
-    <a routerLink="/ar" class="btn-primary">Probar en Escáner AR</a>
-  </div>
-</section>
+</app-section-shell>

@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { ArModelViewerComponent } from '../ar-3d/ar-model-viewer.component';
 import { ArModelLoaderService } from '../ar-3d/ar-model-loader.service';
+import { SectionShellComponent } from '../../shared/section-shell/section-shell.component';
 
 interface ModeloCard {
   key: string;
@@ -50,7 +50,7 @@ function colorFor(key: string, gorraIndex: number): string {
 @Component({
   selector: 'app-modelos-3d',
   standalone: true,
-  imports: [CommonModule, RouterLink, ArModelViewerComponent],
+  imports: [CommonModule, ArModelViewerComponent, SectionShellComponent],
   templateUrl: './modelos-3d.component.html',
   styleUrl: './modelos-3d.component.scss',
 })

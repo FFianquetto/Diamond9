@@ -1,3 +1,0 @@
-Coloca aquí:
-- logo principal (p. ej. logo.png)
-- favicon.png

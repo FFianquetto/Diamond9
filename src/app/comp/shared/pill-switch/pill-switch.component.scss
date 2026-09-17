@@ -1,0 +1,42 @@
+@use "../../../../styles/variables.scss" as *;
+
+.pill-switch {
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba($rebase-10, 0.45);
+  background: rgba($rebase-10, 0.08);
+  margin-bottom: 1.25rem;
+  box-sizing: border-box;
+}
+
+.pill {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: $rebase-7;
+  border-radius: 999px;
+  padding: 0.5rem clamp(0.75rem, 2.5vw, 1.2rem);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 2.1vw, 0.9rem);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  line-height: 1.2;
+
+  &.active {
+    background: $rebase-10;
+    color: $rebase-6;
+  }
+
+  &:hover:not(.active) {
+    color: $rebase-10;
+  }
+}

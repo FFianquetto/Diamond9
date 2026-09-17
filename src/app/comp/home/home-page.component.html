@@ -1,6 +1,44 @@
 <div class="home-container" [class.compress-top]="atTop">
   <section class="hero-video-section" aria-labelledby="hero-brand">
     <div class="hero-depth-layer" aria-hidden="true"></div>
+
+    <aside class="hero-user-chip" aria-label="Usuario">
+      <span class="chip-dot" aria-hidden="true"></span>
+      <div class="chip-copy">
+        <span class="chip-status">{{ perfil().estado }}</span>
+        <strong class="chip-name">{{ displayName() }}</strong>
+      </div>
+      <button
+        type="button"
+        class="chip-gear"
+        [attr.aria-expanded]="gearOpen()"
+        aria-label="Configurar nombre de usuario"
+        (click)="toggleGear($event)"
+      >
+        <mat-icon>settings</mat-icon>
+      </button>
+
+      @if (gearOpen()) {
+        <div class="chip-panel" role="dialog" aria-label="Cambiar nombre" (click)="$event.stopPropagation()">
+          <label>
+            <span>Nombre de usuario</span>
+            <input
+              type="text"
+              maxlength="24"
+              [value]="draftName()"
+              (input)="onDraft($event)"
+              (keydown.enter)="saveName()"
+              autocomplete="nickname"
+            />
+          </label>
+          <div class="chip-panel-actions">
+            <button type="button" class="chip-save" (click)="saveName()">Guardar</button>
+            <button type="button" class="chip-cancel" (click)="closeGear()">Cerrar</button>
+          </div>
+        </div>
+      }
+    </aside>
+
     <div class="hero-video-content">
       <p class="hero-brand" id="hero-brand" aria-label="Diamante 9">DIAMANTE 9</p>
       <h1 class="hero-video-title">
@@ -20,38 +58,8 @@
           Ver equipos
         </button>
       </div>
-      <button type="button" class="hero-scroll-cue" (click)="scrollToModes()">
-        <span>Explorar modos</span>
-        <mat-icon aria-hidden="true">expand_more</mat-icon>
-      </button>
     </div>
     <div class="hero-portal-scrim" aria-hidden="true"></div>
-  </section>
-
-  <section class="d9-portals-section" id="modos" aria-labelledby="modos-heading">
-    <div class="d9-portals-intro">
-      <p class="d9-portals-eyebrow">Experiencias</p>
-      <h2 class="d9-portals-heading" id="modos-heading">
-        Modos de <span>interacción</span>
-      </h2>
-      <p class="d9-portals-subheading">
-        Galería AR, trivia, videos inmersivos y estadísticas — coherentes con
-        la temática del beisbol.
-      </p>
-    </div>
-
-    <nav class="hero-portal-buttons" aria-label="Modos Diamante 9">
-      @for (mode of modes; track mode.link) {
-        <a class="hero-portal-button" [routerLink]="mode.link" [attr.aria-label]="mode.title" (click)="onModeClick($event)">
-          <span class="hero-portal-index" aria-hidden="true">{{ mode.index }}</span>
-          <span class="hero-portal-eyebrow">DIAMANTE 9</span>
-          <span class="hero-portal-title">
-            <span class="hero-portal-highlight">{{ mode.title }}</span>
-          </span>
-          <span class="hero-portal-subtitle">{{ mode.subtitle }}</span>
-        </a>
-      }
-    </nav>
   </section>
 
   <div class="main-content-overlay">

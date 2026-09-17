@@ -2,184 +2,420 @@
   {
     "id": "yankees",
     "nombre": "New York Yankees",
-    "aliases": ["YANKEES", "NEW YORK", "NY", "NYY", "YANKEE"],
+    "aliases": [
+      "YANKEES",
+      "NEW YORK",
+      "NY",
+      "NYY",
+      "YANKEE"
+    ],
     "liga": "MLB",
     "abrev": "NYY",
     "color": "#0C2340",
-    "keywords": ["YANKEES", "NEW YORK", "NY"],
-    "palette": ["#0C2340", "#132448", "#1A2F4A", "#FFFFFF", "#C4CED4"],
-    "modelKey": "gorra-yankees"
+    "keywords": [
+      "YANKEES",
+      "NEW YORK",
+      "NY"
+    ],
+    "palette": [
+      "#0C2340",
+      "#132448",
+      "#1A2F4A",
+      "#FFFFFF",
+      "#C4CED4",
+      "#C9A227",
+      "#D4AF37",
+      "#B8860B"
+    ],
+    "modelKey": "gorra-yankees",
+    "info": "Gorra / identidad New York Yankees (MLB). Logo NY interlocking (blanco o dorado) sobre navy."
   },
   {
     "id": "redsox",
     "nombre": "Boston Red Sox",
-    "aliases": ["RED SOX", "REDSOX", "BOSTON", "BOS", "SOX"],
+    "aliases": [
+      "RED SOX",
+      "REDSOX",
+      "BOSTON",
+      "BOS",
+      "SOX",
+      "SOCKS",
+      "RED SOCKS",
+      "BOSTON RED SOX"
+    ],
     "liga": "MLB",
     "abrev": "BOS",
     "color": "#BD3039",
-    "keywords": ["RED SOX", "BOSTON", "BOS"],
-    "palette": ["#BD3039", "#0C2340", "#FFFFFF", "#8B1E26"]
+    "keywords": [
+      "RED SOX",
+      "BOSTON",
+      "BOS",
+      "SOCKS"
+    ],
+    "palette": [
+      "#BD3039",
+      "#C8102E",
+      "#0C2340",
+      "#FFFFFF",
+      "#8B1E26"
+    ],
+    "modelKey": "gorra-redsox",
+    "info": "Gorra / identidad Boston Red Sox (MLB). Logo B rojo sobre navy."
   },
   {
     "id": "dodgers",
     "nombre": "Los Angeles Dodgers",
-    "aliases": ["DODGERS", "LOS ANGELES", "LAD", "LA"],
+    "aliases": [
+      "DODGERS",
+      "LOS ANGELES",
+      "LAD",
+      "LA"
+    ],
     "liga": "MLB",
     "abrev": "LAD",
     "color": "#005A9C",
-    "keywords": ["DODGERS", "LOS ANGELES"],
-    "palette": ["#005A9C", "#FFFFFF", "#A2AAAD", "#EF3E42"],
-    "modelKey": "gorra-dodgers"
+    "keywords": [
+      "DODGERS",
+      "LOS ANGELES"
+    ],
+    "palette": [
+      "#005A9C",
+      "#FFFFFF",
+      "#A2AAAD",
+      "#EF3E42"
+    ],
+    "modelKey": "gorra-dodgers",
+    "info": "Gorra / identidad Los Angeles Dodgers (MLB)."
   },
   {
     "id": "cubs",
     "nombre": "Chicago Cubs",
-    "aliases": ["CUBS", "CHICAGO", "CHC"],
+    "aliases": [
+      "CUBS",
+      "CHICAGO",
+      "CHC"
+    ],
     "liga": "MLB",
     "abrev": "CHC",
     "color": "#0E3386",
-    "keywords": ["CUBS", "CHICAGO"],
-    "palette": ["#0E3386", "#CC3433", "#FFFFFF"]
+    "keywords": [
+      "CUBS",
+      "CHICAGO"
+    ],
+    "palette": [
+      "#0E3386",
+      "#CC3433",
+      "#FFFFFF"
+    ],
+    "info": "Gorra / identidad Chicago Cubs (MLB)."
   },
   {
     "id": "giants",
     "nombre": "San Francisco Giants",
-    "aliases": ["GIANTS", "SAN FRANCISCO", "SF", "GIGANTS"],
+    "aliases": [
+      "GIANTS",
+      "SAN FRANCISCO",
+      "SF",
+      "GIGANTS"
+    ],
     "liga": "MLB",
     "abrev": "SF",
     "color": "#FD5A1E",
-    "keywords": ["GIANTS", "SAN FRANCISCO"],
-    "palette": ["#FD5A1E", "#27251F", "#FFFFFF", "#EFD19F"]
+    "keywords": [
+      "GIANTS",
+      "SAN FRANCISCO"
+    ],
+    "palette": [
+      "#FD5A1E",
+      "#27251F",
+      "#FFFFFF",
+      "#EFD19F"
+    ],
+    "info": "Gorra / identidad San Francisco Giants (MLB). Naranja y negro."
   },
   {
     "id": "bucaneros-cabos",
     "nombre": "Bucaneros de Los Cabos",
-    "aliases": ["BUCANEROS", "CABOS", "CAB"],
+    "aliases": [
+      "BUCANEROS",
+      "CABOS",
+      "CAB"
+    ],
     "liga": "LNM",
     "abrev": "CAB",
     "color": "#00C2D7",
-    "keywords": ["BUCANEROS", "CABOS"],
-    "palette": ["#003840", "#00C2D7", "#00E5FF", "#FFFFFF"],
-    "modelKey": "gorra-bucaneros"
+    "keywords": [
+      "BUCANEROS",
+      "CABOS"
+    ],
+    "palette": [
+      "#003840",
+      "#00C2D7",
+      "#00E5FF",
+      "#FFFFFF"
+    ],
+    "modelKey": "gorra-bucaneros",
+    "info": "Gorra / identidad Bucaneros de Los Cabos (LNM)."
   },
   {
     "id": "marineros-ensenada",
     "nombre": "Marineros de Ensenada",
-    "aliases": ["MARINEROS", "ENSENADA", "ENS"],
+    "aliases": [
+      "MARINEROS",
+      "ENSENADA",
+      "ENS"
+    ],
     "liga": "LNM",
     "abrev": "ENS",
     "color": "#1565C0",
-    "keywords": ["MARINEROS", "ENSENADA"],
-    "palette": ["#021A33", "#1565C0", "#42A5F5", "#FFFFFF"],
-    "modelKey": "gorra-marineros"
+    "keywords": [
+      "MARINEROS",
+      "ENSENADA"
+    ],
+    "palette": [
+      "#021A33",
+      "#1565C0",
+      "#42A5F5",
+      "#FFFFFF"
+    ],
+    "modelKey": "gorra-marineros",
+    "info": "Gorra / identidad Marineros de Ensenada (LNM)."
   },
   {
     "id": "barbanegras-tijuana",
     "nombre": "Barbanegras de Tijuana",
-    "aliases": ["BARBANEGRAS", "TIJUANA", "TIJ"],
+    "aliases": [
+      "BARBANEGRAS",
+      "TIJUANA",
+      "TIJ"
+    ],
     "liga": "LNM",
     "abrev": "TIJ",
     "color": "#212121",
-    "keywords": ["BARBANEGRAS", "TIJUANA"],
-    "palette": ["#0A0A0A", "#B91C1C", "#DC2626", "#FFFFFF"]
+    "keywords": [
+      "BARBANEGRAS",
+      "TIJUANA"
+    ],
+    "palette": [
+      "#0A0A0A",
+      "#B91C1C",
+      "#DC2626",
+      "#FFFFFF"
+    ],
+    "info": "Gorra / identidad Barbanegras de Tijuana (LNM)."
   },
   {
     "id": "algodoneros-slrc",
     "nombre": "Algodoneros de San Luis",
-    "aliases": ["ALGODONEROS", "SAN LUIS", "SLRC"],
+    "aliases": [
+      "ALGODONEROS",
+      "SAN LUIS",
+      "SLRC"
+    ],
     "liga": "LNM",
     "abrev": "SLRC",
     "color": "#F9A825",
-    "keywords": ["ALGODONEROS", "SAN LUIS"],
-    "palette": ["#2E2200", "#F9A825", "#FFD54F", "#FFFFFF"],
-    "modelKey": "gorra-algodoneros"
+    "keywords": [
+      "ALGODONEROS",
+      "SAN LUIS"
+    ],
+    "palette": [
+      "#2E2200",
+      "#F9A825",
+      "#FFD54F",
+      "#FFFFFF"
+    ],
+    "modelKey": "gorra-algodoneros",
+    "info": "Gorra / identidad Algodoneros de San Luis (LNM)."
   },
   {
     "id": "tiburones-penasco",
     "nombre": "Tiburones de Puerto Peñasco",
-    "aliases": ["TIBURONES", "PENASCO", "PCO"],
+    "aliases": [
+      "TIBURONES",
+      "PENASCO",
+      "PCO"
+    ],
     "liga": "LNM",
     "abrev": "PCO",
     "color": "#0277BD",
-    "keywords": ["TIBURONES", "PENASCO"],
-    "palette": ["#001E33", "#0277BD", "#29B6F6", "#FFFFFF"],
-    "modelKey": "gorra-tiburones"
+    "keywords": [
+      "TIBURONES",
+      "PENASCO"
+    ],
+    "palette": [
+      "#001E33",
+      "#0277BD",
+      "#29B6F6",
+      "#FFFFFF"
+    ],
+    "modelKey": "gorra-tiburones",
+    "info": "Gorra / identidad Tiburones de Puerto Peñasco (LNM)."
   },
   {
     "id": "cerveceros-tecate",
     "nombre": "Cerveceros de Tecate",
-    "aliases": ["CERVECEROS", "TECATE", "TEC"],
+    "aliases": [
+      "CERVECEROS",
+      "TECATE",
+      "TEC"
+    ],
     "liga": "LNM",
     "abrev": "TEC",
     "color": "#FF8F00",
-    "keywords": ["CERVECEROS", "TECATE"],
-    "palette": ["#2A1600", "#FF8F00", "#FF9100", "#FFFFFF"],
-    "modelKey": "gorra-cerveceros"
+    "keywords": [
+      "CERVECEROS",
+      "TECATE"
+    ],
+    "palette": [
+      "#2A1600",
+      "#FF8F00",
+      "#FF9100",
+      "#FFFFFF"
+    ],
+    "modelKey": "gorra-cerveceros",
+    "info": "Gorra / identidad Cerveceros de Tecate (LNM)."
   },
   {
     "id": "diablos",
     "nombre": "Diablos Rojos del México",
-    "aliases": ["DIABLOS", "MEXICO", "ROJOS", "CDM"],
+    "aliases": [
+      "DIABLOS",
+      "MEXICO",
+      "ROJOS",
+      "CDM"
+    ],
     "liga": "LMB",
     "abrev": "CDM",
     "color": "#C62828",
-    "keywords": ["DIABLOS", "MEXICO"],
-    "palette": ["#7F0000", "#C62828", "#FFFFFF", "#1A1A1A"],
-    "modelKey": "gorra-diablos"
+    "keywords": [
+      "DIABLOS",
+      "MEXICO"
+    ],
+    "palette": [
+      "#7F0000",
+      "#C62828",
+      "#FFFFFF",
+      "#1A1A1A"
+    ],
+    "modelKey": "gorra-diablos",
+    "info": "Gorra / identidad Diablos Rojos del México (LMB)."
   },
   {
     "id": "bravos",
     "nombre": "Bravos de León",
-    "aliases": ["BRAVOS", "LEON"],
+    "aliases": [
+      "BRAVOS",
+      "LEON"
+    ],
     "liga": "LMB",
     "abrev": "LEO",
     "color": "#1565C0",
-    "keywords": ["BRAVOS", "LEON"],
-    "palette": ["#0D47A1", "#1565C0", "#FFFFFF", "#FFC107"],
-    "modelKey": "gorra-bravos"
+    "keywords": [
+      "BRAVOS",
+      "LEON"
+    ],
+    "palette": [
+      "#0D47A1",
+      "#1565C0",
+      "#FFFFFF",
+      "#FFC107"
+    ],
+    "modelKey": "gorra-bravos",
+    "info": "Gorra / identidad Bravos de León (LMB)."
   },
   {
     "id": "conspiradores",
     "nombre": "Conspiradores de Querétaro",
-    "aliases": ["CONSPIRADORES", "QUERETARO"],
+    "aliases": [
+      "CONSPIRADORES",
+      "QUERETARO"
+    ],
     "liga": "LMB",
     "abrev": "QUE",
     "color": "#2E7D32",
-    "keywords": ["CONSPIRADORES", "QUERETARO"],
-    "palette": ["#1B5E20", "#2E7D32", "#C0C0C0", "#FFFFFF"],
-    "modelKey": "gorra-conspiradores"
+    "keywords": [
+      "CONSPIRADORES",
+      "QUERETARO"
+    ],
+    "palette": [
+      "#1B5E20",
+      "#2E7D32",
+      "#C0C0C0",
+      "#FFFFFF"
+    ],
+    "modelKey": "gorra-conspiradores",
+    "info": "Gorra / identidad Conspiradores de Querétaro (LMB)."
   },
   {
     "id": "saraperos",
     "nombre": "Saraperos de Saltillo",
-    "aliases": ["SARAPEROS", "SALTILLO"],
+    "aliases": [
+      "SARAPEROS",
+      "SALTILLO"
+    ],
     "liga": "LMB",
     "abrev": "SAL",
     "color": "#6A1B9A",
-    "keywords": ["SARAPEROS", "SALTILLO"],
-    "palette": ["#4A148C", "#6A1B9A", "#FFFFFF", "#FFD600"],
-    "modelKey": "gorra-saraperos"
+    "keywords": [
+      "SARAPEROS",
+      "SALTILLO"
+    ],
+    "palette": [
+      "#4A148C",
+      "#6A1B9A",
+      "#FFFFFF",
+      "#FFD600"
+    ],
+    "modelKey": "gorra-saraperos",
+    "info": "Gorra / identidad Saraperos de Saltillo (LMB)."
   },
   {
     "id": "sultanes",
     "nombre": "Sultanes de Monterrey",
-    "aliases": ["SULTANES", "MONTERREY", "MTY"],
+    "aliases": [
+      "SULTANES",
+      "MONTERREY",
+      "MTY"
+    ],
     "liga": "LMB",
     "abrev": "MTY",
     "color": "#1A237E",
-    "keywords": ["SULTANES", "MONTERREY"],
-    "palette": ["#1A237E", "#0D47A1", "#FFFFFF", "#C62828"],
-    "modelKey": "gorra-bravos"
+    "keywords": [
+      "SULTANES",
+      "MONTERREY"
+    ],
+    "palette": [
+      "#1A237E",
+      "#0D47A1",
+      "#FFFFFF",
+      "#C62828"
+    ],
+    "modelKey": "gorra-bravos",
+    "info": "Gorra / identidad Sultanes de Monterrey (LMB)."
   },
   {
     "id": "lmb",
     "nombre": "Liga Mexicana de Beisbol",
-    "aliases": ["LMB", "BANORTE", "LIGA MEXICANA"],
+    "aliases": [
+      "LMB",
+      "BANORTE",
+      "LIGA MEXICANA"
+    ],
     "liga": "LMB",
     "abrev": "LMB",
     "color": "#0D1B2A",
-    "keywords": ["LMB", "BANORTE"],
-    "palette": ["#0D1B2A", "#1B5E20", "#C62828", "#FFFFFF"],
-    "modelKey": "gorra-visor-camo"
+    "keywords": [
+      "LMB",
+      "BANORTE"
+    ],
+    "palette": [
+      "#0D1B2A",
+      "#1B5E20",
+      "#C62828",
+      "#FFFFFF"
+    ],
+    "modelKey": "gorra-visor-camo",
+    "info": "Gorra / marca Liga Mexicana de Beisbol."
   }
 ]

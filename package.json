@@ -8,6 +8,7 @@
     "start:all": "npm run start:api & npm start",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "compile:mind": "node scripts/compile-mind-targets.mjs",
     "test": "ng test"
   },
   "private": true,
@@ -22,8 +23,8 @@
     "@angular/platform-browser": "^19.1.0",
     "@angular/platform-browser-dynamic": "^19.1.0",
     "@angular/router": "^19.1.0",
+    "mind-ar": "^1.2.5",
     "rxjs": "~7.8.0",
-    "tesseract.js": "^7.0.0",
     "three": "^0.185.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

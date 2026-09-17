@@ -8,10 +8,21 @@
     "equipo": "pelota",
     "liga": "pelota",
     "gorra": "gorra-yankees",
+    "logo": "gorra-yankees",
     "pelota": "pelota"
   },
   "overrides": {
     "liga-lnm": "pelota",
+    "logo-lnm": "pelota",
+    "logo-yankees": "gorra-yankees",
+    "logo-redsox": "gorra-redsox",
+    "logo-dodgers": "gorra-dodgers",
+    "logo-marineros": "gorra-marineros",
+    "logo-bucaneros": "gorra-bucaneros",
+    "logo-tiburones": "gorra-tiburones",
+    "logo-algodoneros": "gorra-algodoneros",
+    "logo-cerveceros": "gorra-cerveceros",
+    "logo-barbanegras": "pelota",
     "gorra-diablos": "gorra-diablos",
     "gorra-diablos-alt": "gorra-diablos-alt",
     "gorra-bravos": "gorra-bravos",
@@ -19,6 +30,7 @@
     "gorra-saraperos": "gorra-saraperos",
     "gorra-visor-camo": "gorra-visor-camo",
     "gorra-yankees": "gorra-yankees",
+    "gorra-redsox": "gorra-redsox",
     "gorra-dodgers": "gorra-dodgers",
     "gorra-bucaneros": "gorra-bucaneros",
     "gorra-marineros": "gorra-marineros",
@@ -26,6 +38,7 @@
     "gorra-algodoneros": "gorra-algodoneros",
     "gorra-cerveceros": "gorra-cerveceros",
     "yankees": "gorra-yankees",
+    "redsox": "gorra-redsox",
     "dodgers": "gorra-dodgers",
     "bucaneros-cabos": "gorra-bucaneros",
     "marineros-ensenada": "gorra-marineros",
@@ -66,98 +79,106 @@
       "label": "Pelota",
       "file": "assets/modelos/pelota/pelota02.glb",
       "format": "glb",
-      "scale": 1.0,
+      "scale": 1,
       "fallback": "pelota"
     },
     "gorra-yankees": {
       "label": "New York Yankees",
       "file": "assets/modelos/gorra/yankees.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
+    },
+    "gorra-redsox": {
+      "label": "Boston Red Sox",
+      "file": "assets/modelos/gorra/redsox.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra",
+      "nota": "Visual rojo (base Diablos); distinto de yankees.glb navy"
     },
     "gorra-dodgers": {
       "label": "Los Angeles Dodgers",
       "file": "assets/modelos/gorra/dodgers.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-bucaneros": {
       "label": "Bucaneros de Los Cabos",
       "file": "assets/modelos/gorra/bucaneros.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-marineros": {
       "label": "Marineros de Ensenada",
       "file": "assets/modelos/gorra/marinerosroja.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-tiburones": {
       "label": "Tiburones de Puerto Peñasco",
       "file": "assets/modelos/gorra/tiburones.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-algodoneros": {
       "label": "Algodoneros de San Luis",
       "file": "assets/modelos/gorra/algodoneros.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-cerveceros": {
       "label": "Cerveceros de Tecate",
       "file": "assets/modelos/gorra/cerveceros.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-diablos": {
       "label": "Diablos del México",
       "file": "assets/modelos/gorra/diablos-mexico-onfield-2026.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-diablos-alt": {
       "label": "Diablos Onfield Alt",
       "file": "assets/modelos/gorra/diablos-mexico-onfield-alt.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-bravos": {
       "label": "Bravos de León",
       "file": "assets/modelos/gorra/bravos-leon-home-2026.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-conspiradores": {
       "label": "Conspiradores Querétaro",
       "file": "assets/modelos/gorra/conspiradores-queretaro.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-saraperos": {
       "label": "Saraperos de Saltillo",
       "file": "assets/modelos/gorra/saraperos-saltillo.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     },
     "gorra-visor-camo": {
       "label": "LMB Visor Camo",
       "file": "assets/modelos/gorra/lmb-visor-camo.glb",
       "format": "glb",
-      "scale": 1.05,
+      "scale": 1.35,
       "fallback": "gorra"
     }
   }

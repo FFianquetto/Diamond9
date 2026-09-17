@@ -1,19 +1,17 @@
-export type LnmItemType = 'jugador' | 'equipo' | 'liga' | 'gorra' | 'pelota';
+export type LnmItemType =
+  | 'jugador'
+  | 'equipo'
+  | 'liga'
+  | 'gorra'
+  | 'pelota'
+  | 'logo';
 
-/** Modo del escáner AR: acota perfiles y umbrales. */
-export type ScanModo = 'tarjeta' | 'gorra' | 'pelota';
+/** Modo del escáner AR MindAR. */
+export type ScanModo = 'tarjeta' | 'gorra' | 'logo';
 
 export interface LnmStat {
   label: string;
   value: string;
-}
-
-/** Colores del logo + palabras/letras para escaneo preciso. */
-export interface ScanProfile {
-  id: string;
-  modo: ScanModo;
-  colors: string[];
-  keywords: string[];
 }
 
 export interface LnmScanItem {
@@ -22,7 +20,6 @@ export interface LnmScanItem {
   nombre: string;
   subtitle: string;
   color: string;
-  scanProfile?: ScanProfile;
   info: string;
   stats: LnmStat[];
   videoHint: string;
@@ -38,9 +35,7 @@ export interface LnmScanItem {
   ciudad?: string;
   estadio?: string;
   filialLmb?: string;
-  /** Figuras populares del equipo (solo tipo equipo). */
   destacados?: string[];
-  /** Para gorras: si pertenece a un equipo conocido. */
   equipoReconocido?: boolean;
   ligaOrigen?: string;
 }

@@ -1,66 +1,83 @@
-<section class="rewards-page page-shell">
-  <header>
-    <p class="eyebrow">Premios</p>
-    <h1>Mi colección</h1>
-    <p class="lede">
-      Gana insignias al escanear marcadores, jugar los mini juegos o terminar la
-      trivia. Sin reglas complicadas.
-    </p>
-  </header>
-
+<app-section-shell
+  eyebrow="Coleccionables"
+  title="Mi colección"
+  [lede]="lede"
+  [pills]="pills"
+  [activePill]="filtro"
+  pillsAriaLabel="Liga"
+  (pillChange)="setFiltro($event)"
+>
   <div class="progress-bar" role="status">
     <span class="progress-label">
-      {{ totalPremios() }} / {{ premios.length }} premios
+      {{ totalCartas() }} / {{ cartas.length || 12 }} cartas en total
     </span>
     <div class="track">
       <div
         class="fill"
-        [style.width.%]="premios.length ? (totalPremios() / premios.length) * 100 : 0"
+        [style.width.%]="
+          cartas.length ? (totalCartas() / cartas.length) * 100 : 0
+        "
       ></div>
     </div>
-    <span class="scan-count">{{ totalScans() }} escaneos</span>
+    <span class="scan-count">
+      MLB {{ countOwned('mlb') }}/{{ countTotal('mlb') }} · México
+      {{ countOwned('mex') }}/{{ countTotal('mex') }}
+    </span>
   </div>
 
-  <section class="how-to" aria-label="Cómo ganar premios">
-    <h2 class="section-title">Cómo ganar</h2>
-    <ul>
-      <li><mat-icon aria-hidden="true">document_scanner</mat-icon> Escanea cartas o escudos en <a routerLink="/ar">AR</a></li>
-      <li><mat-icon aria-hidden="true">sports_baseball</mat-icon> Juega <a routerLink="/juego">Jonrón</a> o <a routerLink="/rebote">Rebote</a></li>
-      <li><mat-icon aria-hidden="true">quiz</mat-icon> Termina la <a routerLink="/trivia">Trivia</a></li>
-    </ul>
-  </section>
+  <h2 class="section-title">
+    {{ filtro === 'mex' ? 'Cartas México' : 'Cartas MLB' }}
+  </h2>
 
-  <section aria-labelledby="premios-title">
-    <h2 id="premios-title" class="section-title">Insignias</h2>
-    <div class="premios-grid">
-      @for (p of premios; track p.id) {
-        <article class="premio-card" [class.unlocked]="tienePremio(p.id)">
-          <mat-icon aria-hidden="true">{{ tienePremio(p.id) ? p.icono : 'lock' }}</mat-icon>
-          <h3>{{ p.titulo }}</h3>
-          <p>{{ p.descripcion }}</p>
-        </article>
-      }
-    </div>
-  </section>
-
-  @if (escaneados.length) {
-    <section aria-labelledby="cartas-title">
-      <h2 id="cartas-title" class="section-title">Cartas escaneadas</h2>
-      <div class="scans-grid">
-        @for (m of escaneados; track m.id) {
-          <article class="scan-card" [style.--team-color]="m.color">
-            @if (m.targetImage) {
-              <img [src]="m.targetImage" [alt]="m.nombre" loading="lazy" />
-            }
-            <span>{{ m.nombre }}</span>
-          </article>
+  <div class="cartas-grid">
+    @for (c of cartasFiltradas; track c.id) {
+      <article
+        class="carta-card"
+        [class.unlocked]="tieneCarta(c.id)"
+        [class.source-inicial]="sourceOf(c.id) === 'inicial'"
+        [class.source-juego]="sourceOf(c.id) === 'juego'"
+        [class.source-scanner]="sourceOf(c.id) === 'scanner'"
+        [class.source-completo]="sourceOf(c.id) === 'completo'"
+        [style.--team-color]="tieneCarta(c.id) ? c.color : 'transparent'"
+      >
+        @if (tieneCarta(c.id)) {
+          <span class="carta-num">#{{ c.numero }}</span>
+          <span
+            class="source-badge"
+            [class.gold]="sourceOf(c.id) === 'juego'"
+            [class.silver]="sourceOf(c.id) === 'scanner'"
+            [class.starter]="sourceOf(c.id) === 'inicial'"
+            [class.cyan]="sourceOf(c.id) === 'completo'"
+          >
+            {{ sourceLabel(c) }}
+          </span>
+        } @else {
+          <span class="carta-num">?</span>
         }
-      </div>
-    </section>
-  }
-
-  <div class="actions">
-    <a routerLink="/ar" class="btn-primary">Ir al escáner AR</a>
-    <a routerLink="/juego" class="btn-secondary">Jugar</a>
+        <div class="carta-media">
+          @if (tieneCarta(c.id)) {
+            <img [src]="c.foto" [alt]="c.nombre" loading="lazy" />
+            <span class="foil" aria-hidden="true"></span>
+          } @else {
+            <div class="carta-locked">
+              <mat-icon>lock</mat-icon>
+              <span>{{ unlockHint(c) }}</span>
+            </div>
+          }
+        </div>
+        <div class="carta-body">
+          @if (tieneCarta(c.id)) {
+            <p class="serie">{{ c.serie }} · {{ c.rareza }}</p>
+            <h3>{{ c.nombre }}</h3>
+            <p class="liga">{{ c.liga }}</p>
+            <p class="resumen">{{ c.resumen }}</p>
+          } @else {
+            <p class="serie">Sin revelar</p>
+            <h3 class="mystery">???</h3>
+            <p class="liga">Desbloquéala para descubrirla</p>
+          }
+        </div>
+      </article>
+    }
   </div>
-</section>
+</app-section-shell>

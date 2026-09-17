@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
+import {
+  SectionPill,
+  SectionShellComponent,
+} from '../../shared/section-shell/section-shell.component';
 
 export type GalleryTab = 'imagenes' | 'videos';
 
@@ -45,7 +49,7 @@ interface ImageFilterOption {
 @Component({
   selector: 'app-video-filters',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SectionShellComponent],
   templateUrl: './video-filters.component.html',
   styleUrl: './video-filters.component.scss',
 })
@@ -55,6 +59,10 @@ export class VideoFiltersComponent implements OnInit {
   private readonly embedCache = new Map<string, SafeResourceUrl>();
 
   readonly tab = signal<GalleryTab>('imagenes');
+  readonly pills: SectionPill[] = [
+    { id: 'imagenes', label: 'Imágenes' },
+    { id: 'videos', label: 'Videos' },
+  ];
   readonly videos = signal<GalleryVideo[]>([]);
   readonly images = signal<GalleryImage[]>([]);
   readonly activeVideo = signal<GalleryVideo | null>(null);
@@ -98,7 +106,8 @@ export class VideoFiltersComponent implements OnInit {
       });
   }
 
-  setTab(next: GalleryTab): void {
+  setTab(next: string): void {
+    if (next !== 'imagenes' && next !== 'videos') return;
     this.tab.set(next);
   }
 
