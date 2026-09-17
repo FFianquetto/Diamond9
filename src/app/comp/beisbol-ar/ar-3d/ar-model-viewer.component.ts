@@ -182,8 +182,9 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     const maxDim = Math.max(size.x, size.y, size.z, 0.001);
     const fov = THREE.MathUtils.degToRad(this.camera.fov);
     const dist = (maxDim * 0.55) / Math.tan(fov * 0.5);
+    const zoom = this.modelKey === 'guante' ? 1.5 : 1;
 
-    this.camera.position.set(center.x, center.y + maxDim * 0.02, center.z + dist * 1.35);
+    this.camera.position.set(center.x, center.y + maxDim * 0.02, center.z + (dist * 1.35) / zoom);
     this.camera.near = Math.max(dist / 100, 0.01);
     this.camera.far = Math.max(dist * 40, 50);
     this.camera.lookAt(center.x, center.y, center.z);

@@ -4,8 +4,8 @@
       <p class="eyebrow">Acervo multimedia</p>
       <h1>Galería</h1>
       <p class="lede">
-        Sube tus fotos en <code>public/assets/galeria/imagenes/</code> y mira
-        resúmenes de equipos de la Liga Mexicana de Beisbol en YouTube.
+        Fotos de equipos y jugadores, más videos de beisbol. Ajusta tonalidad,
+        brillo y contraste; descarga el resultado si quieres.
       </p>
     </header>
 
@@ -41,6 +41,7 @@
             <img
               [src]="img.src"
               [alt]="img.title"
+              [style.filter]="activeFilterCss()"
               decoding="async"
               fetchpriority="high"
             />
@@ -50,13 +51,80 @@
               <p>{{ img.caption }}</p>
             </div>
           } @else {
-            <p class="status">
-              Aún no hay imágenes. Agrega archivos en
-              <code>assets/galeria/imagenes/</code> y regístralos en
-              <code>galeria.json</code>.
-            </p>
+            <p class="status">Aún no hay imágenes en la galería.</p>
           }
         </div>
+
+        @if (activeImage()) {
+          <div class="filters-panel">
+            <div class="filter-bar" role="toolbar" aria-label="Filtros de imagen">
+              @for (f of filters; track f.id) {
+                <button
+                  type="button"
+                  class="filter-btn"
+                  [class.active]="activeFilter() === f.id"
+                  (click)="setFilter(f.id)"
+                >
+                  {{ f.label }}
+                </button>
+              }
+            </div>
+
+            <div class="sliders" aria-label="Ajustes">
+              <label class="slider-row">
+                <span>Brillo <em>{{ brightness() }}%</em></span>
+                <input
+                  type="range"
+                  min="40"
+                  max="180"
+                  step="1"
+                  [value]="brightness()"
+                  (input)="onBrightness($event)"
+                />
+              </label>
+              <label class="slider-row">
+                <span>Contraste <em>{{ contrast() }}%</em></span>
+                <input
+                  type="range"
+                  min="40"
+                  max="180"
+                  step="1"
+                  [value]="contrast()"
+                  (input)="onContrast($event)"
+                />
+              </label>
+              <label class="slider-row">
+                <span>Saturación <em>{{ saturate() }}%</em></span>
+                <input
+                  type="range"
+                  min="0"
+                  max="200"
+                  step="1"
+                  [value]="saturate()"
+                  (input)="onSaturate($event)"
+                />
+              </label>
+            </div>
+
+            <div class="filter-actions">
+              <button type="button" class="action-btn ghost" (click)="resetAdjustments()">
+                Restablecer
+              </button>
+              <button
+                type="button"
+                class="action-btn primary"
+                [disabled]="downloading()"
+                (click)="downloadFiltered()"
+              >
+                {{ downloading() ? 'Generando…' : 'Descargar filtrada' }}
+              </button>
+            </div>
+
+            @if (downloadError(); as err) {
+              <p class="status error">{{ err }}</p>
+            }
+          </div>
+        }
 
         <div class="thumbs" aria-label="Imágenes">
           @for (img of images(); track img.id) {
@@ -118,12 +186,5 @@
         </div>
       </div>
     }
-
-    <p class="api-note">
-      Canal en español: Liga Mexicana de Beisbol (resúmenes de equipos). Para
-      agregar un video, copia el ID de YouTube en
-      <code>assets/data/galeria.json</code>. Las fotos van en
-      <code>assets/galeria/imagenes/</code> (ver LEEME.txt).
-    </p>
   </div>
 </section>

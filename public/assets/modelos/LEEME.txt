@@ -1,0 +1,14 @@
+# Modelos 3D (carpeta única)
+
+Todo el AR y la galería 3D leen **solo** de aquí:
+
+```
+public/assets/modelos/
+  bate/     → bates .glb
+  gorra/    → gorras .glb
+  pelota/   → pelotas .glb
+```
+
+El manifiesto es `public/assets/data/ar-models.json` (rutas `assets/modelos/...`).
+
+No uses `public/assets/models/` para contenido nuevo.

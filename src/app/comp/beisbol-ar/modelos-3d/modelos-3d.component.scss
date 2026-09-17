@@ -16,7 +16,7 @@
 
 .modelos-inner {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1296px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -37,18 +37,22 @@ h1 {
 .lede {
   @include d9-editorial-subtitle;
   font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
 
-  code {
-    font-size: 0.85em;
-    color: $rebase-10;
-  }
+.section-title {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $rebase-10;
 }
 
 .modelos-grid {
   display: grid;
   gap: 1.15rem;
   width: 100%;
-  margin: 1.75rem 0 2rem;
+  margin: 0 0 1.5rem;
   grid-template-columns: 1fr;
   box-sizing: border-box;
 
@@ -61,7 +65,17 @@ h1 {
   }
 
   @media (min-width: 1100px) {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.gorras-grid {
+  @media (min-width: 1100px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -75,11 +89,12 @@ h1 {
   box-sizing: border-box;
   overflow: hidden;
 
-  h2 {
+  h3 {
     margin: 0.65rem 0 0;
-    font-size: clamp(0.88rem, 1.4vw, 1.02rem);
+    font-size: clamp(0.82rem, 1.4vw, 0.98rem);
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    line-height: 1.3;
   }
 }
 

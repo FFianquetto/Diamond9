@@ -1,0 +1,102 @@
+[
+  {
+    "id": "andres-garza",
+    "nombre": "Andrés Garza",
+    "aliases": ["ANDRES GARZA", "GARZA", "A GARZA"],
+    "equipoId": "bucaneros-cabos",
+    "equipo": "Bucaneros de Los Cabos",
+    "posicion": "Bateador",
+    "liga": "LNM",
+    "stats": { "AVG": ".361", "abrev": "CAB" }
+  },
+  {
+    "id": "miguel-palos",
+    "nombre": "Miguel Palos",
+    "aliases": ["MIGUEL PALOS", "PALOS"],
+    "equipoId": "tiburones-penasco",
+    "equipo": "Tiburones de Puerto Peñasco",
+    "posicion": "Bateador",
+    "liga": "LNM",
+    "stats": { "AVG": ".346", "abrev": "PCO" }
+  },
+  {
+    "id": "jose-cecena",
+    "nombre": "José Ceceña",
+    "aliases": ["JOSE CECENA", "CECENA", "CECEÑA"],
+    "equipoId": "algodoneros-slrc",
+    "equipo": "Algodoneros de San Luis",
+    "posicion": "Bateador",
+    "liga": "LNM",
+    "stats": { "AVG": ".345", "abrev": "SLRC" }
+  },
+  {
+    "id": "oliver-carrillo",
+    "nombre": "Oliver Carrillo",
+    "aliases": ["OLIVER CARRILLO", "CARRILLO"],
+    "equipoId": "bucaneros-cabos",
+    "equipo": "Bucaneros de Los Cabos",
+    "posicion": "Bateador",
+    "liga": "LNM",
+    "stats": { "RBI": "35", "abrev": "CAB" }
+  },
+  {
+    "id": "alejandro-carrillo",
+    "nombre": "Alejandro Carrillo",
+    "aliases": ["ALEJANDRO CARRILLO", "A CARRILLO"],
+    "equipoId": "marineros-ensenada",
+    "equipo": "Marineros de Ensenada",
+    "posicion": "Bateador",
+    "liga": "LNM",
+    "stats": { "abrev": "ENS" }
+  },
+  {
+    "id": "walter-silva",
+    "nombre": "Walter Silva",
+    "aliases": ["WALTER SILVA", "SILVA"],
+    "equipoId": "referencia-lmb",
+    "equipo": "Referencia LMB / Norte",
+    "posicion": "Pitcher",
+    "liga": "LMB",
+    "stats": { "ERA": "3.12", "SO": "142" }
+  },
+  {
+    "id": "fernando-valenzuela",
+    "nombre": "Fernando Valenzuela",
+    "aliases": ["FERNANDO VALENZUELA", "VALENZUELA", "EL TORO", "FERNANDO"],
+    "equipoId": "dodgers",
+    "equipo": "Los Angeles Dodgers",
+    "posicion": "Pitcher",
+    "liga": "MLB",
+    "stats": { "leyenda": "Sí", "abrev": "LAD" }
+  },
+  {
+    "id": "hector-espino",
+    "nombre": "Héctor Espino",
+    "aliases": ["HECTOR ESPINO", "ESPINO"],
+    "equipoId": "sultanes",
+    "equipo": "Sultanes de Monterrey",
+    "posicion": "Bateador",
+    "liga": "LMB",
+    "stats": { "leyenda": "Sí", "abrev": "MTY" }
+  },
+  {
+    "id": "beto-avila",
+    "nombre": "Beto Ávila",
+    "aliases": ["BETO AVILA", "AVILA", "ÁVILA"],
+    "equipoId": "indios",
+    "equipo": "Indios de Cleveland / LMB",
+    "posicion": "Bateador",
+    "liga": "MLB/LMB",
+    "stats": { "leyenda": "Sí" }
+  },
+  {
+    "id": "nelson-barrera",
+    "nombre": "Nelson Barrera",
+    "aliases": ["NELSON BARRERA", "BARRERA"],
+    "equipoId": "diablos",
+    "equipo": "Diablos Rojos del México",
+    "posicion": "Bateador",
+    "liga": "LMB",
+    "stats": { "leyenda": "Sí", "abrev": "CDM" }
+  }
+]

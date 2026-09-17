@@ -4,7 +4,7 @@
 .ar-page {
   @include d9-page-shell;
   padding: 2rem 1.25rem 4rem;
-  max-width: 960px;
+  max-width: 1152px;
   margin: 0 auto;
 }
 
@@ -28,6 +28,147 @@
 .guide-link {
   color: $rebase-12;
   font-weight: 600;
+}
+
+.mode-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1.25rem;
+  width: 100%;
+}
+
+.mode-btn {
+  appearance: none;
+  flex: 1 1 calc(33.333% - 0.45rem);
+  min-width: 6.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 12px;
+  border: 1.5px solid rgba($rebase-14, 0.45);
+  background: rgba($rebase-10, 0.06);
+  color: $rebase-7;
+  font-weight: 800;
+  font-size: clamp(0.72rem, 2vw, 0.82rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  mat-icon {
+    font-size: 1.15rem;
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  &.active {
+    background: $rebase-10;
+    border-color: $rebase-10;
+    color: $rebase-6;
+  }
+
+  &:hover:not(.active) {
+    border-color: $rebase-10;
+    color: $rebase-10;
+  }
+
+  @media (max-width: 420px) {
+    flex: 1 1 100%;
+  }
+}
+
+.mode-hint {
+  margin: 0.55rem 0 0;
+  color: $rebase-14;
+  font-size: clamp(0.82rem, 2.2vw, 0.92rem);
+  line-height: 1.45;
+}
+
+.api-status {
+  display: inline-flex;
+  margin: 0.65rem 0 0;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &.on {
+    background: rgba(#00c853, 0.14);
+    border: 1px solid rgba(#00c853, 0.45);
+    color: #69f0ae;
+  }
+
+  &.off {
+    background: rgba(#ffc107, 0.12);
+    border: 1px solid rgba(#ffc107, 0.4);
+    color: #ffe082;
+  }
+}
+
+.scan-miss {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  padding: 0.7rem 0.8rem;
+  border-radius: 10px;
+  background: rgba(40, 12, 12, 0.88);
+  border: 1px solid rgba(#ff8a80, 0.55);
+  color: #ffcdd2;
+
+  mat-icon {
+    flex: 0 0 auto;
+    color: #ff8a80;
+  }
+
+  strong {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  p {
+    margin: 0.2rem 0 0;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: rgba(#ffcdd2, 0.95);
+  }
+}
+
+.verdict {
+  margin: 0.65rem 0 0.35rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.35;
+
+  &.ok {
+    background: rgba(#00c853, 0.12);
+    border: 1px solid rgba(#00c853, 0.45);
+    color: #69f0ae;
+  }
+
+  &.bad {
+    background: rgba(#ff5252, 0.12);
+    border: 1px solid rgba(#ff5252, 0.45);
+    color: #ff8a80;
+  }
+
+  span {
+    font-weight: 600;
+    opacity: 0.85;
+  }
 }
 
 .ar-layout {

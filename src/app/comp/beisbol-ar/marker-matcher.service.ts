@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-
-export interface ScanProfile {
-  id: string;
-  colors: string[];
-  keywords: string[];
-}
+import { ScanModo, ScanProfile } from './lnm-catalog.types';
 
 interface Rgb {
   r: number;
@@ -18,12 +13,13 @@ interface LoadedProfile extends ScanProfile {
 }
 
 /**
- * Escaneo por colores distintivos del logo + letras/palabras (OCR + JSON).
- * Requiere coincidencia en AMBOS; sin keyword en cámara = no detecta.
+ * Escaneo por colores + OCR, filtrado por modo (tarjeta / gorra / pelota).
  */
 @Injectable({ providedIn: 'root' })
 export class MarkerMatcherService {
+  private allProfiles: LoadedProfile[] = [];
   private profiles: LoadedProfile[] = [];
+  private activeMode: ScanModo = 'tarjeta';
   private canvas = document.createElement('canvas');
   private ctx = this.canvas.getContext('2d', { willReadFrequently: true })!;
   private pendingId: string | null = null;
@@ -32,18 +28,43 @@ export class MarkerMatcherService {
   private ocrBusy = false;
   private lastOcrText = '';
   private lastOcrAt = 0;
+  /** Frames recientes con OCR sin match (para “no reconocido”). */
+  private unmatchedFrames = 0;
 
   async loadProfiles(profiles: ScanProfile[]): Promise<void> {
-    this.profiles = profiles.map((p) => {
+    this.allProfiles = profiles.map((p) => {
       const rgbColors = p.colors.map((c) => this.hexToRgb(c));
       return {
         ...p,
+        modo: p.modo ?? 'tarjeta',
         rgbColors,
         signatureColors: rgbColors.filter((c) => !this.isNeutralColor(c)),
       };
     });
+    this.applyModeFilter();
     this.resetPending();
     void this.getOcrWorker().catch(() => {});
+  }
+
+  setMode(mode: ScanModo): void {
+    if (this.activeMode === mode) return;
+    this.activeMode = mode;
+    this.applyModeFilter();
+    this.resetPending();
+    this.unmatchedFrames = 0;
+    this.lastOcrText = '';
+  }
+
+  getMode(): ScanModo {
+    return this.activeMode;
+  }
+
+  get lastOcrSnippet(): string {
+    return this.lastOcrText.slice(0, 80);
+  }
+
+  get unmatchedStreak(): number {
+    return this.unmatchedFrames;
   }
 
   async warmOcr(video: HTMLVideoElement): Promise<void> {
@@ -61,13 +82,17 @@ export class MarkerMatcherService {
 
     const frameColors = this.extractDominantColors(video);
     const ocrText = this.lastOcrText;
-    if (!ocrText.trim()) return null;
-
     const scored = this.scoreProfiles(frameColors, ocrText);
+
     if (!scored) {
       this.resetPending();
+      if (this.activeMode === 'pelota' || ocrText.trim().length >= 3) {
+        this.unmatchedFrames++;
+      }
       return null;
     }
+
+    this.unmatchedFrames = 0;
 
     if (scored.id === this.pendingId) {
       this.pendingHits++;
@@ -76,7 +101,14 @@ export class MarkerMatcherService {
       this.pendingHits = 1;
     }
 
-    const needHits = scored.combined >= 0.85 ? 2 : 3;
+    const needHits =
+      this.activeMode === 'pelota'
+        ? scored.combined >= 0.75
+          ? 2
+          : 3
+        : scored.combined >= 0.85
+          ? 2
+          : 3;
     if (this.pendingHits < needHits) return null;
 
     const id = scored.id;
@@ -89,8 +121,16 @@ export class MarkerMatcherService {
     this.pendingHits = 0;
   }
 
+  clearUnmatched(): void {
+    this.unmatchedFrames = 0;
+  }
+
   get isReady(): boolean {
     return this.profiles.length > 0;
+  }
+
+  private applyModeFilter(): void {
+    this.profiles = this.allProfiles.filter((p) => p.modo === this.activeMode);
   }
 
   private extractDominantColors(video: HTMLVideoElement): Rgb[] {
@@ -148,7 +188,10 @@ export class MarkerMatcherService {
     for (const profile of this.profiles) {
       const colorScore = this.scoreColors(frameColors, profile);
       const textScore = this.scoreKeywords(normalizedOcr, profile.keywords);
-      const combined = colorScore * 0.5 + textScore * 0.5;
+      const combined =
+        this.activeMode === 'pelota'
+          ? colorScore * 0.72 + textScore * 0.28
+          : colorScore * 0.5 + textScore * 0.5;
       results.push({ id: profile.id, colorScore, textScore, combined });
     }
 
@@ -156,10 +199,14 @@ export class MarkerMatcherService {
     const best = results[0];
     const second = results[1];
 
-    const minColor = 0.55;
-    const minText = 0.34;
-    const minCombined = 0.62;
-    const minMargin = 0.12;
+    if (this.activeMode === 'pelota') {
+      return this.acceptPelota(best, second, normalizedOcr);
+    }
+
+    const minColor = this.activeMode === 'gorra' ? 0.48 : 0.55;
+    const minText = this.activeMode === 'gorra' ? 0.28 : 0.34;
+    const minCombined = this.activeMode === 'gorra' ? 0.55 : 0.62;
+    const minMargin = this.activeMode === 'gorra' ? 0.08 : 0.12;
 
     if (
       !best ||
@@ -178,7 +225,41 @@ export class MarkerMatcherService {
     return { id: best.id, combined: best.combined };
   }
 
-  /** Colores distintivos del logo (rojo Barbanegras, azul Marineros, etc.). */
+  /** Pelota: prioriza cuero claro + costuras rojas; el texto es bonus. */
+  private acceptPelota(
+    best: { id: string; colorScore: number; textScore: number; combined: number } | undefined,
+    second: { combined: number } | undefined,
+    normalizedOcr: string,
+  ): { id: string; combined: number } | null {
+    if (!best || best.colorScore < 0.5 || best.combined < 0.48) return null;
+
+    const hasBallCue =
+      best.textScore >= 0.2 ||
+      this.hasRedAndWhiteCue(best.id) ||
+      /LMB|BALL|BASE|PELOTA/.test(normalizedOcr);
+
+    if (!hasBallCue && best.colorScore < 0.7) return null;
+
+    if (second && best.combined - second.combined < 0.06 && best.colorScore < 0.75) {
+      return null;
+    }
+
+    return { id: best.id, combined: best.combined };
+  }
+
+  private hasRedAndWhiteCue(profileId: string): boolean {
+    const profile = this.profiles.find((p) => p.id === profileId);
+    if (!profile) return false;
+    const hasRed = profile.rgbColors.some(
+      (c) => c.r > 150 && c.g < 90 && c.b < 90,
+    );
+    const hasLight = profile.rgbColors.some((c) => {
+      const lum = c.r * 0.299 + c.g * 0.587 + c.b * 0.114;
+      return lum > 200;
+    });
+    return hasRed && hasLight;
+  }
+
   private scoreColors(frame: Rgb[], profile: LoadedProfile): number {
     if (!profile.rgbColors.length) return 0;
 
@@ -191,7 +272,7 @@ export class MarkerMatcherService {
       const closest = Math.min(...frame.map((f) => this.colorDist(f, target)));
       if (closest < 80) sigMatched++;
     }
-    if (signatures.length && sigMatched / signatures.length < 0.45) return 0;
+    if (signatures.length && sigMatched / signatures.length < 0.4) return 0;
 
     let matched = 0;
     for (const target of profile.rgbColors) {

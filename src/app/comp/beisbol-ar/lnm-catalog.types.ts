@@ -1,4 +1,7 @@
-export type LnmItemType = 'jugador' | 'equipo' | 'liga';
+export type LnmItemType = 'jugador' | 'equipo' | 'liga' | 'gorra' | 'pelota';
+
+/** Modo del escáner AR: acota perfiles y umbrales. */
+export type ScanModo = 'tarjeta' | 'gorra' | 'pelota';
 
 export interface LnmStat {
   label: string;
@@ -8,6 +11,7 @@ export interface LnmStat {
 /** Colores del logo + palabras/letras para escaneo preciso. */
 export interface ScanProfile {
   id: string;
+  modo: ScanModo;
   colors: string[];
   keywords: string[];
 }
@@ -26,6 +30,8 @@ export interface LnmScanItem {
   tip: string;
   actions: string;
   targetImage?: string;
+  /** Clave en ar-models.json (opcional; si no, usa defaults por tipo). */
+  modelKey?: string;
   equipo?: string;
   posicion?: string;
   abrev?: string;
@@ -34,6 +40,9 @@ export interface LnmScanItem {
   filialLmb?: string;
   /** Figuras populares del equipo (solo tipo equipo). */
   destacados?: string[];
+  /** Para gorras: si pertenece a un equipo conocido. */
+  equipoReconocido?: boolean;
+  ligaOrigen?: string;
 }
 
 export interface LnmCatalogFile {

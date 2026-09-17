@@ -1,16 +1,27 @@
-Referencias de escaneo (deben coincidir con targetImage del JSON)
-=================================================================
+Marcadores AR (escaneo con cámara)
+==================================
 
-Equipos: cada PNG es distinto (círculo/diamante + nombre) para no confundirse.
-Cartel LNM: liga-lnm.png → datos de liga.json (standing / campeón).
-Jugadores: cartas en jugadores.json.
+Esta carpeta es para las IMÁGENES QUE RECONOCE EL ESCÁNER.
+
+  Equipos   → escudos (enlazados en equipos.json → targetImage)
+  Jugadores → cartas PNG (enlazados en jugadores.json → targetImage)
+  Liga      → liga-lnm.png (enlazado en liga.json)
+
+Para la GALERÍA (solo mostrar fotos, no escanear):
+  public/assets/galeria/imagenes/equipos/
+  public/assets/galeria/imagenes/jugadores/
 
 IMPORTANTE
 - La info siempre sale del JSON (jugadores.json / equipos.json / liga.json).
 - Tras detectar, la ficha se BLOQUEA hasta pulsar “Escanear de nuevo”.
-- Para un logo físico real: reemplaza el PNG del equipo con una foto clara
-  SOLO del logo (sin UI del navegador) y recarga con Ctrl+F5.
+- Para un logo físico real: reemplaza el archivo del equipo con una foto clara
+  SOLO del logo y recarga con Ctrl+F5.
 
-Archivos clave:
-- barbanegras-tijuana.png
-- liga-lnm.png  ← tercer marcador (Cartel LNM / logo de la liga)
+Equipos LNM 2026 (logos reales):
+- marineros-ensenada.png
+- barbanegras-tijuana.jpg
+- bucaneros-cabos.jpg
+- algodoneros-slrc.jpg
+- tiburones-penasco.jpg
+- cerveceros-tecate.jpg
+- liga-lnm.png  ← logo de liga

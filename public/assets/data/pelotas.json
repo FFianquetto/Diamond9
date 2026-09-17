@@ -1,0 +1,48 @@
+{
+  "tipo": "pelota",
+  "temporada": 2026,
+  "liga": "Beisbol",
+  "nota": "Detección de pelota por cuero blanco + costuras rojas (y texto LMB si aparece).",
+  "items": [
+    {
+      "id": "pelota-beisbol",
+      "nombre": "Pelota de beisbol",
+      "subtitle": "Objeto reconocido · cuero y costuras",
+      "color": "#F5F5F5",
+      "info": "Sí: se detectó una pelota de beisbol (tono de cuero + costuras rojas). Puedes ver el modelo 3D y datos básicos.",
+      "stats": [
+        { "label": "Tipo", "value": "Pelota" },
+        { "label": "Costuras", "value": "Rojas" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Clip: fildeo / rolling",
+      "animationLabel": "Giro de pelota",
+      "tip": "Acerca la pelota al centro del cuadro.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipoReconocido": true,
+      "ligaOrigen": "General"
+    },
+    {
+      "id": "pelota-lmb",
+      "nombre": "Pelota oficial LMB",
+      "subtitle": "Marca de liga detectada",
+      "color": "#C62828",
+      "info": "Sí: pelota con marcas asociadas a la Liga Mexicana de Beisbol (texto/colores oficiales).",
+      "stats": [
+        { "label": "Tipo", "value": "Pelota LMB" },
+        { "label": "Liga", "value": "LMB" },
+        { "label": "Match", "value": "Sí" }
+      ],
+      "videoHint": "Resumen LMB",
+      "animationLabel": "Giro de pelota",
+      "tip": "Muestra el sello o logo si lo tiene.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "pelota",
+      "equipo": "Liga Mexicana de Beisbol",
+      "abrev": "LMB",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMB"
+    }
+  ]
+}

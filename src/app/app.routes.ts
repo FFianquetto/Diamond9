@@ -67,12 +67,13 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'marcadores',
+    path: 'equipos',
     loadComponent: () =>
       import('./comp/beisbol-ar/markers-guide/markers-guide.component').then(
         (m) => m.MarkersGuideComponent,
       ),
   },
+  { path: 'marcadores', redirectTo: 'equipos', pathMatch: 'full' },
   {
     path: 'juego',
     loadComponent: () =>

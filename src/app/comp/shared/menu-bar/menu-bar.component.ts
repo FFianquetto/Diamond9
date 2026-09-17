@@ -162,7 +162,7 @@ export class MenuBarComponent implements OnInit, OnDestroy {
 
   isMoreActive(): boolean {
     return (
-      this.isActive('marcadores') ||
+      this.isActive('equipos') ||
       this.isActive('historia') ||
       this.isActive('recompensas') ||
       this.isActive('modelos')

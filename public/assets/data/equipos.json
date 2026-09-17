@@ -46,7 +46,7 @@
       "animationLabel": "Rotación del escudo",
       "tip": "Escudo o logo de Barbanegras de Tijuana.",
       "actions": "Info · Stats · Video · Animación",
-      "targetImage": "assets/markers/barbanegras-tijuana.png"
+      "targetImage": "assets/markers/barbanegras-tijuana.jpg"
     },
     {
       "id": "bucaneros-cabos",
@@ -68,7 +68,7 @@
       "animationLabel": "Rotación del escudo",
       "tip": "Escudo o logo de Bucaneros de Los Cabos.",
       "actions": "Info · Stats · Video · Animación",
-      "targetImage": "assets/markers/bucaneros-cabos.png"
+      "targetImage": "assets/markers/bucaneros-cabos.jpg"
     },
     {
       "id": "algodoneros-slrc",
@@ -90,7 +90,7 @@
       "animationLabel": "Rotación del escudo",
       "tip": "Escudo o logo de Algodoneros de San Luis.",
       "actions": "Info · Stats · Video · Animación",
-      "targetImage": "assets/markers/algodoneros-slrc.png"
+      "targetImage": "assets/markers/algodoneros-slrc.jpg"
     },
     {
       "id": "tiburones-penasco",
@@ -112,7 +112,7 @@
       "animationLabel": "Rotación del escudo",
       "tip": "Escudo o logo de Tiburones de Puerto Peñasco.",
       "actions": "Info · Stats · Video · Animación",
-      "targetImage": "assets/markers/tiburones-penasco.png"
+      "targetImage": "assets/markers/tiburones-penasco.jpg"
     },
     {
       "id": "cerveceros-tecate",
@@ -134,7 +134,7 @@
       "animationLabel": "Rotación del escudo",
       "tip": "Escudo o logo de Cerveceros de Tecate.",
       "actions": "Info · Stats · Video · Animación",
-      "targetImage": "assets/markers/cerveceros-tecate.png"
+      "targetImage": "assets/markers/cerveceros-tecate.jpg"
     }
   ]
 }

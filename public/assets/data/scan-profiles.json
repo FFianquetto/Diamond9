@@ -1,60 +1,181 @@
 {
-  "nota": "Perfil de escaneo: colores distintivos del logo + palabras/letras visibles. Requiere AMBOS.",
+  "nota": "Perfiles por modo: tarjeta (cartas/escudos), gorra (logos en gorra), pelota (pelota de beisbol). Colores + keywords; el escáner filtra por modo.",
   "profiles": [
     {
       "id": "marineros-ensenada",
+      "modo": "tarjeta",
       "colors": ["#021a33", "#42a5f5", "#1565c0", "#ffffff"],
       "keywords": ["MARINEROS", "ENS", "ENSENADA"]
     },
     {
       "id": "barbanegras-tijuana",
+      "modo": "tarjeta",
       "colors": ["#dc2626", "#b91c1c", "#0a0a0a", "#171717", "#ffffff"],
       "keywords": ["BARBANEGRAS", "BARBANEGRA", "TIJ", "TIJUANA"]
     },
     {
       "id": "bucaneros-cabos",
+      "modo": "tarjeta",
       "colors": ["#003840", "#00e5ff", "#00c2d7", "#ffffff"],
-      "keywords": ["BUCANEROS", "CAB", "CAMP"]
+      "keywords": ["BUCANEROS", "CAB", "CABOS"]
     },
     {
       "id": "algodoneros-slrc",
+      "modo": "tarjeta",
       "colors": ["#2e2200", "#ffd54f", "#f9a825", "#ffffff"],
       "keywords": ["ALGODONEROS", "SLRC", "SAN LUIS"]
     },
     {
       "id": "tiburones-penasco",
+      "modo": "tarjeta",
       "colors": ["#001e33", "#29b6f6", "#0277bd", "#ffffff"],
       "keywords": ["TIBURONES", "PCO", "PENASCO"]
     },
     {
       "id": "cerveceros-tecate",
+      "modo": "tarjeta",
       "colors": ["#2a1600", "#ff9100", "#ff8f00", "#ffffff"],
       "keywords": ["CERVECEROS", "TEC", "TECATE"]
     },
     {
       "id": "liga-lnm",
+      "modo": "tarjeta",
       "colors": ["#0d1b2a", "#90caf9", "#3e688c", "#ffffff"],
-      "keywords": ["LNM", "2026"]
+      "keywords": ["LNM", "2026", "LMB", "BANORTE"]
     },
     {
       "id": "walter-silva",
+      "modo": "tarjeta",
       "colors": ["#c62828", "#1a1a1a", "#ffffff"],
       "keywords": ["WALTER", "SILVA"]
     },
     {
       "id": "andres-garza",
+      "modo": "tarjeta",
       "colors": ["#0d3d4a", "#8beaf2", "#00c2d7"],
-      "keywords": ["GARZA", "ANDRES", "ANDRÉS"]
+      "keywords": ["GARZA", "ANDRES"]
     },
     {
       "id": "oliver-carrillo",
+      "modo": "tarjeta",
       "colors": ["#0d3d4a", "#00c2d7", "#8beaf2"],
       "keywords": ["CARRILLO", "OLIVER"]
     },
     {
       "id": "alejandro-carrillo",
+      "modo": "tarjeta",
       "colors": ["#1a2a3a", "#1565c0", "#0d47a1"],
       "keywords": ["CARRILLO", "ALEJANDRO", "ENS"]
+    },
+    {
+      "id": "miguel-palos",
+      "modo": "tarjeta",
+      "colors": ["#001e33", "#0277bd", "#ffffff"],
+      "keywords": ["PALOS", "MIGUEL"]
+    },
+    {
+      "id": "jose-cecena",
+      "modo": "tarjeta",
+      "colors": ["#2e2200", "#f9a825", "#ffffff"],
+      "keywords": ["CECENA", "JOSE"]
+    },
+
+    {
+      "id": "gorra-diablos",
+      "modo": "gorra",
+      "colors": ["#7f0000", "#c62828", "#ffffff", "#1a1a1a"],
+      "keywords": ["DIABLOS", "MEXICO", "MÉXICO", "CDM"]
+    },
+    {
+      "id": "gorra-diablos-alt",
+      "modo": "gorra",
+      "colors": ["#b71c1c", "#ff5252", "#ffffff", "#212121"],
+      "keywords": ["DIABLOS", "ONFIELD", "ROJOS"]
+    },
+    {
+      "id": "gorra-bravos",
+      "modo": "gorra",
+      "colors": ["#0d47a1", "#1565c0", "#ffffff", "#ffc107"],
+      "keywords": ["BRAVOS", "LEON", "LEÓN"]
+    },
+    {
+      "id": "gorra-conspiradores",
+      "modo": "gorra",
+      "colors": ["#1b5e20", "#2e7d32", "#c0c0c0", "#ffffff"],
+      "keywords": ["CONSPIRADORES", "QUERETARO", "QUERÉTARO"]
+    },
+    {
+      "id": "gorra-saraperos",
+      "modo": "gorra",
+      "colors": ["#4a148c", "#6a1b9a", "#ffffff", "#ffd600"],
+      "keywords": ["SARAPEROS", "SALTILLO"]
+    },
+    {
+      "id": "gorra-visor-camo",
+      "modo": "gorra",
+      "colors": ["#33691e", "#558b2f", "#795548", "#ffffff"],
+      "keywords": ["LMB", "CAMO", "VISOR", "59FIFTY"]
+    },
+    {
+      "id": "gorra-marineros",
+      "modo": "gorra",
+      "colors": ["#021a33", "#1565c0", "#42a5f5", "#ffffff"],
+      "keywords": ["MARINEROS", "ENSENADA"]
+    },
+    {
+      "id": "gorra-barbanegras",
+      "modo": "gorra",
+      "colors": ["#0a0a0a", "#b91c1c", "#dc2626", "#ffffff"],
+      "keywords": ["BARBANEGRAS", "TIJUANA"]
+    },
+    {
+      "id": "gorra-bucaneros",
+      "modo": "gorra",
+      "colors": ["#003840", "#00c2d7", "#00e5ff", "#ffffff"],
+      "keywords": ["BUCANEROS", "CABOS"]
+    },
+    {
+      "id": "gorra-yankees",
+      "modo": "gorra",
+      "colors": ["#0c2340", "#132448", "#1a2f4a", "#ffffff", "#c4ced4"],
+      "keywords": ["YANKEES", "NEW YORK", "NY", "NYY"]
+    },
+    {
+      "id": "gorra-dodgers",
+      "modo": "gorra",
+      "colors": ["#005a9c", "#ffffff", "#a2aaad", "#ef3e42"],
+      "keywords": ["DODGERS", "LOS ANGELES", "LAD", "LA"]
+    },
+    {
+      "id": "gorra-tiburones",
+      "modo": "gorra",
+      "colors": ["#001e33", "#0277bd", "#29b6f6", "#ffffff"],
+      "keywords": ["TIBURONES", "PENASCO"]
+    },
+    {
+      "id": "gorra-algodoneros",
+      "modo": "gorra",
+      "colors": ["#2e2200", "#f9a825", "#ffd54f", "#ffffff"],
+      "keywords": ["ALGODONEROS", "SAN LUIS", "SLRC"]
+    },
+    {
+      "id": "gorra-cerveceros",
+      "modo": "gorra",
+      "colors": ["#2a1600", "#ff8f00", "#ff9100", "#ffffff"],
+      "keywords": ["CERVECEROS", "TECATE"]
+    },
+
+    {
+      "id": "pelota-beisbol",
+      "modo": "pelota",
+      "colors": ["#f5f5f5", "#eeeeee", "#c62828", "#b71c1c", "#d7ccc8"],
+      "keywords": ["BASEBALL", "BALL", "LMB", "PELOTA"]
+    },
+    {
+      "id": "pelota-lmb",
+      "modo": "pelota",
+      "colors": ["#ffffff", "#fafafa", "#c62828", "#0d1b2a", "#1b5e20"],
+      "keywords": ["LMB", "BANORTE", "OFICIAL"]
     }
   ]
 }

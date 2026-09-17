@@ -1,20 +1,20 @@
 {
-  "nota": "Imágenes: public/assets/galeria/imagenes/ (ver LEEME.txt). Videos: embeds YouTube del canal Liga Mexicana de Beisbol / resúmenes de equipos en español.",
-  "canalReferencia": "https://www.youtube.com/@LigaMexicanadeBeisbol",
+  "nota": "Imágenes: public/assets/galeria/imagenes/equipos/ y .../jugadores/. Videos: embeds YouTube.",
+  "canalReferencia": "https://www.youtube.com/@DiamanteMexicanoBeisbol",
   "videos": [
     {
-      "id": "lmb-tigres-olmecas",
-      "title": "Tigres vs Olmecas",
-      "caption": "Resumen final — LMB 2026",
-      "youtubeId": "LGBZxURqyxQ",
-      "channel": "Liga Mexicana de Beisbol"
+      "id": "lmb-playoffs-2026",
+      "title": "Playoffs LMB 2026 explicados",
+      "caption": "Cómo funcionan playoffs, mejor perdedor y Serie del Rey",
+      "youtubeId": "HiUSPcJVNU4",
+      "channel": "Diamante Mexicano"
     },
     {
       "id": "lmb-olmecas-pericos",
       "title": "Olmecas vs Pericos",
       "caption": "Resumen final — LMB 2026",
       "youtubeId": "Q_cmvuK5Jeo",
-      "channel": "Liga Mexicana de Beisbol"
+      "channel": "Claro Sports"
     },
     {
       "id": "lmb-field-es",
@@ -41,37 +41,170 @@
   "images": [
     {
       "id": "img-liga",
-      "title": "Liga LNM",
-      "caption": "Marcador oficial — reemplázalo o agrega más en /galeria/imagenes",
+      "title": "LMB Banorte",
+      "caption": "Logo oficial de la Liga Mexicana de Beisbol",
       "src": "assets/galeria/imagenes/liga-lnm.png",
       "tag": "Liga"
     },
     {
-      "id": "img-algodoneros",
-      "title": "Algodoneros",
-      "caption": "Escudo del equipo",
-      "src": "assets/galeria/imagenes/algodoneros.png",
+      "id": "img-marineros",
+      "title": "Marineros de Ensenada",
+      "caption": "Escudo oficial · LNM 2026",
+      "src": "assets/galeria/imagenes/equipos/marineros-ensenada.png",
       "tag": "Equipo"
     },
     {
       "id": "img-barbanegras",
-      "title": "Barbanegras",
-      "caption": "Escudo Tijuana",
-      "src": "assets/galeria/imagenes/barbanegras.png",
+      "title": "Barbanegras de Tijuana",
+      "caption": "Escudo oficial · LNM 2026",
+      "src": "assets/galeria/imagenes/equipos/barbanegras-tijuana.jpg",
       "tag": "Equipo"
     },
     {
-      "id": "img-marineros",
-      "title": "Marineros",
-      "caption": "Escudo Ensenada",
-      "src": "assets/galeria/imagenes/marineros.png",
+      "id": "img-bucaneros",
+      "title": "Bucaneros de Los Cabos",
+      "caption": "Campeón LNM 2026",
+      "src": "assets/galeria/imagenes/equipos/bucaneros-cabos.jpg",
       "tag": "Equipo"
     },
     {
-      "id": "img-andres",
-      "title": "Andrés Garza",
-      "caption": "Jugador LNM",
-      "src": "assets/galeria/imagenes/andres-garza.png",
+      "id": "img-algodoneros",
+      "title": "Algodoneros de San Luis",
+      "caption": "Escudo oficial · LNM 2026",
+      "src": "assets/galeria/imagenes/equipos/algodoneros-slrc.jpg",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-tiburones",
+      "title": "Tiburones de Puerto Peñasco",
+      "caption": "Escudo oficial · LNM 2026",
+      "src": "assets/galeria/imagenes/equipos/tiburones-penasco.jpg",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-cerveceros",
+      "title": "Cerveceros de Tecate",
+      "caption": "Escudo oficial · LNM 2026",
+      "src": "assets/galeria/imagenes/equipos/cerveceros-tecate.jpg",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-yankees",
+      "title": "New York Yankees",
+      "caption": "Logo histórico · MLB",
+      "src": "assets/galeria/imagenes/equipos/yankees.jpg",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-redsox",
+      "title": "Boston Red Sox",
+      "caption": "Logo histórico · MLB",
+      "src": "assets/galeria/imagenes/equipos/redsox.jpg",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-dodgers",
+      "title": "Los Angeles Dodgers",
+      "caption": "Logo · MLB",
+      "src": "assets/galeria/imagenes/equipos/dodgers.webp",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-cubs",
+      "title": "Chicago Cubs",
+      "caption": "Logo · MLB",
+      "src": "assets/galeria/imagenes/equipos/cubs.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-giants",
+      "title": "San Francisco Giants",
+      "caption": "Logo · MLB",
+      "src": "assets/galeria/imagenes/equipos/gigants.jpg",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-othani",
+      "title": "Shohei Ohtani",
+      "caption": "Dodgers · MLB",
+      "src": "assets/galeria/imagenes/jugadores/othani.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-baberuth",
+      "title": "Babe Ruth",
+      "caption": "Leyenda del beisbol",
+      "src": "assets/galeria/imagenes/jugadores/baberuth.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-derekjeter",
+      "title": "Derek Jeter",
+      "caption": "Yankees · MLB",
+      "src": "assets/galeria/imagenes/jugadores/derekjeter.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-hankaaron",
+      "title": "Hank Aaron",
+      "caption": "Leyenda del beisbol",
+      "src": "assets/galeria/imagenes/jugadores/hankaaron.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-williemays",
+      "title": "Willie Mays",
+      "caption": "Leyenda del beisbol",
+      "src": "assets/galeria/imagenes/jugadores/williemays.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-jackierob",
+      "title": "Jackie Robinson",
+      "caption": "Leyenda del beisbol",
+      "src": "assets/galeria/imagenes/jugadores/jackierob.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-fernando",
+      "title": "Fernando Valenzuela",
+      "caption": "Leyenda mexicana · MLB",
+      "src": "assets/galeria/imagenes/jugadores/fernandovalenzuela.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-betoavila",
+      "title": "Beto Ávila",
+      "caption": "Leyenda mexicana",
+      "src": "assets/galeria/imagenes/jugadores/betoavila.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-hector",
+      "title": "Héctor Espino",
+      "caption": "Leyenda mexicana · LMB",
+      "src": "assets/galeria/imagenes/jugadores/hectorespino.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-nelson",
+      "title": "Nelson Barrera",
+      "caption": "Leyenda mexicana · LMB",
+      "src": "assets/galeria/imagenes/jugadores/nelsonbarrera.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-ramon",
+      "title": "Ramón Arano",
+      "caption": "Leyenda mexicana · LMB",
+      "src": "assets/galeria/imagenes/jugadores/ramonarano.jpg",
+      "tag": "Jugador"
+    },
+    {
+      "id": "img-jesusrios",
+      "title": "Jesús Ríos",
+      "caption": "Leyenda mexicana",
+      "src": "assets/galeria/imagenes/jugadores/jesusrios.jpg",
       "tag": "Jugador"
     }
   ]

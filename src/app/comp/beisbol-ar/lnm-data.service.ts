@@ -14,6 +14,8 @@ interface CatalogBundle {
   jugadores: LnmScanItem[];
   equipos: LnmScanItem[];
   liga: LnmScanItem[];
+  gorras: LnmScanItem[];
+  pelotas: LnmScanItem[];
   all: LnmScanItem[];
 }
 
@@ -54,7 +56,7 @@ const FALLBACK: LnmScanItem[] = [
     animationLabel: 'Rotación del escudo',
     tip: 'Escudo de Bucaneros.',
     actions: 'Info · Stats · Video · Animación',
-    targetImage: 'assets/markers/bucaneros-cabos.png',
+    targetImage: 'assets/markers/bucaneros-cabos.jpg',
     abrev: 'CAB',
   },
   {
@@ -87,28 +89,46 @@ export class LnmDataService {
       jugadores: this.http.get<LnmCatalogFile>(`${this.base}/jugadores.json`),
       equipos: this.http.get<LnmCatalogFile>(`${this.base}/equipos.json`),
       liga: this.http.get<LnmCatalogFile>(`${this.base}/liga.json`),
+      gorras: this.http.get<LnmCatalogFile>(`${this.base}/gorras.json`),
+      pelotas: this.http.get<LnmCatalogFile>(`${this.base}/pelotas.json`),
     }).pipe(
-      map(({ jugadores, equipos, liga }) => {
+      map(({ jugadores, equipos, liga, gorras, pelotas }) => {
         const jugadorItems = this.mapFile(jugadores, 'jugador');
         const equipoItems = this.mapFile(equipos, 'equipo');
         const ligaItems = this.mapFile(liga, 'liga');
+        const gorraItems = this.mapFile(gorras, 'gorra');
+        const pelotaItems = this.mapFile(pelotas, 'pelota');
         return {
           jugadores: jugadorItems,
           equipos: equipoItems,
           liga: ligaItems,
-          all: [...jugadorItems, ...equipoItems, ...ligaItems],
+          gorras: gorraItems,
+          pelotas: pelotaItems,
+          all: [
+            ...jugadorItems,
+            ...equipoItems,
+            ...ligaItems,
+            ...gorraItems,
+            ...pelotaItems,
+          ],
         };
       }),
       catchError(() => {
         const jugadores = FALLBACK.filter((i) => i.tipo === 'jugador');
         const equipos = FALLBACK.filter((i) => i.tipo === 'equipo');
         const liga = FALLBACK.filter((i) => i.tipo === 'liga');
-        return of({ jugadores, equipos, liga, all: [...FALLBACK] });
+        return of({
+          jugadores,
+          equipos,
+          liga,
+          gorras: [],
+          pelotas: [],
+          all: [...FALLBACK],
+        });
       }),
     );
   }
 
-  /** Compatibilidad con guía / listados planos. */
   loadMarkers(): Observable<ArMarker[]> {
     return this.loadCatalog().pipe(map((c) => c.all));
   }
@@ -139,23 +159,21 @@ export class LnmDataService {
     return [
       {
         id: 'barbanegras-tijuana',
+        modo: 'tarjeta',
         colors: ['#050505', '#c62828', '#ffffff'],
         keywords: ['BARBANEGRAS', 'TIJ'],
       },
       {
-        id: 'bucaneros-cabos',
-        colors: ['#003840', '#00e5ff', '#ffffff'],
-        keywords: ['BUCANEROS', 'CAB'],
+        id: 'gorra-diablos',
+        modo: 'gorra',
+        colors: ['#7f0000', '#c62828', '#ffffff'],
+        keywords: ['DIABLOS', 'MEXICO'],
       },
       {
-        id: 'liga-lnm',
-        colors: ['#0d1b2a', '#90caf9', '#ffffff'],
-        keywords: ['LNM', 'LIGA', 'NORTE'],
-      },
-      {
-        id: 'walter-silva',
-        colors: ['#c62828', '#1a1a1a', '#ffffff'],
-        keywords: ['WALTER', 'SILVA'],
+        id: 'pelota-beisbol',
+        modo: 'pelota',
+        colors: ['#f5f5f5', '#c62828', '#eeeeee'],
+        keywords: ['LMB', 'BALL'],
       },
     ];
   }

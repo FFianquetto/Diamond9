@@ -1,0 +1,12 @@
+Imágenes de EQUIPOS (galería)
+=============================
+
+Coloca aquí fotos/escudos de equipos.
+
+FORMATOS: jpg / jpeg / png / webp
+Nombre sin espacios ni acentos (ej: bucaneros-cabos.jpg)
+
+Luego regístralas en public/assets/data/galeria.json.
+
+NOTA: Los escudos para el ESCÁNER AR van también en public/assets/markers/
+y se enlazan desde public/assets/data/equipos.json (campo targetImage).

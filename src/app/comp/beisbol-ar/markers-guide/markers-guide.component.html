@@ -1,10 +1,10 @@
 <section class="guide-page page-shell">
   <header>
-    <p class="eyebrow">Guía de uso · LNM 2026</p>
-    <h1>Equipos escaneables</h1>
+    <p class="eyebrow">Liga Norte de México · 2026</p>
+    <h1>Equipos</h1>
     <p class="lede">
-      Los 6 equipos activos de la Liga Norte de México. Imprime o muestra el
-      escudo: el escáner AR mostrará standing, filial LMB y figuras destacadas.
+      Los 6 equipos activos de la temporada. Escanea su escudo en el AR para ver
+      standing, filial LMB y figuras destacadas.
     </p>
   </header>
 
@@ -13,6 +13,14 @@
     @for (m of equipos; track m.id; let i = $index) {
       <article class="card" [style.--team-color]="m.color">
         <span class="idx">0{{ i + 1 }}</span>
+        @if (m.targetImage) {
+          <img
+            class="team-logo"
+            [src]="m.targetImage"
+            [alt]="'Escudo ' + m.nombre"
+            loading="lazy"
+          />
+        }
         <div class="card-head">
           <span class="swatch" [style.background]="m.color"></span>
           <div>
@@ -39,24 +47,23 @@
             <strong>Figuras:</strong> {{ m.destacados!.join(' · ') }}
           </p>
         }
-        <p class="tip">{{ m.tip }}</p>
       </article>
     }
   </div>
 
   @if (ligaItems.length) {
-    <h2 class="section-title">Tercer marcador · Cartel LNM</h2>
-    <p class="cartel-explain">
-      <strong>¿Qué es el Cartel LNM?</strong>
-      Es un póster o escudo oficial de la <em>liga completa</em> (no de un
-      equipo ni de un jugador). Al escanearlo ves el resumen de la temporada:
-      standing, campeón y líderes. Usa el archivo
-      <code>liga-lnm.png</code> o cualquier cartel con el logo de la Liga Norte
-      de México.
-    </p>
+    <h2 class="section-title">Liga</h2>
     <div class="list">
       @for (m of ligaItems; track m.id) {
         <article class="card liga-card" [style.--team-color]="m.color">
+          @if (m.targetImage) {
+            <img
+              class="team-logo"
+              [src]="m.targetImage"
+              [alt]="m.nombre"
+              loading="lazy"
+            />
+          }
           <div class="card-head">
             <span class="swatch" [style.background]="m.color"></span>
             <div>
@@ -70,8 +77,6 @@
               <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
             }
           </ul>
-          <p class="tip">{{ m.tip }}</p>
-          <p class="actions"><strong>Acciones AR:</strong> {{ m.actions }}</p>
         </article>
       }
     </div>

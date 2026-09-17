@@ -6,17 +6,17 @@
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
-  padding: 1.1rem clamp(0.75rem, 3vw, 1.5rem) 3rem;
+  padding: 1.1rem clamp(0.75rem, 3vw, 1.75rem) 3rem;
   box-sizing: border-box;
 
   @media (min-width: 640px) {
-    padding: 1.75rem clamp(1rem, 3vw, 2rem) 3.5rem;
+    padding: 1.75rem clamp(1.25rem, 3.5vw, 2.25rem) 3.5rem;
   }
 }
 
 .galeria-inner {
   width: 100%;
-  max-width: 960px;
+  max-width: 1152px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -39,13 +39,8 @@ h1 {
 .lede {
   @include d9-editorial-subtitle;
   margin-bottom: 1.1rem;
+  max-width: 50rem;
   font-size: clamp(0.88rem, 2.4vw, 1.05rem);
-
-  code {
-    color: $rebase-10;
-    font-size: 0.88em;
-    word-break: break-all;
-  }
 }
 
 .pill-switch {
@@ -103,7 +98,7 @@ h1 {
   img {
     display: block;
     width: 100%;
-    max-height: min(48vh, 380px);
+    max-height: min(52vh, 460px);
     object-fit: contain;
     background: radial-gradient(
       ellipse at center,
@@ -112,10 +107,15 @@ h1 {
     );
     padding: 0.75rem;
     box-sizing: border-box;
+    transition: filter 0.2s ease;
 
     @media (min-width: 640px) {
-      max-height: min(52vh, 420px);
+      max-height: min(58vh, 520px);
       padding: 1rem;
+    }
+
+    @media (min-width: 1100px) {
+      max-height: min(62vh, 560px);
     }
   }
 }
@@ -163,6 +163,139 @@ h1 {
   text-transform: uppercase;
 }
 
+.filters-panel {
+  @include comic-surface;
+  padding: 0.85rem 0.9rem 1rem;
+  display: grid;
+  gap: 0.85rem;
+  min-width: 0;
+
+  @media (min-width: 768px) {
+    padding: 1rem 1.15rem 1.15rem;
+  }
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.filter-btn {
+  appearance: none;
+  border: 1.5px solid rgba($rebase-10, 0.4);
+  background: rgba($rebase-10, 0.08);
+  color: $rebase-7;
+  border-radius: 999px;
+  padding: 0.42rem 0.8rem;
+  font-weight: 700;
+  font-size: clamp(0.65rem, 1.8vw, 0.72rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  min-height: 36px;
+
+  &.active {
+    background: $rebase-10;
+    border-color: $rebase-10;
+    color: $rebase-6;
+  }
+
+  &:hover:not(.active) {
+    border-color: $rebase-10;
+    color: $rebase-10;
+  }
+}
+
+.sliders {
+  display: grid;
+  gap: 0.75rem;
+
+  @media (min-width: 720px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+.slider-row {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+
+  span {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $rebase-14;
+
+    em {
+      font-style: normal;
+      color: $rebase-10;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  input[type='range'] {
+    width: 100%;
+    accent-color: $rebase-10;
+    height: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+.filter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+
+  @media (max-width: 479px) {
+    .action-btn {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+.action-btn {
+  appearance: none;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-weight: 800;
+  font-size: clamp(0.72rem, 2vw, 0.8rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-height: 42px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+
+  &.primary {
+    border: 2px solid $rebase-10;
+    background: $rebase-10;
+    color: $rebase-6;
+
+    &:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+  }
+
+  &.ghost {
+    border: 2px solid rgba($rebase-14, 0.55);
+    background: transparent;
+    color: $rebase-7;
+
+    &:hover {
+      border-color: $rebase-10;
+      color: $rebase-10;
+    }
+  }
+}
+
 .thumbs {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -175,6 +308,10 @@ h1 {
   @media (min-width: 800px) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.75rem;
+  }
+
+  @media (min-width: 1100px) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 
@@ -221,25 +358,11 @@ h1 {
 
 .status {
   color: $rebase-14;
-  margin: 1rem 0;
+  margin: 0.35rem 0 0;
   font-size: 0.92rem;
 
-  code {
-    color: $rebase-10;
-    word-break: break-all;
-  }
-}
-
-.api-note {
-  margin: 1.5rem 0 0;
-  font-size: clamp(0.75rem, 2vw, 0.82rem);
-  line-height: 1.55;
-  color: rgba($rebase-14, 0.9);
-  max-width: 42rem;
-
-  code {
-    color: $rebase-10;
-    word-break: break-all;
+  &.error {
+    color: #ff8a80;
   }
 }
 

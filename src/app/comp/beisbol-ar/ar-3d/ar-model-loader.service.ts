@@ -31,29 +31,28 @@ export class ArModelLoaderService {
         const fallback: ArModelsManifest = {
           nota: '',
           formatoRecomendado: 'glb',
-          defaults: { jugador: 'bate', equipo: 'pelota', liga: 'trofeo' },
+          defaults: {
+            jugador: 'bate',
+            equipo: 'pelota',
+            liga: 'trofeo',
+            gorra: 'gorra',
+            pelota: 'pelota',
+          },
           overrides: {},
           models: {
             bate: {
               label: 'Bate',
-              file: '',
+              file: 'assets/modelos/bate/batemaple.glb',
               format: 'glb',
               scale: 1.4,
               fallback: 'bate',
             },
             pelota: {
               label: 'Pelota',
-              file: '',
+              file: 'assets/modelos/pelota/pelota02.glb',
               format: 'glb',
               scale: 1.2,
               fallback: 'pelota',
-            },
-            trofeo: {
-              label: 'Trofeo',
-              file: '',
-              format: 'glb',
-              scale: 1.3,
-              fallback: 'trofeo',
             },
           },
         };
@@ -141,6 +140,14 @@ export class ArModelLoaderService {
   ): void {
     const t = elapsed * 0.001;
     switch (mode) {
+      case 'static':
+        model.position.set(0, 0, 0);
+        model.rotation.set(0, 0, 0);
+        break;
+      case 'spinAxis':
+        model.position.set(0, 0, 0);
+        model.rotation.set(0, t * 0.35, 0);
+        break;
       case 'spin':
         model.rotation.y = t * 0.35;
         model.rotation.x = 0.08;

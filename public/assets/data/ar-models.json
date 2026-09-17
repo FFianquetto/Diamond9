@@ -1,55 +1,164 @@
 {
-  "nota": "Rutas a los modelos en public/assets/models/<carpeta>/. texture/normalMap opcionales (png, jpg, jpeg).",
+  "nota": "Única carpeta de modelos: public/assets/modelos/ (bate, gorra, pelota).",
   "formatoRecomendado": "glb",
   "formatoAlternativo": "obj",
   "noUsar": "fbx / max",
   "defaults": {
     "jugador": "bate",
     "equipo": "pelota",
-    "liga": "trofeo"
+    "liga": "pelota",
+    "gorra": "gorra-yankees",
+    "pelota": "pelota"
   },
   "overrides": {
-    "liga-lnm": "trofeo"
+    "liga-lnm": "pelota",
+    "gorra-diablos": "gorra-diablos",
+    "gorra-diablos-alt": "gorra-diablos-alt",
+    "gorra-bravos": "gorra-bravos",
+    "gorra-conspiradores": "gorra-conspiradores",
+    "gorra-saraperos": "gorra-saraperos",
+    "gorra-visor-camo": "gorra-visor-camo",
+    "gorra-yankees": "gorra-yankees",
+    "gorra-dodgers": "gorra-dodgers",
+    "gorra-bucaneros": "gorra-bucaneros",
+    "gorra-marineros": "gorra-marineros",
+    "gorra-tiburones": "gorra-tiburones",
+    "gorra-algodoneros": "gorra-algodoneros",
+    "gorra-cerveceros": "gorra-cerveceros",
+    "yankees": "gorra-yankees",
+    "dodgers": "gorra-dodgers",
+    "bucaneros-cabos": "gorra-bucaneros",
+    "marineros-ensenada": "gorra-marineros",
+    "tiburones-penasco": "gorra-tiburones",
+    "algodoneros-slrc": "gorra-algodoneros",
+    "cerveceros-tecate": "gorra-cerveceros",
+    "diablos": "gorra-diablos",
+    "bravos": "gorra-bravos",
+    "conspiradores": "gorra-conspiradores",
+    "saraperos": "gorra-saraperos",
+    "lmb": "gorra-visor-camo",
+    "pelota-beisbol": "pelota",
+    "pelota-lmb": "pelota"
   },
   "models": {
     "bate": {
-      "label": "Bate",
-      "file": "assets/models/bate/Baseball_Bat.glb",
+      "label": "Bate maple",
+      "file": "assets/modelos/bate/batemaple.glb",
       "format": "glb",
       "scale": 1.15,
-      "fallback": "bate",
-      "normalMap": "assets/models/bate/bat_normal.png"
+      "fallback": "bate"
+    },
+    "bate-2": {
+      "label": "Bate maple 2",
+      "file": "assets/modelos/bate/batemaple2.glb",
+      "format": "glb",
+      "scale": 1.15,
+      "fallback": "bate"
+    },
+    "bate-rojo": {
+      "label": "Bate maple rojo",
+      "file": "assets/modelos/bate/batemaplerojo.glb",
+      "format": "glb",
+      "scale": 1.15,
+      "fallback": "bate"
     },
     "pelota": {
       "label": "Pelota",
-      "file": "assets/models/pelota/baseball.glb",
+      "file": "assets/modelos/pelota/pelota02.glb",
       "format": "glb",
       "scale": 1.0,
-      "fallback": "pelota",
-      "texture": "assets/models/pelota/bola.jpg",
-      "normalMap": "assets/models/pelota/bola_Normal.jpg"
+      "fallback": "pelota"
     },
-    "gorra": {
-      "label": "Gorra",
-      "file": "assets/models/gorra/baseball_cap.glb",
-      "format": "glb",
-      "scale": 1.1,
-      "fallback": "gorra"
-    },
-    "guante": {
-      "label": "Guante",
-      "file": "assets/models/guante/glove.glb",
+    "gorra-yankees": {
+      "label": "New York Yankees",
+      "file": "assets/modelos/gorra/yankees.glb",
       "format": "glb",
       "scale": 1.05,
-      "fallback": "guante"
+      "fallback": "gorra"
     },
-    "trofeo": {
-      "label": "Trofeo",
-      "file": "",
+    "gorra-dodgers": {
+      "label": "Los Angeles Dodgers",
+      "file": "assets/modelos/gorra/dodgers.glb",
       "format": "glb",
-      "scale": 1.0,
-      "fallback": "trofeo",
-      "texture": "assets/models/trofeo/Trophy1_Basetexture.jpg"
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-bucaneros": {
+      "label": "Bucaneros de Los Cabos",
+      "file": "assets/modelos/gorra/bucaneros.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-marineros": {
+      "label": "Marineros de Ensenada",
+      "file": "assets/modelos/gorra/marinerosroja.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-tiburones": {
+      "label": "Tiburones de Puerto Peñasco",
+      "file": "assets/modelos/gorra/tiburones.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-algodoneros": {
+      "label": "Algodoneros de San Luis",
+      "file": "assets/modelos/gorra/algodoneros.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-cerveceros": {
+      "label": "Cerveceros de Tecate",
+      "file": "assets/modelos/gorra/cerveceros.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-diablos": {
+      "label": "Diablos del México",
+      "file": "assets/modelos/gorra/diablos-mexico-onfield-2026.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-diablos-alt": {
+      "label": "Diablos Onfield Alt",
+      "file": "assets/modelos/gorra/diablos-mexico-onfield-alt.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-bravos": {
+      "label": "Bravos de León",
+      "file": "assets/modelos/gorra/bravos-leon-home-2026.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-conspiradores": {
+      "label": "Conspiradores Querétaro",
+      "file": "assets/modelos/gorra/conspiradores-queretaro.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-saraperos": {
+      "label": "Saraperos de Saltillo",
+      "file": "assets/modelos/gorra/saraperos-saltillo.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
+    },
+    "gorra-visor-camo": {
+      "label": "LMB Visor Camo",
+      "file": "assets/modelos/gorra/lmb-visor-camo.glb",
+      "format": "glb",
+      "scale": 1.05,
+      "fallback": "gorra"
     }
   }
 }
