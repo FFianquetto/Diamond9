@@ -30,7 +30,7 @@ export interface HistoriaFile {
 export type CartaUnlockVia = 'inicial' | 'juego' | 'scanner' | 'completo';
 export type CartaUnlockSource = CartaUnlockVia;
 export type CartaJuegoId = 'jonron' | 'rebote' | 'trivia';
-export type CartaScanModo = 'tarjeta' | 'logo' | 'gorra';
+export type CartaScanModo = 'pelota' | 'logo' | 'gorra';
 
 export interface CartaUnlockRule {
   via: CartaUnlockVia;

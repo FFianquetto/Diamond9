@@ -173,6 +173,38 @@ export class ArModelLoaderService {
         model.position.y = Math.sin(t * 5) * 0.06;
         model.scale.setScalar(1);
         break;
+      case 'pitch': {
+        // Wind-up → entrega: balanceo X/Z + avance corto
+        const phase = Math.sin(t * 4.2);
+        model.rotation.x = 0.2 + phase * 0.45;
+        model.rotation.z = Math.sin(t * 3.4) * 0.28;
+        model.rotation.y = -0.25 + Math.sin(t * 2.2) * 0.15;
+        model.position.z = phase * 0.12;
+        model.position.y = 0.02 + Math.abs(phase) * 0.04;
+        model.scale.setScalar(1 + Math.max(0, phase) * 0.06);
+        break;
+      }
+      case 'catch': {
+        // Snap del guante: tilt + scale punch
+        const snap = Math.sin(t * 7.5);
+        model.rotation.x = 0.35 + snap * 0.35;
+        model.rotation.z = -0.2 + snap * 0.2;
+        model.rotation.y = Math.sin(t * 1.8) * 0.12;
+        model.position.y = Math.max(0, snap) * 0.05;
+        model.scale.setScalar(1 + Math.max(0, snap) * 0.1);
+        break;
+      }
+      case 'homerun': {
+        // Arco hacia arriba + spin agresivo (celebración)
+        const lift = Math.abs(Math.sin(t * 2.8));
+        model.position.y = lift * 0.28;
+        model.position.x = Math.sin(t * 2.2) * 0.08;
+        model.rotation.y = t * 2.4;
+        model.rotation.x = 0.15 + lift * 0.25;
+        model.rotation.z = Math.sin(t * 3) * 0.12;
+        model.scale.setScalar(1 + lift * 0.08);
+        break;
+      }
       case 'pulse3d': {
         const s = 1 + Math.sin(t * 4) * 0.08;
         model.scale.setScalar(s);

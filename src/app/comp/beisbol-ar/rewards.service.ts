@@ -41,7 +41,7 @@ const JUEGO_LABEL: Record<CartaJuegoId, string> = {
 };
 
 const SCAN_LABEL: Record<CartaScanModo, string> = {
-  tarjeta: 'Escáner · Tarjeta',
+  pelota: 'Escáner · Pelota',
   logo: 'Escáner · Logo',
   gorra: 'Escáner · Gorra',
 };
@@ -113,7 +113,7 @@ export class RewardsService {
 
   /**
    * Registra un escaneo AR. Si es la primera vez en ese modo
-   * (tarjeta / logo / gorra), desbloquea la carta plateada asociada.
+   * (pelota / logo / gorra), desbloquea la carta plateada asociada.
    */
   recordScan(markerId: string, modo?: ScanModo): string | null {
     const p = this.progress();
@@ -344,13 +344,18 @@ export class RewardsService {
         null;
       if (!raw) return { ...EMPTY, cartaSources: {}, scanModesDone: [] };
       const parsed = JSON.parse(raw) as Partial<RewardsProgress>;
+      const modes = (parsed.scanModesDone ?? []).map((m) => {
+        const id = m as string;
+        if (id === 'tarjeta') return 'logo' as CartaScanModo;
+        return m;
+      });
       return {
         ...EMPTY,
         scans: parsed.scans ?? [],
         premios: parsed.premios ?? [],
         cartas: parsed.cartas ?? [],
         cartaSources: parsed.cartaSources ?? {},
-        scanModesDone: parsed.scanModesDone ?? [],
+        scanModesDone: [...new Set(modes)],
         juegoJonron: parsed.juegoJonron ?? false,
         juegoRebote: parsed.juegoRebote ?? false,
         triviaHecha: parsed.triviaHecha ?? false,

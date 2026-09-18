@@ -104,7 +104,7 @@
       "foto": "assets/galeria/imagenes/jugadores/williemays.jpg",
       "rareza": "Legendaria",
       "resumen": "The Say Hey Kid. Excelencia total en el jardín central.",
-      "unlock": { "via": "scanner", "modo": "tarjeta" }
+      "unlock": { "via": "scanner", "modo": "logo" }
     },
     {
       "id": "derek-jeter",
@@ -117,7 +117,7 @@
       "foto": "assets/galeria/imagenes/jugadores/derekjeter.jpg",
       "rareza": "Épica",
       "resumen": "Capitán de los Yankees. 5 anillos y 3,465 hits.",
-      "unlock": { "via": "scanner", "modo": "logo" }
+      "unlock": { "via": "scanner", "modo": "pelota" }
     },
     {
       "id": "ramon-arano",

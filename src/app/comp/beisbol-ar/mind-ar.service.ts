@@ -159,8 +159,9 @@ export class MindArService {
       uiLoading: 'no',
       uiScanning: 'no',
       uiError: 'yes',
-      warmupTolerance: 0,
-      missTolerance: 5,
+      // Más tolerancia: gorras reales cambian con ángulo/luz
+      warmupTolerance: 3,
+      missTolerance: 10,
     });
     this.mindar = mindar;
 

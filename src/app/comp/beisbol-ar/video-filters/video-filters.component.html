@@ -1,22 +1,154 @@
 <app-section-shell
   eyebrow="Acervo multimedia"
   title="Galería"
-  lede="Fotos de equipos y jugadores, más videos de beisbol. Ajusta tonalidad, brillo y contraste; descarga el resultado si quieres."
+  lede="Videos de beisbol con filtros en vivo: desenfoque, pixelado, cámara térmica, ajuste de color y presets personalizados."
   [pills]="pills"
   [activePill]="tab()"
   pillsAriaLabel="Tipo de contenido"
   (pillChange)="setTab($event)"
 >
+  @if (feedback(); as msg) {
+    <p class="feedback-toast" role="status" aria-live="polite">{{ msg }}</p>
+  }
+
   @if (loading()) {
     <p class="status">Cargando galería…</p>
-  } @else if (tab() === 'imagenes') {
+  } @else if (tab() === 'videos') {
+    <div class="layout" role="tabpanel">
+      <div class="stage video-stage">
+        @if (activeVideo(); as vid) {
+          <div class="player-wrap">
+            <video
+              #sourceVideo
+              class="source-video"
+              [src]="vid.src"
+              [poster]="vid.poster || null"
+              [attr.aria-label]="vid.title"
+              playsinline
+              loop
+              muted
+              preload="auto"
+            ></video>
+            <canvas
+              #filterCanvas
+              class="filter-canvas"
+              aria-hidden="true"
+            ></canvas>
+            <span class="filter-badge">{{ activeFilterLabel() }}</span>
+            <div class="player-controls" aria-label="Controles de video">
+              <button
+                type="button"
+                class="play-btn"
+                (click)="togglePlay()"
+                [attr.aria-label]="playing() ? 'Pausar' : 'Reproducir'"
+              >
+                {{ playing() ? '❚❚' : '▶' }}
+              </button>
+              <input
+                class="seek"
+                type="range"
+                min="0"
+                max="100"
+                step="0.1"
+                [value]="progress()"
+                (input)="onSeek($event)"
+                aria-label="Progreso"
+              />
+            </div>
+          </div>
+          <div class="stage-meta">
+            <span class="tag">{{ vid.tag }}</span>
+            <h2>{{ vid.title }}</h2>
+            <p>{{ vid.caption }}</p>
+          </div>
+        } @else {
+          <p class="status">Aún no hay videos en la galería.</p>
+        }
+      </div>
+
+      @if (activeVideo()) {
+        <div class="filters-panel">
+          <div class="filter-bar" role="toolbar" aria-label="Filtros de video">
+            @for (f of filters; track f.id) {
+              <button
+                type="button"
+                class="filter-btn"
+                [class.active]="activeFilter() === f.id"
+                [attr.title]="f.hint"
+                (click)="setFilter(f.id)"
+              >
+                {{ f.label }}
+              </button>
+            }
+          </div>
+
+          @if (activeFilter() === 'color') {
+            <div class="sliders" aria-label="Ajuste de color">
+              <label class="slider-row">
+                <span>Matiz <em>{{ hue() }}°</em></span>
+                <input
+                  type="range"
+                  min="-180"
+                  max="180"
+                  step="1"
+                  [value]="hue()"
+                  (input)="onHue($event)"
+                />
+              </label>
+              <label class="slider-row">
+                <span>Saturación <em>{{ saturate() }}%</em></span>
+                <input
+                  type="range"
+                  min="40"
+                  max="220"
+                  step="1"
+                  [value]="saturate()"
+                  (input)="onSaturate($event)"
+                />
+              </label>
+            </div>
+          }
+
+          <div class="download-row">
+            <button type="button" class="ghost-btn" (click)="resetFilter()">
+              Restablecer
+            </button>
+            <p class="hint">
+              Filtros en tiempo real sobre el video (Canvas). Sin B&amp;N, sepia,
+              exposición ni inversión.
+            </p>
+          </div>
+        </div>
+      }
+
+      <div class="thumbs" aria-label="Videos">
+        @for (vid of videos(); track vid.id) {
+          <button
+            type="button"
+            class="thumb"
+            [class.active]="activeVideo()?.id === vid.id"
+            (click)="selectVideo(vid)"
+          >
+            <img
+              [src]="vid.poster || vid.src"
+              [alt]="vid.title"
+              loading="lazy"
+              width="320"
+              height="180"
+            />
+            <span>{{ vid.title }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  } @else {
     <div class="layout" role="tabpanel">
       <div class="stage image-stage">
         @if (activeImage(); as img) {
           <img
             [src]="img.src"
             [alt]="img.title"
-            [style.filter]="activeFilterCss()"
+            [style.filter]="imageFilterCss()"
             decoding="async"
             fetchpriority="high"
           />
@@ -38,6 +170,7 @@
                 type="button"
                 class="filter-btn"
                 [class.active]="activeFilter() === f.id"
+                [attr.title]="f.hint"
                 (click)="setFilter(f.id)"
               >
                 {{ f.label }}
@@ -45,48 +178,39 @@
             }
           </div>
 
-          <div class="sliders" aria-label="Ajustes">
-            <label class="slider-row">
-              <span>Brillo <em>{{ brightness() }}%</em></span>
-              <input
-                type="range"
-                min="40"
-                max="180"
-                step="1"
-                [value]="brightness()"
-                (input)="onBrightness($event)"
-              />
-            </label>
-            <label class="slider-row">
-              <span>Contraste <em>{{ contrast() }}%</em></span>
-              <input
-                type="range"
-                min="40"
-                max="180"
-                step="1"
-                [value]="contrast()"
-                (input)="onContrast($event)"
-              />
-            </label>
-            <label class="slider-row">
-              <span>Saturación <em>{{ saturate() }}%</em></span>
-              <input
-                type="range"
-                min="0"
-                max="200"
-                step="1"
-                [value]="saturate()"
-                (input)="onSaturate($event)"
-              />
-            </label>
-          </div>
+          @if (activeFilter() === 'color') {
+            <div class="sliders" aria-label="Ajuste de color">
+              <label class="slider-row">
+                <span>Matiz <em>{{ hue() }}°</em></span>
+                <input
+                  type="range"
+                  min="-180"
+                  max="180"
+                  step="1"
+                  [value]="hue()"
+                  (input)="onHue($event)"
+                />
+              </label>
+              <label class="slider-row">
+                <span>Saturación <em>{{ saturate() }}%</em></span>
+                <input
+                  type="range"
+                  min="40"
+                  max="220"
+                  step="1"
+                  [value]="saturate()"
+                  (input)="onSaturate($event)"
+                />
+              </label>
+            </div>
+          }
 
           <div class="download-row">
             <button
               type="button"
               class="download-btn"
               [disabled]="downloading()"
-              (click)="downloadFiltered()"
+              (click)="downloadFilteredImage()"
             >
               <span class="dl-icon" aria-hidden="true">↓</span>
               <span class="dl-copy">
@@ -96,8 +220,11 @@
                 <small>PNG con filtros aplicados</small>
               </span>
             </button>
-            @if (downloadError()) {
-              <p class="status error">{{ downloadError() }}</p>
+            <button type="button" class="ghost-btn" (click)="resetFilter()">
+              Restablecer
+            </button>
+            @if (downloadError) {
+              <p class="status error">{{ downloadError }}</p>
             }
           </div>
         </div>
@@ -111,54 +238,14 @@
             [class.active]="activeImage()?.id === img.id"
             (click)="selectImage(img)"
           >
-            <img [src]="img.src" [alt]="img.title" loading="lazy" width="320" height="180" />
-            <span>{{ img.title }}</span>
-          </button>
-        }
-      </div>
-    </div>
-  } @else {
-    <div class="layout" role="tabpanel">
-      <div class="stage video-stage">
-        @if (activeVideo(); as vid) {
-          <div class="embed-wrap">
-            <iframe
-              [src]="embedUrl(vid.youtubeId)"
-              [title]="vid.title"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="strict-origin-when-cross-origin"
-            ></iframe>
-          </div>
-          <div class="stage-meta">
-            <span class="tag">{{ vid.channel }}</span>
-            <h2>{{ vid.title }}</h2>
-            <p>{{ vid.caption }}</p>
-          </div>
-        } @else {
-          <p class="status">Aún no hay videos en la galería.</p>
-        }
-      </div>
-
-      <div class="thumbs" aria-label="Videos">
-        @for (vid of videos(); track vid.id) {
-          <button
-            type="button"
-            class="thumb"
-            [class.active]="activeVideo()?.id === vid.id"
-            (click)="selectVideo(vid)"
-          >
             <img
-              [src]="
-                'https://i.ytimg.com/vi/' + vid.youtubeId + '/hqdefault.jpg'
-              "
-              [alt]="vid.title"
+              [src]="img.src"
+              [alt]="img.title"
               loading="lazy"
               width="320"
               height="180"
             />
-            <span>{{ vid.title }}</span>
+            <span>{{ img.title }}</span>
           </button>
         }
       </div>

@@ -72,18 +72,22 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
     const count = this.countFor(burst.kind);
     const palette = this.paletteFor(burst.kind);
     for (let i = 0; i < count; i++) {
-      const speed = 1.4 + Math.random() * (burst.kind === 'homer' ? 8.5 : 5.5);
-      const dir = Math.random() * Math.PI * 2;
+      const isHomer = burst.kind === 'homer';
+      // Jonrón: trayectoria preferente hacia arriba
+      const dir = isHomer
+        ? -Math.PI / 2 + (Math.random() - 0.5) * 1.1
+        : Math.random() * Math.PI * 2;
+      const speed = 1.4 + Math.random() * (isHomer ? 9.5 : 5.5);
       this.particles.push({
         x: burst.x,
         y: burst.y,
         vx: Math.cos(dir) * speed,
-        vy: Math.sin(dir) * speed - (burst.kind === 'homer' ? 2.4 : 1.1),
+        vy: Math.sin(dir) * speed - (isHomer ? 3.2 : 1.1),
         life: 1,
         maxLife: 520 + Math.random() * 420,
-        size: burst.kind === 'homer' ? 5 + Math.random() * 7 : 3 + Math.random() * 5,
+        size: isHomer ? 5 + Math.random() * 7 : 3 + Math.random() * 5,
         color: palette[i % palette.length],
-        shape: burst.kind === 'homer' && i % 3 === 0 ? 'diamond' : i % 4 === 0 ? 'rect' : 'circle',
+        shape: isHomer && i % 3 === 0 ? 'diamond' : i % 4 === 0 ? 'rect' : 'circle',
         spin: (Math.random() - 0.5) * 0.28,
         angle: Math.random() * Math.PI,
       });
@@ -91,15 +95,20 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
   }
 
   private countFor(kind: ParticleKind): number {
+    const mobile =
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(max-width: 820px)').matches ||
+        window.matchMedia('(pointer: coarse)').matches);
+    const scale = mobile ? 0.55 : 1;
     switch (kind) {
       case 'homer':
-        return 46;
+        return Math.round(58 * scale);
       case 'confetti':
-        return 28;
+        return Math.round(32 * scale);
       case 'spark':
-        return 16;
+        return Math.round(16 * scale);
       case 'strike':
-        return 10;
+        return Math.round(10 * scale);
     }
   }
 
@@ -109,6 +118,9 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
     }
     if (kind === 'spark') {
       return ['#00C2D7', '#8BEAF2', '#FFFFFF'];
+    }
+    if (kind === 'homer') {
+      return ['#F5C542', '#FFD76A', '#FFFFFF', '#00C2D7', '#8BEAF2'];
     }
     return ['#00C2D7', '#8BEAF2', '#FFFFFF', '#F5C542', '#3E688C'];
   }

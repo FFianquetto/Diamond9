@@ -9,7 +9,24 @@ export type ArAnimMode =
   | 'static'
   | 'swing'
   | 'pulse3d'
-  | 'showcase';
+  | 'showcase'
+  /** Lanzamiento / wind-up. */
+  | 'pitch'
+  /** Guante / recepción (snap). */
+  | 'catch'
+  /** Celebración jonrón (arco + giro). */
+  | 'homerun';
+
+/** Modos que intensifican luces y partículas 3D. */
+export const AR_CELEBRATION_MODES: ReadonlySet<ArAnimMode> = new Set([
+  'showcase',
+  'swing',
+  'pulse3d',
+  'pitch',
+  'catch',
+  'homerun',
+  'spin',
+]);
 
 export interface ArModelEntry {
   label: string;

@@ -1,41 +1,37 @@
 {
-  "nota": "Imágenes: public/assets/galeria/imagenes/equipos/ y .../jugadores/. Videos: embeds YouTube.",
-  "canalReferencia": "https://www.youtube.com/@DiamanteMexicanoBeisbol",
+  "nota": "Imágenes: public/assets/galeria/imagenes/. Videos locales: public/assets/videos/ (filtros Canvas/CSS).",
   "videos": [
     {
-      "id": "lmb-playoffs-2026",
-      "title": "Playoffs LMB 2026 explicados",
-      "caption": "Cómo funcionan playoffs, mejor perdedor y Serie del Rey",
-      "youtubeId": "HiUSPcJVNU4",
-      "channel": "Diamante Mexicano"
+      "id": "jonron-historia",
+      "title": "Jonrón — Historia",
+      "caption": "Recorrido visual por leyendas del beisbol mundial",
+      "src": "assets/videos/jonron-historia.mp4",
+      "poster": "assets/galeria/imagenes/jugadores/baberuth.jpg",
+      "tag": "Historia"
     },
     {
-      "id": "lmb-olmecas-pericos",
-      "title": "Olmecas vs Pericos",
-      "caption": "Resumen final — LMB 2026",
-      "youtubeId": "Q_cmvuK5Jeo",
-      "channel": "Claro Sports"
+      "id": "leyendas-mexicanas",
+      "title": "Leyendas mexicanas",
+      "caption": "Íconos del beisbol mexicano y la LMB",
+      "src": "assets/videos/leyendas-mexicanas.mp4",
+      "poster": "assets/galeria/imagenes/jugadores/fernandovalenzuela.jpg",
+      "tag": "México"
     },
     {
-      "id": "lmb-field-es",
-      "title": "Fildeo — Ripken (ES/EN)",
-      "caption": "Técnica de rolling aplicada al juego de equipo",
-      "youtubeId": "GfqSNwFVv1s",
-      "channel": "Ripken Baseball"
+      "id": "escudos-lnm",
+      "title": "Escudos LNM",
+      "caption": "Identidad visual de equipos de la Liga del Noroeste",
+      "src": "assets/videos/escudos-lnm.mp4",
+      "poster": "assets/galeria/imagenes/equipos/bucaneros-cabos.jpg",
+      "tag": "Equipos"
     },
     {
-      "id": "lmb-ground",
-      "title": "Ground ball en 60s",
-      "caption": "Defensa de cuadro — útil para jugadores de equipo",
-      "youtubeId": "OPg_PMXBnjU",
-      "channel": "Ultimate Baseball Training"
-    },
-    {
-      "id": "lmb-hitting",
-      "title": "Hitting 101 — Tony Gwynn",
-      "caption": "Fundamentos de bateo para ofensiva de equipo",
-      "youtubeId": "GhVSBMjLwsA",
-      "channel": "Clásico educativo"
+      "id": "estrellas-mlb",
+      "title": "Estrellas MLB",
+      "caption": "Figuras y franquicias de las Grandes Ligas",
+      "src": "assets/videos/estrellas-mlb.mp4",
+      "poster": "assets/galeria/imagenes/jugadores/othani.jpg",
+      "tag": "MLB"
     }
   ],
   "images": [
@@ -49,42 +45,42 @@
     {
       "id": "img-marineros",
       "title": "Marineros de Ensenada",
-      "caption": "Escudo oficial · LNM 2026",
+      "caption": "Escudo oficial · LNM",
       "src": "assets/galeria/imagenes/equipos/marineros-ensenada.png",
       "tag": "Equipo"
     },
     {
       "id": "img-barbanegras",
       "title": "Barbanegras de Tijuana",
-      "caption": "Escudo oficial · LNM 2026",
+      "caption": "Escudo oficial · LNM",
       "src": "assets/galeria/imagenes/equipos/barbanegras-tijuana.jpg",
       "tag": "Equipo"
     },
     {
       "id": "img-bucaneros",
       "title": "Bucaneros de Los Cabos",
-      "caption": "Campeón LNM 2026",
+      "caption": "Campeón LNM",
       "src": "assets/galeria/imagenes/equipos/bucaneros-cabos.jpg",
       "tag": "Equipo"
     },
     {
       "id": "img-algodoneros",
       "title": "Algodoneros de San Luis",
-      "caption": "Escudo oficial · LNM 2026",
+      "caption": "Escudo oficial · LNM",
       "src": "assets/galeria/imagenes/equipos/algodoneros-slrc.jpg",
       "tag": "Equipo"
     },
     {
       "id": "img-tiburones",
       "title": "Tiburones de Puerto Peñasco",
-      "caption": "Escudo oficial · LNM 2026",
+      "caption": "Escudo oficial · LNM",
       "src": "assets/galeria/imagenes/equipos/tiburones-penasco.jpg",
       "tag": "Equipo"
     },
     {
       "id": "img-cerveceros",
       "title": "Cerveceros de Tecate",
-      "caption": "Escudo oficial · LNM 2026",
+      "caption": "Escudo oficial · LNM",
       "src": "assets/galeria/imagenes/equipos/cerveceros-tecate.jpg",
       "tag": "Equipo"
     },

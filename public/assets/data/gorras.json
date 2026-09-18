@@ -7,9 +7,9 @@
     {
       "id": "gorra-yankees",
       "nombre": "Gorra New York Yankees",
-      "subtitle": "Equipo reconocido · MLB",
+      "subtitle": "Tu gorra · MLB",
       "color": "#0C2340",
-      "info": "Sí: gorra de los New York Yankees (MLB). Logo NY / navy reconocible.",
+      "info": "Sí: gorra de los New York Yankees (MLB). Logo NY dorado sobre gorra negra. También puedes mostrar el logo NY en pantalla.",
       "stats": [
         {
           "label": "Equipo",
@@ -26,25 +26,25 @@
       ],
       "videoHint": "Clip: Yankees",
       "animationLabel": "Rotación de gorra",
-      "tip": "Centra el logo NY con buena luz.",
+      "tip": "Centra la gorra en el cuadro: MindAR + colores (negro/dorado). No hace falta ángulo perfecto.",
       "actions": "Info · Stats · Video · Animación",
       "modelKey": "gorra-yankees",
       "equipo": "New York Yankees",
       "abrev": "NYY",
       "equipoReconocido": true,
       "ligaOrigen": "MLB",
-      "targetImage": "assets/galeria/imagenes/equipos/yankees-ny-clean.jpg"
+      "targetImage": "assets/markers/mind/gorra-yankees-logo-crop.jpg"
     },
     {
       "id": "gorra-redsox",
-      "nombre": "Gorra Boston Red Sox",
-      "subtitle": "Equipo reconocido · MLB",
-      "color": "#BD3039",
-      "info": "Sí: gorra de los Boston Red Sox (MLB). Logo B / rojo-navy reconocible.",
+      "nombre": "Gorra Chicago White Sox",
+      "subtitle": "Tu gorra · MLB",
+      "color": "#27251F",
+      "info": "Sí: gorra de los Chicago White Sox (MLB). Logo Sox púrpura sobre corona clara. También puedes mostrar el logo de frente.",
       "stats": [
         {
           "label": "Equipo",
-          "value": "Red Sox"
+          "value": "White Sox"
         },
         {
           "label": "Liga",
@@ -55,16 +55,16 @@
           "value": "Sí"
         }
       ],
-      "videoHint": "Clip: Red Sox",
+      "videoHint": "Clip: White Sox",
       "animationLabel": "Rotación de gorra",
-      "tip": "Centra el logo B rojo con buena luz.",
+      "tip": "Centra la gorra en el cuadro: MindAR + colores (crema/púrpura). No hace falta ángulo perfecto.",
       "actions": "Info · Stats · Video · Animación",
       "modelKey": "gorra-redsox",
-      "equipo": "Boston Red Sox",
-      "abrev": "BOS",
+      "equipo": "Chicago White Sox",
+      "abrev": "CWS",
       "equipoReconocido": true,
       "ligaOrigen": "MLB",
-      "targetImage": "assets/galeria/imagenes/equipos/redsox-b.jpg"
+      "targetImage": "assets/markers/mind/gorra-sox-logo-crop.jpg"
     },
     {
       "id": "gorra-dodgers",

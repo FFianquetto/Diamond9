@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import * as THREE from 'three';
 import { ArModelLoaderService } from './ar-model-loader.service';
-import { ArAnimMode } from './ar-model.types';
+import { ArAnimMode, AR_CELEBRATION_MODES } from './ar-model.types';
 import { LnmItemType } from '../lnm-catalog.types';
 
 @Component({
@@ -54,12 +54,19 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
   private model: THREE.Object3D | null = null;
   private particleSystem: THREE.Points | null = null;
   private particleVel: Float32Array | null = null;
+  private keyLight: THREE.DirectionalLight | null = null;
+  private rimLight: THREE.DirectionalLight | null = null;
+  private fillLight: THREE.DirectionalLight | null = null;
   private raf = 0;
   private startedAt = 0;
   private resizeObs: ResizeObserver | null = null;
   private ready = false;
   private pendingKey = '';
   private loadToken = 0;
+  private readonly isMobile =
+    typeof window !== 'undefined' &&
+    (window.matchMedia('(max-width: 820px)').matches ||
+      window.matchMedia('(pointer: coarse)').matches);
 
   ngOnInit(): void {
     this.loader.loadManifest().subscribe(() => {
@@ -77,16 +84,19 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       this.syncParticles();
     }
 
-    if (
-      changes['animMode'] &&
-      !changes['markerId'] &&
-      !changes['markerTipo'] &&
-      !changes['modelKey'] &&
-      !changes['accentColor'] &&
-      !changes['active']
-    ) {
+    if (changes['animMode']) {
       this.startedAt = performance.now();
-      return;
+      this.applyCelebrationLights();
+      this.boostParticlesForAnim();
+      if (
+        !changes['markerId'] &&
+        !changes['markerTipo'] &&
+        !changes['modelKey'] &&
+        !changes['accentColor'] &&
+        !changes['active']
+      ) {
+        return;
+      }
     }
 
     if (
@@ -124,7 +134,9 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       powerPreference: 'high-performance',
       failIfMajorPerformanceCaveat: false,
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
+    renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio || 1, this.isMobile ? 1 : 1.25),
+    );
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setClearColor(0x000000, 0);
 
@@ -143,15 +155,45 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     rim.position.set(0, 2, -3);
     scene.add(hemi, key, fill, rim);
 
+    this.keyLight = key;
+    this.fillLight = fill;
+    this.rimLight = rim;
     this.renderer = renderer;
     this.scene = scene;
     this.camera = camera;
     this.startedAt = performance.now();
+    this.applyCelebrationLights();
 
     this.resizeObs = new ResizeObserver(() => this.resize());
     this.resizeObs.observe(canvas.parentElement ?? canvas);
     this.resize();
     this.startLoop();
+  }
+
+  private applyCelebrationLights(): void {
+    const celebrating = AR_CELEBRATION_MODES.has(this.animMode);
+    const accent = new THREE.Color(this.accentColor || '#00e5ff');
+    if (this.keyLight) {
+      this.keyLight.intensity = celebrating ? 1.85 : 1.4;
+      this.keyLight.color = celebrating ? accent.clone().lerp(new THREE.Color(0xffffff), 0.45) : new THREE.Color(0xffffff);
+    }
+    if (this.fillLight) {
+      this.fillLight.intensity = celebrating ? 1.05 : 0.7;
+      this.fillLight.color = accent;
+    }
+    if (this.rimLight) {
+      this.rimLight.intensity = celebrating ? 0.95 : 0.45;
+      this.rimLight.color = celebrating ? accent : new THREE.Color(0xffffff);
+    }
+  }
+
+  private boostParticlesForAnim(): void {
+    if (!this.particleSystem) return;
+    const mat = this.particleSystem.material as THREE.PointsMaterial;
+    const celebrating = AR_CELEBRATION_MODES.has(this.animMode);
+    mat.size = celebrating ? 0.07 : 0.045;
+    mat.opacity = celebrating ? 1 : 0.85;
+    mat.color = new THREE.Color(this.accentColor || '#00e5ff');
   }
 
   private syncParticles(): void {
@@ -161,12 +203,11 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     if (this.particleSystem) {
-      const mat = this.particleSystem.material as THREE.PointsMaterial;
-      mat.color = new THREE.Color(this.accentColor || '#00e5ff');
+      this.boostParticlesForAnim();
       return;
     }
 
-    const count = 160;
+    const count = this.isMobile ? 72 : 160;
     const positions = new Float32Array(count * 3);
     const velocities = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -198,6 +239,7 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     this.particleSystem = points;
     this.particleVel = velocities;
     this.scene.add(points);
+    this.boostParticlesForAnim();
   }
 
   private disposeParticles(): void {
@@ -211,15 +253,17 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
 
   private tickParticles(): void {
     if (!this.particleSystem || !this.particleVel) return;
+    const celebrating = AR_CELEBRATION_MODES.has(this.animMode);
     const pos = this.particleSystem.geometry.getAttribute(
       'position',
     ) as THREE.BufferAttribute;
     const arr = pos.array as Float32Array;
     const vel = this.particleVel;
+    const speed = celebrating ? 1.65 : 1;
     for (let i = 0; i < arr.length; i += 3) {
-      arr[i] += vel[i];
-      arr[i + 1] += vel[i + 1];
-      arr[i + 2] += vel[i + 2];
+      arr[i] += vel[i] * speed;
+      arr[i + 1] += vel[i + 1] * speed;
+      arr[i + 2] += vel[i + 2] * speed;
       if (arr[i + 1] > 1.8) {
         arr[i + 1] = -1.2;
         arr[i] = (Math.random() - 0.5) * 2.2;
@@ -227,7 +271,7 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
     pos.needsUpdate = true;
-    this.particleSystem.rotation.y += 0.004;
+    this.particleSystem.rotation.y += celebrating ? 0.012 : 0.004;
   }
 
   private async swapModel(): Promise<void> {

@@ -1,35 +1,65 @@
 {
-  "version": 3,
-  "nota": "MindAR oficial (MindARThree). El orden de targets[] = índices del .mind.",
+  "version": 5,
+  "nota": "Modos: Pelota (Ohtani/Sultanes), Gorra (Yankees/Sox reales), Logo (escudos planos como antes).",
   "modes": {
-    "tarjeta": {
-      "label": "Tarjeta",
-      "mindFile": "assets/mind/tarjeta.mind",
-      "hint": "Escanea algo de baseball y ve lo que sucede.",
+    "pelota": {
+      "label": "Pelota",
+      "mindFile": "assets/mind/pelota.mind",
+      "hint": "Escanea tu pelota Dodgers/Ohtani o Sultanes.",
       "targets": [
-        { "id": "andres-garza", "image": "assets/markers/andres-garza.png" },
-        { "id": "miguel-palos", "image": "assets/markers/miguel-palos.png" },
-        { "id": "walter-silva", "image": "assets/markers/walter-silva.png" },
-        { "id": "bucaneros-cabos", "image": "assets/markers/bucaneros-cabos.jpg" },
-        { "id": "marineros-ensenada", "image": "assets/markers/marineros-ensenada.png" },
-        { "id": "liga-lnm", "image": "assets/markers/liga-lnm.png" }
+        {
+          "id": "pelota-othani",
+          "image": "assets/markers/mind/pelota-othani-dodgers.jpg"
+        },
+        {
+          "id": "pelota-sultanes",
+          "image": "assets/markers/mind/pelota-sultanes.jpg"
+        }
       ]
     },
     "gorra": {
       "label": "Gorra",
       "mindFile": "assets/mind/gorra.mind",
-      "hint": "Escanea algo de baseball y ve lo que sucede.",
+      "hint": "Centra el logo NY o Sox de frente (gorra real o logo en pantalla).",
       "targets": [
-        { "id": "gorra-yankees", "image": "assets/markers/mind/yankees.png" },
-        { "id": "gorra-redsox", "image": "assets/markers/mind/redsox.png" },
-        { "id": "gorra-bucaneros", "image": "assets/markers/mind/bucaneros-cabos.png" },
-        { "id": "gorra-marineros", "image": "assets/markers/mind/marineros-ensenada.png" }
+        {
+          "id": "gorra-yankees",
+          "image": "assets/markers/mind/gorra-yankees-logo-crop.jpg"
+        },
+        {
+          "id": "gorra-yankees",
+          "image": "assets/markers/mind/gorra-yankees-logo-tight.jpg"
+        },
+        {
+          "id": "gorra-yankees",
+          "image": "assets/markers/mind/gorra-yankees-full.jpg"
+        },
+        {
+          "id": "gorra-yankees",
+          "image": "assets/markers/mind/gorra-yankees-ny-bold.jpg"
+        },
+        {
+          "id": "gorra-yankees",
+          "image": "assets/markers/mind/gorra-yankees-clean.jpg"
+        },
+        {
+          "id": "gorra-redsox",
+          "image": "assets/markers/mind/gorra-sox-logo-crop.jpg"
+        },
+        {
+          "id": "gorra-redsox",
+          "image": "assets/markers/mind/gorra-sox-logo-tight.jpg"
+        },
+        {
+          "id": "gorra-redsox",
+          "image": "assets/markers/mind/gorra-sox-full.jpg"
+        }
       ]
     },
     "logo": {
       "label": "Logo",
       "mindFile": "assets/mind/logo.mind",
-      "hint": "Escanea algo de baseball y ve lo que sucede.",
+      "hint": "Escanea un logo o escudo plano (pantalla o impreso).",
       "targets": [
         { "id": "logo-demo", "image": "assets/mind/demo/card.png" },
         { "id": "logo-yankees", "image": "assets/markers/mind/yankees.png" },

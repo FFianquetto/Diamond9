@@ -51,7 +51,9 @@
     "saraperos": "gorra-saraperos",
     "lmb": "gorra-visor-camo",
     "pelota-beisbol": "pelota",
-    "pelota-lmb": "pelota"
+    "pelota-lmb": "pelota",
+    "pelota-othani": "pelota",
+    "pelota-sultanes": "pelota"
   },
   "models": {
     "bate": {

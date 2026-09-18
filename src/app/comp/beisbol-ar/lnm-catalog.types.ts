@@ -7,7 +7,7 @@ export type LnmItemType =
   | 'logo';
 
 /** Modo del escáner AR MindAR. */
-export type ScanModo = 'tarjeta' | 'gorra' | 'logo';
+export type ScanModo = 'pelota' | 'gorra' | 'logo';
 
 export interface LnmStat {
   label: string;
@@ -23,6 +23,8 @@ export interface LnmScanItem {
   info: string;
   stats: LnmStat[];
   videoHint: string;
+  /** Clip local opcional para el botón Video del escáner AR. */
+  videoSrc?: string;
   animationLabel: string;
   tip: string;
   actions: string;

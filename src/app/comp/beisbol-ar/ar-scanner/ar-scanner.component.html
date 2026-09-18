@@ -73,14 +73,17 @@
               <span class="guide-cross-v"></span>
               <p class="guide-label">
                 @switch (scanMode()) {
+                  @case ('gorra') {
+                    Centra el logo de tu gorra aquí
+                  }
+                  @case ('pelota') {
+                    Centra tu pelota aquí
+                  }
                   @case ('logo') {
                     Centra el logo / escudo aquí
                   }
-                  @case ('gorra') {
-                    Centra el logo / marcador aquí
-                  }
                   @default {
-                    Centra la tarjeta / escudo aquí
+                    Centra el marcador aquí
                   }
                 }
               </p>
@@ -120,25 +123,48 @@
             <p class="ar-label">
               {{ marker.nombre }}
               @if (animating()) {
-                <span class="ar-anim-badge">Animando</span>
+                <span class="ar-anim-badge">{{
+                  marker.animationLabel || 'Animando'
+                }}</span>
               }
               @if (videoPlaying()) {
                 <span class="ar-anim-badge">Video · FX</span>
               }
             </p>
 
+            @if (fxBanner(); as banner) {
+              <app-ar-fx-banner
+                [title]="banner.title"
+                [subtitle]="banner.subtitle"
+                [kind]="banner.kind"
+              />
+            }
+
             @if (showInfo()) {
               <div class="ar-panel info-panel panel-enter">
                 <h3>Información</h3>
                 <p>{{ marker.info }}</p>
+                <p class="narration-note">
+                  <mat-icon>record_voice_over</mat-icon>
+                  Narración en voz alta · el modelo rota 360°
+                </p>
               </div>
             }
             @if (videoPlaying()) {
               <div class="ar-panel video-panel panel-enter">
-                <mat-icon>play_circle</mat-icon>
+                <div class="video-player">
+                  <video
+                    #arClip
+                    [src]="clipSrc(marker)"
+                    playsinline
+                    controls
+                    (timeupdate)="onClipTimeUpdate()"
+                    (ended)="onClipEnded()"
+                  ></video>
+                </div>
                 <div class="video-copy">
                   <p>{{ marker.videoHint }}</p>
-                  <p class="video-fx-note">Partículas 3D activas alrededor del modelo</p>
+                  <p class="video-fx-note">Clip real + partículas 3D alrededor del modelo</p>
                   <div class="video-bar" aria-hidden="true">
                     <span [style.width.%]="videoProgress()"></span>
                   </div>
@@ -305,7 +331,13 @@
           <h2 id="markers-heading">Sin marcador detectado</h2>
           <p class="sidebar-hint">
             @if (scanning()) {
-              Escanea algo de baseball y ve lo que sucede.
+              @if (scanMode() === 'gorra') {
+                Apunta la gorra al centro: reconoce por imagen o por colores (negro+dorado / crema+púrpura).
+              } @else if (scanMode() === 'pelota') {
+                Centra tu pelota Dodgers/Ohtani o Sultanes.
+              } @else {
+                Escanea un logo o escudo plano (pantalla o impreso).
+              }
             } @else {
               Elige un modo y activa la cámara.
             }
@@ -317,7 +349,11 @@
         <div class="targets-block">
           <h3 class="group-title">Targets de este modo</h3>
           <p class="targets-hint">
-            Abre o imprime el marcador del sidebar.
+            @if (scanMode() === 'gorra' || scanMode() === 'pelota') {
+              Referencia de tus objetos reales (también puedes abrir la foto).
+            } @else {
+              Abre o imprime el marcador del sidebar.
+            }
           </p>
           <ul class="targets-list">
             @for (t of currentTargets(); track t.image) {
@@ -411,7 +447,15 @@
         marcadores planos. El video no se graba ni se envía a un servidor.
       </p>
       <ul>
-        <li>Solo necesita el PNG exacto (sidebar → Abrir imagen).</li>
+        <li>
+          @if (scanMode() === 'gorra') {
+                Apunta la gorra al centro: reconoce por imagen o por colores (negro+dorado / crema+púrpura).
+          } @else if (scanMode() === 'pelota') {
+            Centra tu pelota Dodgers/Ohtani o Sultanes.
+          } @else {
+            Usa el marcador exacto del sidebar (logo-demo o escudo).
+          }
+        </li>
         <li>Al detener la cámara, la ficha se guarda en historial.</li>
         <li>Stats, Video, Animar y Foto siguen disponibles.</li>
       </ul>

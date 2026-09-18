@@ -15,16 +15,28 @@ import { ArMarker } from '../ar-markers';
 import { LnmDataService } from '../lnm-data.service';
 import { RewardsService } from '../rewards.service';
 import { ParticleFxService } from '../../shared/particle-fx/particle-fx.service';
+import { UiSoundService } from '../../shared/ui-sound.service';
 import { ArModelViewerComponent } from '../ar-3d/ar-model-viewer.component';
 import { ArAnimMode } from '../ar-3d/ar-model.types';
 import { ScanModo } from '../lnm-catalog.types';
 import { MindArService, MindTargetsFile } from '../mind-ar.service';
+import { GorraColorDetectService } from '../gorra-color-detect.service';
+import {
+  ArFxBannerComponent,
+  ArFxKind,
+} from '../ar-fx-banner/ar-fx-banner.component';
 import {
   SectionPill,
   SectionShellComponent,
 } from '../../shared/section-shell/section-shell.component';
 
 export type ArAction = 'info' | 'stats' | 'video' | 'anim' | 'foto';
+
+interface FxBannerState {
+  title: string;
+  subtitle: string;
+  kind: ArFxKind;
+}
 
 interface ScanModeOption {
   id: ScanModo;
@@ -40,6 +52,7 @@ interface ScanModeOption {
     CommonModule,
     MatIconModule,
     ArModelViewerComponent,
+    ArFxBannerComponent,
     SectionShellComponent,
   ],
   templateUrl: './ar-scanner.component.html',
@@ -49,6 +62,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   @ViewChild('mindarHost') mindarHost?: ElementRef<HTMLElement>;
   @ViewChild('cameraFrame') cameraFrame?: ElementRef<HTMLElement>;
   @ViewChild(ArModelViewerComponent) modelViewer?: ArModelViewerComponent;
+  @ViewChild('arClip') arClip?: ElementRef<HTMLVideoElement>;
 
   private catalog: ArMarker[] = [];
   private lastHitId: string | null = null;
@@ -57,6 +71,10 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   private mindConfig: MindTargetsFile | null = null;
   private engineStarting = false;
   private trackedTargetIndex: number | null = null;
+  /** Origen de la detección activa (MindAR o colores de gorra). */
+  private detectionSource: 'mind' | 'color' | null = null;
+  private colorPollTimer: ReturnType<typeof setInterval> | null = null;
+  private colorMisses = 0;
 
   cameraActive = signal(false);
   scanning = signal(false);
@@ -69,7 +87,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   recentScans = signal<ArMarker[]>([]);
   feedback = signal<string | null>(null);
   scanMiss = signal<string | null>(null);
-  scanMode = signal<ScanModo>('logo');
+  scanMode = signal<ScanModo>('pelota');
   animating = signal(false);
   animMode = signal<ArAnimMode>('idle');
   showInfo = signal(false);
@@ -81,25 +99,26 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   lastPhotoUrl = signal<string | null>(null);
   btnPressed = signal<string | null>(null);
   activeAction = signal<ArAction | null>(null);
+  fxBanner = signal<FxBannerState | null>(null);
 
   readonly scanModes: ScanModeOption[] = [
     {
-      id: 'tarjeta',
-      label: 'Tarjeta',
-      icon: 'badge',
-      hint: 'Escanea algo de baseball y ve lo que sucede.',
+      id: 'pelota',
+      label: 'Pelota',
+      icon: 'sports_baseball',
+      hint: 'Tu pelota Dodgers/Ohtani o Sultanes.',
     },
     {
       id: 'gorra',
       label: 'Gorra',
       icon: 'style',
-      hint: 'Escanea algo de baseball y ve lo que sucede.',
+      hint: 'Centra el logo NY o Sox de frente (gorra real o logo en pantalla).',
     },
     {
       id: 'logo',
       label: 'Logo',
       icon: 'shield',
-      hint: 'Escanea algo de baseball y ve lo que sucede.',
+      hint: 'Escanea un logo o escudo plano (pantalla o impreso).',
     },
   ];
 
@@ -110,16 +129,18 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
   private feedbackTimer: ReturnType<typeof setTimeout> | null = null;
   private animTimer: ReturnType<typeof setTimeout> | null = null;
-  private videoTimer: ReturnType<typeof setInterval> | null = null;
   private missTimer: ReturnType<typeof setTimeout> | null = null;
+  private bannerTimer: ReturnType<typeof setTimeout> | null = null;
   private photoUrlToRevoke: string | null = null;
-  private audioCtx: AudioContext | null = null;
+  private speaking = false;
 
   private readonly zone = inject(NgZone);
   private readonly fx = inject(ParticleFxService);
+  private readonly sounds = inject(UiSoundService);
   private readonly lnm = inject(LnmDataService);
   private readonly rewards = inject(RewardsService);
   private readonly mindAr = inject(MindArService);
+  private readonly gorraColor = inject(GorraColorDetectService);
 
   ngOnInit(): void {
     this.rewards.loadCatalog().subscribe();
@@ -134,7 +155,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   }
 
   onModePill(id: string): void {
-    if (id !== 'tarjeta' && id !== 'gorra' && id !== 'logo') return;
+    if (id !== 'pelota' && id !== 'gorra' && id !== 'logo') return;
     void this.setScanMode(id);
   }
 
@@ -266,8 +287,9 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.showParticles.set(true);
     this.activeAction.set('stats');
     this.runAnim('pulse3d', 1400);
+    this.showFxBanner('Historial', marker.nombre, 'stats', 2000);
     this.ping(`Historial: ${marker.nombre}`);
-    this.playClick();
+    this.sounds.play('click');
     this.fx.burst('spark', event);
   }
 
@@ -277,7 +299,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
     this.btnPressed.set(action);
     setTimeout(() => this.btnPressed.set(null), 220);
-    this.playClick();
+    this.sounds.play('click');
 
     if (action === 'foto') {
       void this.capturePhoto(event);
@@ -286,65 +308,115 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
     switch (action) {
       case 'stats':
-        this.stopVideoProgress();
+        this.stopClip();
+        this.stopNarration();
         this.showStats.set(true);
         this.showInfo.set(false);
-        this.videoPlaying.set(false);
         this.showParticles.set(true);
         this.activeAction.set('stats');
-        this.runAnim('pulse3d', 1200);
+        this.runAnim('pulse3d', 1400);
+        this.showFxBanner('Stats en vivo', marker.nombre, 'stats', 2200);
         this.fx.burst('spark', event);
         this.ping(`Estadísticas: ${marker.nombre}`);
         break;
 
       case 'video': {
         const next = !this.videoPlaying();
+        this.stopNarration();
         this.showStats.set(false);
         this.showInfo.set(false);
-        this.videoPlaying.set(next);
         this.showParticles.set(next);
         this.activeAction.set(next ? 'video' : null);
         if (next) {
-          this.startVideoProgress();
-          this.runAnim('spin', 2800);
+          this.videoPlaying.set(true);
+          this.runAnim('homerun', 3200);
+          this.showFxBanner(
+            'Clip + celebración',
+            marker.videoHint,
+            'video',
+            3600,
+          );
           this.fx.burstCenter('homer');
-          this.ping(`Video + partículas: ${marker.videoHint}`);
+          this.ping(`Video: ${marker.videoHint}`);
+          setTimeout(() => this.playClip(), 50);
         } else {
-          this.stopVideoProgress();
+          this.stopClip();
           this.animMode.set('idle');
           this.animating.set(false);
+          this.clearFxBanner();
           this.ping('Video detenido');
         }
         break;
       }
 
-      case 'anim':
-        this.stopVideoProgress();
-        this.videoPlaying.set(false);
+      case 'anim': {
+        const mode = this.animModeForMarker(marker);
+        this.stopClip();
+        this.stopNarration();
         this.showParticles.set(true);
         this.activeAction.set('anim');
-        this.runAnim(
-          marker.tipo === 'gorra' || marker.tipo === 'logo' || marker.tipo === 'pelota'
-            ? 'showcase'
-            : 'swing',
-          3200,
+        this.runAnim(mode, 3600);
+        this.showFxBanner(
+          marker.animationLabel || 'Animación 3D',
+          this.animHintFor(mode),
+          mode === 'homerun' ? 'homer' : 'anim',
+          3800,
         );
         this.fx.burst('homer', event);
         this.ping(`Animación 3D: ${marker.animationLabel}`);
         break;
+      }
 
       case 'info':
-        this.stopVideoProgress();
+        this.stopClip();
         this.showInfo.set(true);
         this.showStats.set(false);
-        this.videoPlaying.set(false);
         this.showParticles.set(true);
         this.activeAction.set('info');
-        this.runAnim('spin', 2000);
+        this.runAnim('spinAxis', 2600);
+        this.showFxBanner(
+          'Info + 360°',
+          'Narración en voz alta',
+          'info',
+          3200,
+        );
         this.fx.burst('spark', event);
         this.ping(`Info: ${marker.nombre}`);
+        this.speakInfo(marker);
         break;
     }
+  }
+
+  /** Clip asociado al marcador (o uno por defecto según tipo). */
+  clipSrc(marker: ArMarker): string {
+    if (marker.videoSrc) return marker.videoSrc;
+    switch (marker.tipo) {
+      case 'jugador':
+        return 'assets/videos/leyendas-mexicanas.mp4';
+      case 'equipo':
+      case 'logo':
+      case 'gorra':
+        return 'assets/videos/escudos-lnm.mp4';
+      case 'pelota':
+        return 'assets/videos/jonron-historia.mp4';
+      case 'liga':
+      default:
+        return 'assets/videos/estrellas-mlb.mp4';
+    }
+  }
+
+  onClipTimeUpdate(): void {
+    const video = this.arClip?.nativeElement;
+    if (!video?.duration) return;
+    this.videoProgress.set((video.currentTime / video.duration) * 100);
+  }
+
+  onClipEnded(): void {
+    this.videoProgress.set(100);
+    this.videoPlaying.set(false);
+    this.activeAction.set(null);
+    this.sounds.play('success');
+    this.ping('Clip finalizado');
   }
 
   /** Captura foto: cámara + modelo 3D + etiqueta. */
@@ -356,8 +428,10 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
     this.capturing.set(true);
     this.activeAction.set('foto');
+    this.animMode.set('static');
     this.fx.burst('confetti', event);
     this.showParticles.set(true);
+    this.showFxBanner('Foto AR', marker?.nombre || 'Captura', 'detect', 1800);
 
     try {
       const w = frame.clientWidth || video.clientWidth || 640;
@@ -468,16 +542,18 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     void this.stopEngines();
     this.clearLiveDetection(false);
-    this.stopVideoProgress();
+    this.stopClip();
+    this.stopNarration();
     this.clearMissTimer();
+    this.clearFxBanner();
     if (this.animTimer) clearTimeout(this.animTimer);
     if (this.photoUrlToRevoke) URL.revokeObjectURL(this.photoUrlToRevoke);
     document.body.style.overflow = '';
     if (this.feedbackTimer) clearTimeout(this.feedbackTimer);
-    void this.audioCtx?.close();
   }
 
   private async stopEngines(): Promise<void> {
+    this.stopColorPoll();
     await this.mindAr.stop();
   }
 
@@ -510,7 +586,12 @@ export class ArScannerComponent implements OnInit, OnDestroy {
       this.engineStatus.set(`MindAR · ${modeCfg.targets.length} targets`);
       this.compileProgress.set(null);
       this.scheduleMissHint();
-      this.ping(`Escaneando ${this.modeShortLabel()} (MindAR)`);
+      if (mode === 'gorra') {
+        this.startColorPoll();
+        this.ping('Escaneando Gorra · imagen + colores');
+      } else {
+        this.ping(`Escaneando ${this.modeShortLabel()} (MindAR)`);
+      }
     } catch (err) {
       const detail =
         err instanceof Error ? err.message : 'Error al iniciar escáner';
@@ -523,11 +604,72 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     }
   }
 
+  private startColorPoll(): void {
+    this.stopColorPoll();
+    this.gorraColor.reset();
+    this.colorMisses = 0;
+    this.colorPollTimer = setInterval(() => {
+      if (this.scanMode() !== 'gorra' || !this.scanning()) return;
+      const video = this.mindAr.getVideo();
+      const guess = this.gorraColor.sample(video);
+      if (!guess) {
+        if (this.detectionSource === 'color' && this.activeMarker()) {
+          this.colorMisses++;
+          // Quitar rápido al sacar la gorra (~400 ms)
+          if (this.colorMisses >= 2) {
+            this.clearLiveDetection(true);
+          }
+        }
+        return;
+      }
+      this.colorMisses = 0;
+      this.scanMiss.set(null);
+      this.clearMissTimer();
+      const current = this.activeMarker();
+      if (current?.id === guess.id) {
+        this.lastHitAt = Date.now();
+        this.detectionSource = this.detectionSource ?? 'color';
+        return;
+      }
+      // Si MindAR ya tiene otra ficha, no pisar por color a menos que lleve rato
+      if (
+        current &&
+        this.detectionSource === 'mind' &&
+        Date.now() - this.lastHitAt < 600
+      ) {
+        return;
+      }
+      const marker = this.catalog.find((m) => m.id === guess.id);
+      if (!marker) return;
+      this.detectionSource = 'color';
+      this.applyDetection(marker);
+      this.ping(`Colores · ${guess.label}`);
+    }, 200);
+  }
+
+  private stopColorPoll(): void {
+    if (this.colorPollTimer) clearInterval(this.colorPollTimer);
+    this.colorPollTimer = null;
+    this.gorraColor.reset();
+    this.colorMisses = 0;
+  }
+
   private onMindTarget(index: number, found: boolean): void {
     if (!found) {
       if (this.trackedTargetIndex === index) {
-        this.clearLiveDetection(true);
         this.trackedTargetIndex = null;
+        // Si la gorra sigue por colores, no limpies el overlay
+        if (
+          this.scanMode() === 'gorra' &&
+          this.detectionSource === 'color' &&
+          this.activeMarker()
+        ) {
+          this.scheduleMissHint();
+          return;
+        }
+        if (this.detectionSource === 'mind') {
+          this.clearLiveDetection(true);
+        }
       }
       this.scheduleMissHint();
       return;
@@ -541,6 +683,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
       this.lastHitId = id;
       this.lastHitAt = now;
       this.trackedTargetIndex = index;
+      this.detectionSource = 'mind';
       this.scanMiss.set(null);
       this.clearMissTimer();
       return;
@@ -557,6 +700,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     }
 
     this.trackedTargetIndex = index;
+    this.detectionSource = 'mind';
     this.applyDetection(marker);
   }
 
@@ -564,6 +708,9 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   private clearLiveDetection(announce: boolean): void {
     this.activeMarker.set(null);
     this.lastHitId = null;
+    this.detectionSource = null;
+    this.colorMisses = 0;
+    this.gorraColor.reset();
     this.clearPanels(true);
     this.showParticles.set(false);
     if (announce) this.ping('Marcador fuera de vista');
@@ -575,7 +722,11 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.missTimer = setTimeout(() => {
       if (!this.activeMarker() && this.scanning()) {
         this.scanMiss.set(
-          'Sin match MindAR. Abre el PNG exacto del sidebar (logo-demo primero) o imprímelo.',
+          this.scanMode() === 'gorra'
+            ? 'Sin match aún. Centra la gorra (negro+dorado o crema+púrpura). Colores también cuentan.'
+            : this.scanMode() === 'pelota'
+              ? 'Sin match. Centra tu pelota Ohtani/Dodgers o Sultanes.'
+              : 'Sin match MindAR. Abre o imprime el marcador del sidebar (logo-demo primero).',
         );
       }
     }, 6000);
@@ -598,12 +749,32 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.clearPanels(false);
     this.showParticles.set(true);
 
-    if (marker.tipo === 'gorra' || marker.tipo === 'logo' || marker.tipo === 'pelota') {
+    if (marker.tipo === 'gorra' || marker.tipo === 'logo') {
       this.activeAction.set('anim');
       this.runAnim('showcase', 4200);
+      this.showFxBanner(
+        marker.animationLabel || 'Presentación',
+        marker.equipo || marker.nombre,
+        'detect',
+        4200,
+      );
+    } else if (marker.tipo === 'pelota') {
+      this.activeAction.set('anim');
+      this.runAnim('homerun', 4000);
+      this.showFxBanner('¡Jonrón!', marker.animationLabel, 'homer', 4000);
+    } else if (marker.tipo === 'jugador') {
+      this.activeAction.set('anim');
+      this.runAnim(this.animModeForMarker(marker), 3600);
+      this.showFxBanner(
+        marker.animationLabel || 'Jugada',
+        marker.posicion || marker.subtitle,
+        'anim',
+        3600,
+      );
     } else {
       this.activeAction.set('stats');
-      this.runAnim('pulse3d', 1600);
+      this.runAnim('pulse3d', 1800);
+      this.showFxBanner('Detectado', marker.nombre, 'detect', 2200);
     }
 
     this.ping(
@@ -611,8 +782,11 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         ? `Sí · ${marker.equipo || marker.nombre}`
         : `Detectado: ${marker.nombre}`,
     );
-    this.playClick();
-    this.fx.burst('confetti', event);
+    this.sounds.play('success');
+    this.fx.burst(
+      marker.tipo === 'pelota' ? 'homer' : 'confetti',
+      event,
+    );
 
     const unlocked = this.rewards.recordScan(marker.id, this.scanMode());
     if (unlocked) this.ping(`¡${unlocked}!`);
@@ -627,11 +801,69 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   private clearPanels(clearActive = true): void {
     this.showInfo.set(false);
     this.showStats.set(false);
-    this.videoPlaying.set(false);
+    this.stopClip();
+    this.stopNarration();
     this.animating.set(false);
     this.animMode.set('idle');
-    this.stopVideoProgress();
+    this.clearFxBanner();
     if (clearActive) this.activeAction.set(null);
+  }
+
+  /** Animación coherente con el tipo de marcador / etiqueta. */
+  private animModeForMarker(marker: ArMarker): ArAnimMode {
+    const label = (marker.animationLabel || '').toLowerCase();
+    if (marker.tipo === 'gorra' || marker.tipo === 'logo') return 'showcase';
+    if (marker.tipo === 'pelota') return 'homerun';
+    if (marker.tipo === 'equipo') return 'spinAxis';
+    if (marker.tipo === 'liga') return 'pulse3d';
+    if (label.includes('ponche') || label.includes('lanz') || label.includes('entrega')) {
+      return 'pitch';
+    }
+    if (label.includes('fildeo') || label.includes('guante') || label.includes('atrap')) {
+      return 'catch';
+    }
+    if (label.includes('jonrón') || label.includes('homer') || label.includes('celebr')) {
+      return 'homerun';
+    }
+    return 'swing';
+  }
+
+  private animHintFor(mode: ArAnimMode): string {
+    switch (mode) {
+      case 'pitch':
+        return 'Wind-up y entrega';
+      case 'catch':
+        return 'Recepción / snap';
+      case 'homerun':
+        return 'Arco de celebración';
+      case 'showcase':
+        return 'Presentación del modelo';
+      case 'swing':
+        return 'Swing de bateo';
+      case 'spinAxis':
+        return 'Rotación estable 360°';
+      case 'pulse3d':
+        return 'Pulso 3D';
+      default:
+        return 'Efecto 3D';
+    }
+  }
+
+  private showFxBanner(
+    title: string,
+    subtitle: string,
+    kind: ArFxKind,
+    ms: number,
+  ): void {
+    this.fxBanner.set({ title, subtitle, kind });
+    if (this.bannerTimer) clearTimeout(this.bannerTimer);
+    this.bannerTimer = setTimeout(() => this.clearFxBanner(), ms);
+  }
+
+  private clearFxBanner(): void {
+    if (this.bannerTimer) clearTimeout(this.bannerTimer);
+    this.bannerTimer = null;
+    this.fxBanner.set(null);
   }
 
   private runAnim(mode: ArAnimMode, ms: number): void {
@@ -645,53 +877,56 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     }, ms);
   }
 
-  private startVideoProgress(): void {
-    this.stopVideoProgress();
+  private playClip(): void {
+    const video = this.arClip?.nativeElement;
+    if (!video) return;
+    video.currentTime = 0;
     this.videoProgress.set(0);
-    this.videoTimer = setInterval(() => {
-      const next = this.videoProgress() + 4;
-      if (next >= 100) {
-        this.videoProgress.set(100);
-        this.stopVideoProgress();
-        this.videoPlaying.set(false);
-        this.activeAction.set(null);
-        this.ping('Clip finalizado');
-        return;
-      }
-      this.videoProgress.set(next);
-    }, 120);
+    void video.play().catch(() => {
+      this.ping('Activa el audio/video con un toque y reintenta');
+    });
   }
 
-  private stopVideoProgress(): void {
-    if (this.videoTimer) clearInterval(this.videoTimer);
-    this.videoTimer = null;
+  private stopClip(): void {
+    const video = this.arClip?.nativeElement;
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
+    this.videoPlaying.set(false);
     this.videoProgress.set(0);
+  }
+
+  private speakInfo(marker: ArMarker): void {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      this.ping('Narración no disponible en este navegador');
+      return;
+    }
+    this.stopNarration();
+    const text = `${marker.nombre}. ${marker.subtitle}. ${marker.info}`;
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'es-MX';
+    utter.rate = 1.02;
+    utter.pitch = 1;
+    utter.onend = () => {
+      this.speaking = false;
+    };
+    utter.onerror = () => {
+      this.speaking = false;
+    };
+    this.speaking = true;
+    window.speechSynthesis.speak(utter);
+  }
+
+  private stopNarration(): void {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    this.speaking = false;
   }
 
   private ping(message: string): void {
     this.feedback.set(message);
     if (this.feedbackTimer) clearTimeout(this.feedbackTimer);
     this.feedbackTimer = setTimeout(() => this.feedback.set(null), 2800);
-  }
-
-  private playClick(): void {
-    try {
-      this.audioCtx ??= new AudioContext();
-      const osc = this.audioCtx.createOscillator();
-      const gain = this.audioCtx.createGain();
-      osc.type = 'square';
-      osc.frequency.value = 880;
-      gain.gain.value = 0.04;
-      osc.connect(gain);
-      gain.connect(this.audioCtx.destination);
-      osc.start();
-      gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        this.audioCtx.currentTime + 0.08,
-      );
-      osc.stop(this.audioCtx.currentTime + 0.09);
-    } catch {
-      /* audio opcional */
-    }
   }
 }
