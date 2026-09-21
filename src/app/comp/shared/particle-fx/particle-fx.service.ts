@@ -12,7 +12,17 @@ export interface ParticleBurst {
 @Injectable({ providedIn: 'root' })
 export class ParticleFxService {
   private readonly bursts$ = new Subject<ParticleBurst>();
+  private readonly clear$ = new Subject<void>();
+  private rainTimer: ReturnType<typeof setInterval> | null = null;
+  /** Ancla opcional (p. ej. marco de cámara) para centrar bursts. */
+  private originEl: HTMLElement | null = null;
+
   readonly bursts = this.bursts$.asObservable();
+  readonly clears = this.clear$.asObservable();
+
+  setOrigin(el: HTMLElement | null): void {
+    this.originEl = el;
+  }
 
   burst(
     kind: ParticleKind = 'confetti',
@@ -23,11 +33,48 @@ export class ParticleFxService {
   }
 
   burstCenter(kind: ParticleKind = 'confetti'): void {
-    this.bursts$.next({
+    this.bursts$.next({ ...this.resolveCenter(), kind });
+  }
+
+  /** Lluvia continua de confeti (sigue aunque se quite el modelo). */
+  startRain(kind: ParticleKind = 'confetti', intervalMs = 650): void {
+    if (this.rainTimer) return;
+    this.burstCenter(kind);
+    this.rainTimer = setInterval(() => this.burstCenter(kind), intervalMs);
+  }
+
+  stopRain(): void {
+    if (this.rainTimer) {
+      clearInterval(this.rainTimer);
+      this.rainTimer = null;
+    }
+  }
+
+  isRaining(): boolean {
+    return this.rainTimer != null;
+  }
+
+  /** Detiene la lluvia y limpia partículas visibles. */
+  clear(): void {
+    this.stopRain();
+    this.clear$.next();
+  }
+
+  private resolveCenter(): { x: number; y: number } {
+    const el = this.originEl;
+    if (el?.isConnected) {
+      const r = el.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) {
+        return {
+          x: r.left + r.width / 2,
+          y: r.top + r.height / 2,
+        };
+      }
+    }
+    return {
       x: window.innerWidth / 2,
       y: window.innerHeight * 0.38,
-      kind,
-    });
+    };
   }
 
   private resolvePoint(
@@ -46,9 +93,6 @@ export class ParticleFxService {
         return { x: evt.clientX, y: evt.clientY };
       }
     }
-    return {
-      x: window.innerWidth / 2,
-      y: window.innerHeight * 0.42,
-    };
+    return this.resolveCenter();
   }
 }

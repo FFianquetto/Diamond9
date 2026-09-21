@@ -37,6 +37,7 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
   private particles: Particle[] = [];
   private raf = 0;
   private sub?: Subscription;
+  private clearSub?: Subscription;
   private dpr = 1;
   private reducedMotion = false;
 
@@ -50,13 +51,26 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
     this.resize();
     window.addEventListener('resize', this.resize);
     this.sub = this.fx.bursts.subscribe((burst) => this.spawn(burst));
+    this.clearSub = this.fx.clears.subscribe(() => this.clearParticles());
     // No loop continuo: arranca al primer burst
   }
 
   ngOnDestroy(): void {
     cancelAnimationFrame(this.raf);
     this.sub?.unsubscribe();
+    this.clearSub?.unsubscribe();
     window.removeEventListener('resize', this.resize);
+  }
+
+  private clearParticles(): void {
+    this.particles = [];
+    cancelAnimationFrame(this.raf);
+    this.raf = 0;
+    const canvas = this.canvasRef?.nativeElement;
+    if (canvas && this.ctx) {
+      this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+      this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    }
   }
 
   private resize = (): void => {

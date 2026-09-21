@@ -162,6 +162,15 @@
               <mat-icon>photo_camera</mat-icon>
               {{ capturing() ? 'Capturando…' : 'Tomar foto' }}
             </button>
+            <button
+              type="button"
+              class="btn-celebrate"
+              [class.active]="confettiOn()"
+              (click)="toggleCelebrar($event)"
+            >
+              <mat-icon>{{ confettiOn() ? 'block' : 'celebration' }}</mat-icon>
+              {{ confettiOn() ? 'Quitar confeti' : 'Celebrar' }}
+            </button>
           </div>
         }
 

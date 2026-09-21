@@ -104,6 +104,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   showParticles = signal(false);
   capturing = signal(false);
   lastPhotoUrl = signal<string | null>(null);
+  confettiOn = signal(false);
   btnPressed = signal<string | null>(null);
   activeAction = signal<ArAction | null>(null);
   fxBanner = signal<FxBannerState | null>(null);
@@ -272,6 +273,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
   async stopCamera(event?: Event): Promise<void> {
     this.clearMissTimer();
+    this.stopCelebrar();
     await this.stopEngines();
     this.cameraActive.set(false);
     this.scanning.set(false);
@@ -562,6 +564,37 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggleCelebrar(event?: Event): void {
+    if (this.confettiOn()) {
+      this.stopCelebrar();
+      this.ping('Confeti apagado');
+      this.sounds.play('click');
+      return;
+    }
+    this.startCelebrar(event, 'confetti');
+    this.ping('¡Celebración!');
+    this.sounds.play('success');
+  }
+
+  private startCelebrar(
+    _event?: Event,
+    kind: 'confetti' | 'homer' = 'confetti',
+  ): void {
+    this.confettiOn.set(true);
+    this.showParticles.set(true);
+    // Centrar en el marco de la cámara (no en el botón ni en el viewport).
+    this.fx.setOrigin(this.cameraFrame?.nativeElement ?? null);
+    this.fx.burstCenter(kind);
+    this.fx.startRain(kind);
+  }
+
+  private stopCelebrar(): void {
+    this.confettiOn.set(false);
+    this.showParticles.set(false);
+    this.fx.clear();
+    this.fx.setOrigin(null);
+  }
+
   tipoLabel(tipo: ArMarker['tipo']): string {
     switch (tipo) {
       case 'jugador':
@@ -581,6 +614,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     void this.stopEngines();
+    this.stopCelebrar();
     this.clearLiveDetection(false);
     this.stopClip();
     this.stopNarration();
@@ -826,7 +860,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.pelotaColor.reset();
     this.logoColor.reset();
     this.clearPanels(true);
-    this.showParticles.set(false);
+    // El confeti sigue aunque se quite el modelo; solo Celebrar / Quitar lo apaga.
     if (announce) this.ping('Marcador fuera de vista · guardado en historial');
   }
 
@@ -897,9 +931,9 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         : `Detectado: ${marker.nombre}`,
     );
     this.sounds.play('success');
-    this.fx.burst(
-      marker.tipo === 'pelota' ? 'homer' : 'confetti',
+    this.startCelebrar(
       event,
+      marker.tipo === 'pelota' ? 'homer' : 'confetti',
     );
 
     const unlocked = this.rewards.recordScan(marker.id, this.scanMode());

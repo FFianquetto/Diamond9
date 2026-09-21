@@ -752,44 +752,70 @@
 
 .cam-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.55rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.45rem;
 
-  @media (max-width: 420px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 520px) {
+    gap: 0.35rem;
+  }
+
+  .btn-secondary {
+    min-height: 48px;
+    padding: 0.65rem 0.4rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    line-height: 1.15;
   }
 }
 
-.btn-photo {
+.btn-photo,
+.btn-celebrate {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
   width: 100%;
   min-height: 48px;
-  padding: 0.75rem 0.85rem;
+  padding: 0.65rem 0.45rem;
   border-radius: 12px;
   border: 2px solid rgba($rebase-10, 0.75);
   background: rgba($rebase-10, 0.16);
   color: $rebase-7;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  font-size: 0.68rem;
+  line-height: 1.15;
   cursor: pointer;
   touch-action: manipulation;
 
   mat-icon {
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
     color: $rebase-10;
+    flex-shrink: 0;
   }
 
   &:disabled {
     opacity: 0.45;
     cursor: not-allowed;
+  }
+}
+
+.btn-celebrate {
+  border-color: rgba($rebase-12, 0.7);
+  background: rgba($rebase-12, 0.14);
+
+  mat-icon {
+    color: $rebase-12;
+  }
+
+  &.active {
+    border-color: rgba($rebase-10, 0.85);
+    background: rgba($rebase-10, 0.22);
+    color: $rebase-7;
   }
 }
 
