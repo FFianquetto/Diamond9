@@ -718,13 +718,22 @@
   margin-top: 0.85rem;
 }
 
-.actions-label {
-  margin: 0.15rem 0 0;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: $rebase-10;
+.action-panel {
+  margin-top: 0.65rem;
+  max-width: none;
+  width: 100%;
+}
+
+.action-panel-meta {
+  margin: 0.45rem 0 0;
+  font-size: 0.75rem;
+  color: $rebase-12;
+
+  &.narration-note {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
 }
 
 .action-row {
@@ -732,14 +741,12 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.5rem;
 
-  @media (min-width: 420px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  @media (min-width: 380px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  &.action-row--5 {
-    @media (min-width: 520px) {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 
@@ -828,7 +835,7 @@
     gap: 0.2rem;
     min-height: 52px;
     padding: 0.65rem 0.35rem;
-    font-size: 0.68rem;
+    font-size: clamp(0.62rem, 2.5vw, 0.72rem);
     font-weight: 700;
     text-align: center;
     text-transform: uppercase;

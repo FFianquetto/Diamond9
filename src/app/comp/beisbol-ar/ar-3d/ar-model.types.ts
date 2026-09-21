@@ -1,7 +1,7 @@
 import { LnmItemType } from '../lnm-catalog.types';
 
 export type ArModelFormat = 'glb' | 'gltf' | 'obj';
-export type ArModelFallback = 'bate' | 'pelota' | 'gorra' | 'guante' | 'trofeo';
+export type ArModelFallback = 'pelota' | 'gorra' | 'guante' | 'trofeo';
 export type ArAnimMode =
   | 'idle'
   | 'spin'
@@ -26,6 +26,7 @@ export const AR_CELEBRATION_MODES: ReadonlySet<ArAnimMode> = new Set([
   'catch',
   'homerun',
   'spin',
+  'spinAxis',
 ]);
 
 export interface ArModelEntry {

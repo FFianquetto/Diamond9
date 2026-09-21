@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 /**
- * Detector de gorras por color (región del guía).
- * Exige el par de colores; sin gorra en cuadro → null ya.
+ * Detector de gorras por color (modo Gorra). Independiente de logo/pelota.
+ * Proximidad moderada: centro del guía, sin ser tan estricto como logos.
  * - Yankees: negro + dorado
  * - Sox: crema + púrpura
  */
@@ -19,8 +19,8 @@ export class GorraColorDetectService {
   private canvas: HTMLCanvasElement | null = null;
   private stableId: GorraColorId | null = null;
   private stableHits = 0;
-  /** 2 frames ≈ 400 ms para confirmar; evita falsos al pasar la mano. */
-  private readonly needHits = 2;
+  /** 3 frames ≈ 600 ms: estabiliza sin volverse sordo. */
+  private readonly needHits = 3;
 
   reset(): void {
     this.stableId = null;
@@ -28,10 +28,22 @@ export class GorraColorDetectService {
   }
 
   sample(video: HTMLVideoElement | null): GorraColorGuess | null {
+    const guess = this.analyze(video);
+    if (!guess) return this.fail();
+
+    if (guess.id === this.stableId) this.stableHits++;
+    else {
+      this.stableId = guess.id;
+      this.stableHits = 1;
+    }
+    if (this.stableHits < this.needHits) return null;
+    return guess;
+  }
+
+  private analyze(video: HTMLVideoElement | null): GorraColorGuess | null {
     if (!video || video.readyState < 2 || video.videoWidth < 16) return null;
 
     this.canvas ??= document.createElement('canvas');
-    // Misma región que .detect-guide-box (left 18%, top 12%, w 64%, h 62%)
     const w = 96;
     const h = 96;
     this.canvas.width = w;
@@ -41,23 +53,23 @@ export class GorraColorDetectService {
 
     const vw = video.videoWidth;
     const vh = video.videoHeight;
-    ctx.drawImage(
-      video,
-      vw * 0.18,
-      vh * 0.12,
-      vw * 0.64,
-      vh * 0.62,
-      0,
-      0,
-      w,
-      h,
-    );
+    // Guía completo con un poco de margen interno (no todo el cuadro = lejano)
+    const guideX = vw * 0.18;
+    const guideY = vh * 0.12;
+    const guideW = vw * 0.64;
+    const guideH = vh * 0.62;
+    const sx = guideX + guideW * 0.1;
+    const sy = guideY + guideH * 0.1;
+    const sw = guideW * 0.8;
+    const sh = guideH * 0.8;
+    ctx.drawImage(video, sx, sy, sw, sh, 0, 0, w, h);
 
     const { data } = ctx.getImageData(0, 0, w, h);
     let dark = 0;
     let gold = 0;
     let purple = 0;
     let cream = 0;
+    let other = 0;
     let total = 0;
 
     for (let i = 0; i < data.length; i += 4) {
@@ -66,7 +78,6 @@ export class GorraColorDetectService {
       const b = data[i + 2];
       if (r > 252 && g > 252 && b > 252) continue;
       total++;
-
       const { h: hue, s: sat, v: val } = this.hsv(r, g, b);
 
       if (val < 0.28) {
@@ -74,12 +85,12 @@ export class GorraColorDetectService {
         continue;
       }
 
-      // Dorado (no demasiado laxo: evita paredes cálidas)
+      // Dorado
       if (
         hue >= 22 &&
         hue <= 58 &&
-        sat >= 0.18 &&
-        val >= 0.32 &&
+        sat >= 0.2 &&
+        val >= 0.35 &&
         r > g - 5 &&
         r > b + 12
       ) {
@@ -98,11 +109,11 @@ export class GorraColorDetectService {
         continue;
       }
 
-      // Púrpura (sat mínima para no cazar azules del fondo)
+      // Púrpura
       if (
         hue >= 230 &&
         hue <= 320 &&
-        sat >= 0.1 &&
+        sat >= 0.12 &&
         val >= 0.16 &&
         val <= 0.75 &&
         b >= g
@@ -136,67 +147,48 @@ export class GorraColorDetectService {
         continue;
       }
 
-      if (val < 0.38 && sat < 0.22) dark++;
+      if (val < 0.38 && sat < 0.22) {
+        dark++;
+        continue;
+      }
+
+      other++;
     }
 
-    if (total < 80) return this.fail();
+    if (total < 90) return null;
 
     const pd = dark / total;
     const pg = gold / total;
     const pp = purple / total;
     const pc = cream / total;
+    const po = other / total;
 
-    // Sin objeto: mucha oscuridad / poca señal de par → no hay gorra
-    if (pd > 0.75 && pg < 0.008) return this.fail();
-    if (pg < 0.003 && pp < 0.008 && pc < 0.06) return this.fail();
+    // Solo rechaza fondos claramente vacíos / lejanos
+    if (po > 0.72) return null;
+    if (pd > 0.88 && pg < 0.005 && pp < 0.005) return null;
 
-    // Exige el PAR (no un solo color ambiental)
-    const yankeesOk = pd >= 0.16 && gold >= 8 && pg >= 0.008;
-    const soxOk = pc >= 0.07 && purple >= 12 && pp >= 0.012;
+    const yankeesOk = pd >= 0.14 && gold >= 10 && pg >= 0.01;
+    const soxOk = pc >= 0.08 && purple >= 14 && pp >= 0.014;
 
-    const yankeesScore = pd * 1.2 + pg * 4;
-    const soxScore = pc * 1.8 + pp * 3.5;
-
-    let guess: GorraColorGuess | null = null;
-
-    if (yankeesOk && soxOk) {
-      if (pp >= 0.02 || (pc >= 0.12 && purple >= 30)) {
-        guess = {
-          id: 'gorra-redsox',
-          score: soxScore,
-          label: 'White Sox (crema + púrpura)',
-        };
-      } else {
-        guess = {
-          id: 'gorra-yankees',
-          score: yankeesScore,
-          label: 'Yankees (negro + dorado)',
-        };
-      }
-    } else if (soxOk) {
-      guess = {
-        id: 'gorra-redsox',
-        score: soxScore,
-        label: 'White Sox (crema + púrpura)',
-      };
-    } else if (yankeesOk) {
-      guess = {
+    const scores: GorraColorGuess[] = [];
+    if (yankeesOk) {
+      scores.push({
         id: 'gorra-yankees',
-        score: yankeesScore,
+        score: pd * 1.2 + pg * 4,
         label: 'Yankees (negro + dorado)',
-      };
+      });
+    }
+    if (soxOk) {
+      scores.push({
+        id: 'gorra-redsox',
+        score: pc * 1.8 + pp * 3.5,
+        label: 'White Sox (crema + púrpura)',
+      });
     }
 
-    if (!guess) return this.fail();
-
-    if (guess.id === this.stableId) this.stableHits++;
-    else {
-      this.stableId = guess.id;
-      this.stableHits = 1;
-    }
-
-    if (this.stableHits < this.needHits) return null;
-    return guess;
+    if (!scores.length) return null;
+    scores.sort((a, b) => b.score - a.score);
+    return scores[0];
   }
 
   private hsv(
@@ -223,10 +215,9 @@ export class GorraColorDetectService {
     return { h, s, v };
   }
 
-  /** Sin match → limpia estado ya (no se “pega” al quitar la gorra). */
   private fail(): null {
-    this.stableId = null;
-    this.stableHits = 0;
+    this.stableHits = Math.max(0, this.stableHits - 1);
+    if (this.stableHits === 0) this.stableId = null;
     return null;
   }
 }

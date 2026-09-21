@@ -10,13 +10,6 @@ interface ModeloCard {
   color: string;
 }
 
-const MODEL_COLORS: Record<string, string> = {
-  bate: '#8D6E63',
-  'bate-2': '#A1887F',
-  'bate-rojo': '#C62828',
-  pelota: '#F5F5F5',
-};
-
 const GORRA_COLORS = [
   '#0C2340',
   '#005A9C',
@@ -36,15 +29,12 @@ function isGorraKey(key: string): boolean {
   return key === 'gorra' || key.startsWith('gorra-');
 }
 
-function isBateKey(key: string): boolean {
-  return key === 'bate' || key.startsWith('bate-');
-}
-
 function colorFor(key: string, gorraIndex: number): string {
   if (isGorraKey(key)) {
     return GORRA_COLORS[gorraIndex % GORRA_COLORS.length];
   }
-  return MODEL_COLORS[key] ?? '#00E5FF';
+  if (key === 'pelota' || key.startsWith('pelota-')) return '#F5F5F5';
+  return '#00E5FF';
 }
 
 @Component({
@@ -55,7 +45,6 @@ function colorFor(key: string, gorraIndex: number): string {
   styleUrl: './modelos-3d.component.scss',
 })
 export class Modelos3dComponent implements OnInit {
-  bates: ModeloCard[] = [];
   pelotas: ModeloCard[] = [];
   gorras: ModeloCard[] = [];
 
@@ -76,9 +65,10 @@ export class Modelos3dComponent implements OnInit {
         return card;
       });
 
-      this.bates = cards.filter((c) => isBateKey(c.key));
-      this.pelotas = cards.filter((c) => c.key === 'pelota' || c.key.startsWith('pelota-'));
       this.gorras = cards.filter((c) => isGorraKey(c.key));
+      this.pelotas = cards.filter(
+        (c) => c.key === 'pelota' || c.key.startsWith('pelota-'),
+      );
     });
   }
 }

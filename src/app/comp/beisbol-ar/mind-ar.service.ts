@@ -152,6 +152,7 @@ export class MindArService {
 
     onProgress?.('Iniciando MindAR…');
 
+    // Logo más estricto; gorra un punto medio (detecta bien sin disparar a lo lejos)
     const mindar = new MindARThree({
       container,
       imageTargetSrc: config.mindFile,
@@ -159,9 +160,8 @@ export class MindArService {
       uiLoading: 'no',
       uiScanning: 'no',
       uiError: 'yes',
-      // Más tolerancia: gorras reales cambian con ángulo/luz
-      warmupTolerance: 3,
-      missTolerance: 10,
+      warmupTolerance: mode === 'logo' ? 8 : mode === 'gorra' ? 5 : 3,
+      missTolerance: mode === 'logo' ? 6 : 10,
     });
     this.mindar = mindar;
 

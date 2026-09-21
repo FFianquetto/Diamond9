@@ -1,10 +1,10 @@
 {
-  "nota": "Única carpeta de modelos: public/assets/modelos/ (bate, gorra, pelota).",
+  "nota": "Única carpeta de modelos: public/assets/modelos/ (gorra, pelota).",
   "formatoRecomendado": "glb",
   "formatoAlternativo": "obj",
   "noUsar": "fbx / max",
   "defaults": {
-    "jugador": "bate",
+    "jugador": "pelota",
     "equipo": "pelota",
     "liga": "pelota",
     "gorra": "gorra-yankees",
@@ -56,32 +56,11 @@
     "pelota-sultanes": "pelota"
   },
   "models": {
-    "bate": {
-      "label": "Bate maple",
-      "file": "assets/modelos/bate/batemaple.glb",
-      "format": "glb",
-      "scale": 1.15,
-      "fallback": "bate"
-    },
-    "bate-2": {
-      "label": "Bate maple 2",
-      "file": "assets/modelos/bate/batemaple2.glb",
-      "format": "glb",
-      "scale": 1.15,
-      "fallback": "bate"
-    },
-    "bate-rojo": {
-      "label": "Bate maple rojo",
-      "file": "assets/modelos/bate/batemaplerojo.glb",
-      "format": "glb",
-      "scale": 1.15,
-      "fallback": "bate"
-    },
     "pelota": {
       "label": "Pelota",
       "file": "assets/modelos/pelota/pelota02.glb",
       "format": "glb",
-      "scale": 1,
+      "scale": 2.4,
       "fallback": "pelota"
     },
     "gorra-yankees": {

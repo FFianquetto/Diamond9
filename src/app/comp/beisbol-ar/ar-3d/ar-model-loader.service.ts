@@ -32,27 +32,20 @@ export class ArModelLoaderService {
           nota: '',
           formatoRecomendado: 'glb',
           defaults: {
-            jugador: 'bate',
+            jugador: 'pelota',
             equipo: 'pelota',
-            liga: 'trofeo',
-            gorra: 'gorra',
+            liga: 'pelota',
+            gorra: 'gorra-yankees',
             logo: 'pelota',
             pelota: 'pelota',
           },
           overrides: {},
           models: {
-            bate: {
-              label: 'Bate',
-              file: 'assets/modelos/bate/batemaple.glb',
-              format: 'glb',
-              scale: 1.4,
-              fallback: 'bate',
-            },
             pelota: {
               label: 'Pelota',
               file: 'assets/modelos/pelota/pelota02.glb',
               format: 'glb',
-              scale: 1.2,
+              scale: 2.4,
               fallback: 'pelota',
             },
           },
@@ -487,8 +480,8 @@ export class ArModelLoaderService {
     const box = new THREE.Box3().setFromObject(model);
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    // scale del manifiesto: gorras ~1.3 → un poco más grandes en escena
-    const scaleFactor = Math.min(Math.max(scale || 1, 0.6), 1.85);
+    // scale del manifiesto: pelota ~2.4, gorras ~1.35
+    const scaleFactor = Math.min(Math.max(scale || 1, 0.6), 2.6);
     const fit = (1.55 / maxDim) * scaleFactor;
     model.scale.setScalar(fit);
 
@@ -505,11 +498,6 @@ export class ArModelLoaderService {
       metalness: 0.35,
       roughness: 0.45,
     });
-    const wood = new THREE.MeshStandardMaterial({
-      color: 0x8d6e63,
-      metalness: 0.1,
-      roughness: 0.7,
-    });
     const leather = new THREE.MeshStandardMaterial({
       color: 0xf5f5f5,
       metalness: 0.05,
@@ -522,17 +510,6 @@ export class ArModelLoaderService {
     });
 
     switch (kind) {
-      case 'bate': {
-        const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 1.1, 16), wood);
-        barrel.rotation.z = Math.PI / 2;
-        barrel.position.x = 0.15;
-        const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.06, 0.45, 12), mat);
-        handle.rotation.z = Math.PI / 2;
-        handle.position.x = -0.45;
-        group.add(barrel, handle);
-        group.rotation.z = -0.35;
-        break;
-      }
       case 'pelota': {
         const ball = new THREE.Mesh(new THREE.SphereGeometry(0.42, 24, 24), leather);
         const seam = new THREE.Mesh(

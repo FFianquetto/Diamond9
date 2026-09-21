@@ -21,6 +21,8 @@ import { ArAnimMode } from '../ar-3d/ar-model.types';
 import { ScanModo } from '../lnm-catalog.types';
 import { MindArService, MindTargetsFile } from '../mind-ar.service';
 import { GorraColorDetectService } from '../gorra-color-detect.service';
+import { PelotaColorDetectService } from '../pelota-color-detect.service';
+import { LogoColorDetectService } from '../logo-color-detect.service';
 import {
   ArFxBannerComponent,
   ArFxKind,
@@ -31,6 +33,8 @@ import {
 } from '../../shared/section-shell/section-shell.component';
 
 export type ArAction = 'info' | 'stats' | 'video' | 'anim' | 'foto';
+
+const RECENT_SCANS_KEY = 'd9-recent-scans-v1';
 
 interface FxBannerState {
   title: string;
@@ -71,10 +75,13 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   private mindConfig: MindTargetsFile | null = null;
   private engineStarting = false;
   private trackedTargetIndex: number | null = null;
-  /** Origen de la detección activa (MindAR o colores de gorra). */
-  private detectionSource: 'mind' | 'color' | null = null;
+  /** Origen de la detección activa (MindAR, colores o Detectar ahora). */
+  private detectionSource: 'mind' | 'color' | 'manual' | null = null;
   private colorPollTimer: ReturnType<typeof setInterval> | null = null;
+  private logoPollTimer: ReturnType<typeof setInterval> | null = null;
   private colorMisses = 0;
+  private logoMisses = 0;
+  private pendingRecentIds: string[] = [];
 
   cameraActive = signal(false);
   scanning = signal(false);
@@ -90,8 +97,8 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   scanMode = signal<ScanModo>('pelota');
   animating = signal(false);
   animMode = signal<ArAnimMode>('idle');
-  showInfo = signal(false);
   showStats = signal(false);
+  showInfo = signal(false);
   videoPlaying = signal(false);
   videoProgress = signal(0);
   showParticles = signal(false);
@@ -106,19 +113,19 @@ export class ArScannerComponent implements OnInit, OnDestroy {
       id: 'pelota',
       label: 'Pelota',
       icon: 'sports_baseball',
-      hint: 'Tu pelota Dodgers/Ohtani o Sultanes.',
+      hint: 'Ohtani (blanco+azul) o Sultanes (blanco+negro). Imagen o colores.',
     },
     {
       id: 'gorra',
       label: 'Gorra',
       icon: 'style',
-      hint: 'Centra el logo NY o Sox de frente (gorra real o logo en pantalla).',
+      hint: 'Yankees (negro+dorado) o Sox (crema+púrpura). Imagen o colores.',
     },
     {
       id: 'logo',
       label: 'Logo',
       icon: 'shield',
-      hint: 'Escanea un logo o escudo plano (pantalla o impreso).',
+      hint: 'Abre el marcador del sidebar (logo-demo / Yankees / …) y céntralo.',
     },
   ];
 
@@ -132,7 +139,6 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   private missTimer: ReturnType<typeof setTimeout> | null = null;
   private bannerTimer: ReturnType<typeof setTimeout> | null = null;
   private photoUrlToRevoke: string | null = null;
-  private speaking = false;
 
   private readonly zone = inject(NgZone);
   private readonly fx = inject(ParticleFxService);
@@ -141,11 +147,15 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   private readonly rewards = inject(RewardsService);
   private readonly mindAr = inject(MindArService);
   private readonly gorraColor = inject(GorraColorDetectService);
+  private readonly pelotaColor = inject(PelotaColorDetectService);
+  private readonly logoColor = inject(LogoColorDetectService);
 
   ngOnInit(): void {
+    this.pendingRecentIds = this.readStoredRecentIds();
     this.rewards.loadCatalog().subscribe();
     this.lnm.loadCatalog().subscribe((bundle) => {
       this.catalog = bundle.all;
+      this.hydrateRecentFromCatalog();
     });
     this.mindAr.loadConfig().subscribe({
       next: (cfg) => (this.mindConfig = cfg),
@@ -194,7 +204,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.fx.burst('spark', event);
   }
 
-  /** Fuerza la ficha del target (demo / si la cámara no pega). */
+  /** Fuerza la ficha del target (cuenta como escaneo real y se guarda). */
   forceDetectTarget(id: string, event?: Event): void {
     event?.preventDefault();
     event?.stopPropagation();
@@ -203,8 +213,12 @@ export class ArScannerComponent implements OnInit, OnDestroy {
       this.ping(`Sin ficha para ${id}`);
       return;
     }
+    this.detectionSource = 'manual';
     this.applyDetection(marker, event);
-    this.ping(`Detectado (manual): ${marker.nombre}`);
+    // Escaneo manual = ya “completado”: entra al historial de inmediato
+    this.pushRecent(marker);
+    this.ping(`Escaneo guardado: ${marker.nombre}`);
+    this.sounds.play('success');
   }
 
   openCameraModal(event?: Event): void {
@@ -297,11 +311,17 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     const marker = this.activeMarker();
     if (!marker) return;
 
+    event?.preventDefault();
+    event?.stopPropagation();
     this.btnPressed.set(action);
     setTimeout(() => this.btnPressed.set(null), 220);
     this.sounds.play('click');
 
     if (action === 'foto') {
+      if (!this.cameraActive()) {
+        this.ping('Activa la cámara para tomar foto');
+        return;
+      }
       void this.capturePhoto(event);
       return;
     }
@@ -314,8 +334,8 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         this.showInfo.set(false);
         this.showParticles.set(true);
         this.activeAction.set('stats');
-        this.runAnim('pulse3d', 1400);
-        this.showFxBanner('Stats en vivo', marker.nombre, 'stats', 2200);
+        this.runAnim('pulse3d', 1800);
+        this.showFxBanner('Stats en vivo', marker.nombre, 'stats', 2400);
         this.fx.burst('spark', event);
         this.ping(`Estadísticas: ${marker.nombre}`);
         break;
@@ -338,7 +358,10 @@ export class ArScannerComponent implements OnInit, OnDestroy {
           );
           this.fx.burstCenter('homer');
           this.ping(`Video: ${marker.videoHint}`);
-          setTimeout(() => this.playClip(), 50);
+          // Esperar a que el <video> monte en el DOM
+          this.zone.runOutsideAngular(() => {
+            setTimeout(() => this.zone.run(() => this.playClip()), 120);
+          });
         } else {
           this.stopClip();
           this.animMode.set('idle');
@@ -353,38 +376,55 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         const mode = this.animModeForMarker(marker);
         this.stopClip();
         this.stopNarration();
+        this.showStats.set(false);
+        this.showInfo.set(false);
         this.showParticles.set(true);
         this.activeAction.set('anim');
-        this.runAnim(mode, 3600);
+        this.runAnim(mode, 4000);
         this.showFxBanner(
           marker.animationLabel || 'Animación 3D',
           this.animHintFor(mode),
           mode === 'homerun' ? 'homer' : 'anim',
-          3800,
+          4000,
         );
         this.fx.burst('homer', event);
         this.ping(`Animación 3D: ${marker.animationLabel}`);
         break;
       }
 
-      case 'info':
+      case 'info': {
+        const blurb = this.shortInfo(marker);
         this.stopClip();
-        this.showInfo.set(true);
+        this.stopNarration();
         this.showStats.set(false);
+        this.showInfo.set(true);
         this.showParticles.set(true);
         this.activeAction.set('info');
-        this.runAnim('spinAxis', 2600);
-        this.showFxBanner(
-          'Info + 360°',
-          'Narración en voz alta',
-          'info',
-          3200,
-        );
+        // Rúbrica: rotación 360° + dato + narración corta
+        this.runAnim('spinAxis', 4200);
+        this.showFxBanner('Info · 360°', marker.nombre, 'info', 3200);
         this.fx.burst('spark', event);
-        this.ping(`Info: ${marker.nombre}`);
-        this.speakInfo(marker);
+        this.ping(blurb);
+        this.speakInfo(marker, blurb);
         break;
+      }
     }
+  }
+
+  /** Dato corto para el panel Info (máx. ~140 caracteres). */
+  shortInfo(marker: ArMarker): string {
+    const tip = marker.tip?.trim();
+    if (tip) {
+      return tip.length > 140 ? `${tip.slice(0, 137).trimEnd()}…` : tip;
+    }
+    const raw = (marker.info || marker.subtitle || marker.nombre).trim();
+    const first = raw.split(/(?<=[.!?])\s+/)[0] || raw;
+    return first.length > 140 ? `${first.slice(0, 137).trimEnd()}…` : first;
+  }
+
+  /** Texto corto de la animación activa (plantilla). */
+  animHintForPublic(): string {
+    return this.animHintFor(this.animMode());
   }
 
   /** Clip asociado al marcador (o uno por defecto según tipo). */
@@ -554,6 +594,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
   private async stopEngines(): Promise<void> {
     this.stopColorPoll();
+    this.stopLogoPoll();
     await this.mindAr.stop();
   }
 
@@ -586,9 +627,16 @@ export class ArScannerComponent implements OnInit, OnDestroy {
       this.engineStatus.set(`MindAR · ${modeCfg.targets.length} targets`);
       this.compileProgress.set(null);
       this.scheduleMissHint();
-      if (mode === 'gorra') {
+      if (mode === 'gorra' || mode === 'pelota') {
         this.startColorPoll();
-        this.ping('Escaneando Gorra · imagen + colores');
+        this.ping(
+          mode === 'gorra'
+            ? 'Escaneando Gorra · imagen + colores'
+            : 'Escaneando Pelota · imagen + colores',
+        );
+      } else if (mode === 'logo') {
+        this.startLogoPoll();
+        this.ping('Escaneando Logo · abre el marcador del sidebar');
       } else {
         this.ping(`Escaneando ${this.modeShortLabel()} (MindAR)`);
       }
@@ -606,16 +654,22 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
   private startColorPoll(): void {
     this.stopColorPoll();
+    this.stopLogoPoll();
     this.gorraColor.reset();
+    this.pelotaColor.reset();
     this.colorMisses = 0;
     this.colorPollTimer = setInterval(() => {
-      if (this.scanMode() !== 'gorra' || !this.scanning()) return;
+      const mode = this.scanMode();
+      if ((mode !== 'gorra' && mode !== 'pelota') || !this.scanning()) return;
       const video = this.mindAr.getVideo();
-      const guess = this.gorraColor.sample(video);
+      const guess =
+        mode === 'gorra'
+          ? this.gorraColor.sample(video)
+          : this.pelotaColor.sample(video);
       if (!guess) {
         if (this.detectionSource === 'color' && this.activeMarker()) {
           this.colorMisses++;
-          // Quitar rápido al sacar la gorra (~400 ms)
+          // Quitar rápido al sacar el objeto (~400 ms) y guardar en historial
           if (this.colorMisses >= 2) {
             this.clearLiveDetection(true);
           }
@@ -631,11 +685,12 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         this.detectionSource = this.detectionSource ?? 'color';
         return;
       }
-      // Si MindAR ya tiene otra ficha, no pisar por color a menos que lleve rato
+      // Si MindAR/manual ya tiene otra ficha, no pisar por color a menos que lleve rato
       if (
         current &&
-        this.detectionSource === 'mind' &&
-        Date.now() - this.lastHitAt < 600
+        (this.detectionSource === 'mind' ||
+          this.detectionSource === 'manual') &&
+        Date.now() - this.lastHitAt < 1200
       ) {
         return;
       }
@@ -651,17 +706,70 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     if (this.colorPollTimer) clearInterval(this.colorPollTimer);
     this.colorPollTimer = null;
     this.gorraColor.reset();
+    this.pelotaColor.reset();
     this.colorMisses = 0;
+  }
+
+  /** Poll SOLO modo Logo (no toca gorra/pelota). */
+  private startLogoPoll(): void {
+    this.stopLogoPoll();
+    this.stopColorPoll();
+    this.logoColor.reset();
+    this.logoMisses = 0;
+    this.logoPollTimer = setInterval(() => {
+      if (this.scanMode() !== 'logo' || !this.scanning()) return;
+      const video = this.mindAr.getVideo();
+      const guess = this.logoColor.sample(video);
+      if (!guess) {
+        if (this.detectionSource === 'color' && this.activeMarker()) {
+          this.logoMisses++;
+          if (this.logoMisses >= 2) this.clearLiveDetection(true);
+        }
+        return;
+      }
+      this.logoMisses = 0;
+      this.scanMiss.set(null);
+      this.clearMissTimer();
+      const current = this.activeMarker();
+      if (current?.id === guess.id) {
+        this.lastHitAt = Date.now();
+        this.detectionSource = this.detectionSource ?? 'color';
+        return;
+      }
+      if (
+        current &&
+        (this.detectionSource === 'mind' ||
+          this.detectionSource === 'manual') &&
+        Date.now() - this.lastHitAt < 1200
+      ) {
+        return;
+      }
+      const marker = this.catalog.find((m) => m.id === guess.id);
+      if (!marker) return;
+      this.detectionSource = 'color';
+      this.applyDetection(marker);
+      this.ping(`Logo · ${guess.label}`);
+    }, 200);
+  }
+
+  private stopLogoPoll(): void {
+    if (this.logoPollTimer) clearInterval(this.logoPollTimer);
+    this.logoPollTimer = null;
+    this.logoColor.reset();
+    this.logoMisses = 0;
   }
 
   private onMindTarget(index: number, found: boolean): void {
     if (!found) {
       if (this.trackedTargetIndex === index) {
         this.trackedTargetIndex = null;
-        // Si la gorra sigue por colores, no limpies el overlay
+        // Si sigue por colores o Detectar ahora, no limpies el overlay
         if (
-          this.scanMode() === 'gorra' &&
-          this.detectionSource === 'color' &&
+          (this.scanMode() === 'gorra' ||
+            this.scanMode() === 'pelota' ||
+            this.scanMode() === 'logo') &&
+          (this.detectionSource === 'color' ||
+            this.detectionSource === 'manual') &&
           this.activeMarker()
         ) {
           this.scheduleMissHint();
@@ -704,16 +812,22 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.applyDetection(marker);
   }
 
-  /** Quita modelo, paneles y partículas al perder el marcador. */
+  /** Quita modelo/paneles; si había detección, la guarda en “últimos escaneos”. */
   private clearLiveDetection(announce: boolean): void {
+    const current = this.activeMarker();
+    if (current) this.pushRecent(current);
+
     this.activeMarker.set(null);
     this.lastHitId = null;
     this.detectionSource = null;
     this.colorMisses = 0;
+    this.logoMisses = 0;
     this.gorraColor.reset();
+    this.pelotaColor.reset();
+    this.logoColor.reset();
     this.clearPanels(true);
     this.showParticles.set(false);
-    if (announce) this.ping('Marcador fuera de vista');
+    if (announce) this.ping('Marcador fuera de vista · guardado en historial');
   }
 
   private scheduleMissHint(): void {
@@ -725,8 +839,8 @@ export class ArScannerComponent implements OnInit, OnDestroy {
           this.scanMode() === 'gorra'
             ? 'Sin match aún. Centra la gorra (negro+dorado o crema+púrpura). Colores también cuentan.'
             : this.scanMode() === 'pelota'
-              ? 'Sin match. Centra tu pelota Ohtani/Dodgers o Sultanes.'
-              : 'Sin match MindAR. Abre o imprime el marcador del sidebar (logo-demo primero).',
+              ? 'Sin match. Centra Ohtani (blanco+azul) o Sultanes (blanco+negro). Colores también cuentan.'
+              : 'Sin match. Abre el marcador del sidebar (logo-demo o Yankees) y céntralo de frente.',
         );
       }
     }, 6000);
@@ -796,11 +910,42 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.recentScans.update((list) =>
       [marker, ...list.filter((m) => m.id !== marker.id)].slice(0, 2),
     );
+    this.persistRecent();
+  }
+
+  private persistRecent(): void {
+    try {
+      const ids = this.recentScans().map((m) => m.id);
+      localStorage.setItem(RECENT_SCANS_KEY, JSON.stringify(ids));
+    } catch {
+      /* ignore quota / private mode */
+    }
+  }
+
+  private readStoredRecentIds(): string[] {
+    try {
+      const raw = localStorage.getItem(RECENT_SCANS_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw) as unknown;
+      if (!Array.isArray(parsed)) return [];
+      return parsed.filter((id): id is string => typeof id === 'string').slice(0, 2);
+    } catch {
+      return [];
+    }
+  }
+
+  private hydrateRecentFromCatalog(): void {
+    if (!this.pendingRecentIds.length || !this.catalog.length) return;
+    const markers = this.pendingRecentIds
+      .map((id) => this.catalog.find((m) => m.id === id))
+      .filter((m): m is ArMarker => !!m);
+    this.pendingRecentIds = [];
+    if (markers.length) this.recentScans.set(markers.slice(0, 2));
   }
 
   private clearPanels(clearActive = true): void {
-    this.showInfo.set(false);
     this.showStats.set(false);
+    this.showInfo.set(false);
     this.stopClip();
     this.stopNarration();
     this.animating.set(false);
@@ -878,13 +1023,28 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   }
 
   private playClip(): void {
-    const video = this.arClip?.nativeElement;
-    if (!video) return;
-    video.currentTime = 0;
-    this.videoProgress.set(0);
-    void video.play().catch(() => {
-      this.ping('Activa el audio/video con un toque y reintenta');
-    });
+    const tryPlay = (attempts: number): void => {
+      const video = this.arClip?.nativeElement;
+      if (!video) {
+        if (attempts > 0) {
+          setTimeout(() => tryPlay(attempts - 1), 80);
+        } else {
+          this.ping('No se pudo abrir el clip. Reintenta Video.');
+        }
+        return;
+      }
+      video.muted = false;
+      video.currentTime = 0;
+      this.videoProgress.set(0);
+      void video.play().catch(() => {
+        // Autoplay bloqueado: mute + play
+        video.muted = true;
+        void video.play().catch(() => {
+          this.ping('Toca ▶ en el video para reproducir');
+        });
+      });
+    };
+    tryPlay(8);
   }
 
   private stopClip(): void {
@@ -897,31 +1057,24 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.videoProgress.set(0);
   }
 
-  private speakInfo(marker: ArMarker): void {
+  private stopNarration(): void {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+  }
+
+  /** Narración corta del dato Info (voz del navegador). */
+  private speakInfo(marker: ArMarker, blurb: string): void {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
       this.ping('Narración no disponible en este navegador');
       return;
     }
     this.stopNarration();
-    const text = `${marker.nombre}. ${marker.subtitle}. ${marker.info}`;
-    const utter = new SpeechSynthesisUtterance(text);
+    const line = `${marker.nombre}. ${blurb}`;
+    const utter = new SpeechSynthesisUtterance(line);
     utter.lang = 'es-MX';
-    utter.rate = 1.02;
+    utter.rate = 1.05;
     utter.pitch = 1;
-    utter.onend = () => {
-      this.speaking = false;
-    };
-    utter.onerror = () => {
-      this.speaking = false;
-    };
-    this.speaking = true;
     window.speechSynthesis.speak(utter);
-  }
-
-  private stopNarration(): void {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    this.speaking = false;
   }
 
   private ping(message: string): void {

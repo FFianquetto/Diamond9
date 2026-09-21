@@ -129,9 +129,9 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     const renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true,
+      antialias: !this.isMobile,
       preserveDrawingBuffer: true,
-      powerPreference: 'high-performance',
+      powerPreference: this.isMobile ? 'low-power' : 'high-performance',
       failIfMajorPerformanceCaveat: false,
     });
     renderer.setPixelRatio(
@@ -149,15 +149,20 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     const hemi = new THREE.HemisphereLight(0xffffff, 0x1a2a33, 0.9);
     const key = new THREE.DirectionalLight(0xffffff, 1.4);
     key.position.set(2.5, 4.5, 3);
-    const fill = new THREE.DirectionalLight(0xa8f0ff, 0.7);
-    fill.position.set(-2.5, 1.5, -1.5);
-    const rim = new THREE.DirectionalLight(0xffffff, 0.45);
-    rim.position.set(0, 2, -3);
-    scene.add(hemi, key, fill, rim);
+    scene.add(hemi, key);
+
+    // En móvil: menos luces = menos GPU
+    if (!this.isMobile) {
+      const fill = new THREE.DirectionalLight(0xa8f0ff, 0.7);
+      fill.position.set(-2.5, 1.5, -1.5);
+      const rim = new THREE.DirectionalLight(0xffffff, 0.45);
+      rim.position.set(0, 2, -3);
+      scene.add(fill, rim);
+      this.fillLight = fill;
+      this.rimLight = rim;
+    }
 
     this.keyLight = key;
-    this.fillLight = fill;
-    this.rimLight = rim;
     this.renderer = renderer;
     this.scene = scene;
     this.camera = camera;

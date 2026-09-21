@@ -77,10 +77,10 @@
                     Centra el logo de tu gorra aquí
                   }
                   @case ('pelota') {
-                    Centra tu pelota aquí
+                    Centra tu pelota (logo / colores)
                   }
                   @case ('logo') {
-                    Centra el logo / escudo aquí
+                    Acerca el logo hasta llenar el cuadro
                   }
                   @default {
                     Centra el marcador aquí
@@ -138,38 +138,6 @@
                 [subtitle]="banner.subtitle"
                 [kind]="banner.kind"
               />
-            }
-
-            @if (showInfo()) {
-              <div class="ar-panel info-panel panel-enter">
-                <h3>Información</h3>
-                <p>{{ marker.info }}</p>
-                <p class="narration-note">
-                  <mat-icon>record_voice_over</mat-icon>
-                  Narración en voz alta · el modelo rota 360°
-                </p>
-              </div>
-            }
-            @if (videoPlaying()) {
-              <div class="ar-panel video-panel panel-enter">
-                <div class="video-player">
-                  <video
-                    #arClip
-                    [src]="clipSrc(marker)"
-                    playsinline
-                    controls
-                    (timeupdate)="onClipTimeUpdate()"
-                    (ended)="onClipEnded()"
-                  ></video>
-                </div>
-                <div class="video-copy">
-                  <p>{{ marker.videoHint }}</p>
-                  <p class="video-fx-note">Clip real + partículas 3D alrededor del modelo</p>
-                  <div class="video-bar" aria-hidden="true">
-                    <span [style.width.%]="videoProgress()"></span>
-                  </div>
-                </div>
-              </div>
             }
           </div>
         }
@@ -259,6 +227,63 @@
               Foto
             </button>
           </div>
+
+          @if (showStats()) {
+            <div class="ar-panel action-panel panel-enter" [style.--marker-color]="marker.color">
+              <h3>Estadísticas</h3>
+              <ul>
+                @for (s of marker.stats; track s.label) {
+                  <li>
+                    <span>{{ s.label }}</span>
+                    <strong>{{ s.value }}</strong>
+                  </li>
+                }
+              </ul>
+              @if (marker.equipo) {
+                <p class="action-panel-meta">{{ marker.equipo }} · {{ marker.ligaOrigen || marker.subtitle }}</p>
+              }
+            </div>
+          }
+
+          @if (showInfo()) {
+            <div class="ar-panel action-panel panel-enter" [style.--marker-color]="marker.color">
+              <h3>Información</h3>
+              <p>{{ shortInfo(marker) }}</p>
+              <p class="action-panel-meta narration-note">
+                <mat-icon>record_voice_over</mat-icon>
+                Modelo en 360° · narración en voz alta
+              </p>
+            </div>
+          }
+
+          @if (videoPlaying()) {
+            <div class="ar-panel video-panel action-panel panel-enter">
+              <div class="video-player">
+                <video
+                  #arClip
+                  [src]="clipSrc(marker)"
+                  playsinline
+                  controls
+                  (timeupdate)="onClipTimeUpdate()"
+                  (ended)="onClipEnded()"
+                ></video>
+              </div>
+              <div class="video-copy">
+                <p>{{ marker.videoHint }}</p>
+                <div class="video-bar" aria-hidden="true">
+                  <span [style.width.%]="videoProgress()"></span>
+                </div>
+              </div>
+            </div>
+          }
+
+          @if (activeAction() === 'anim' && animating()) {
+            <div class="ar-panel action-panel panel-enter">
+              <h3>Animación 3D</h3>
+              <p>{{ marker.animationLabel || 'Animando modelo' }}</p>
+              <p class="action-panel-meta">{{ animHintForPublic() }}</p>
+            </div>
+          }
         }
       </div>
 
@@ -334,9 +359,9 @@
               @if (scanMode() === 'gorra') {
                 Apunta la gorra al centro: reconoce por imagen o por colores (negro+dorado / crema+púrpura).
               } @else if (scanMode() === 'pelota') {
-                Centra tu pelota Dodgers/Ohtani o Sultanes.
+                Centra la pelota: imagen o colores (Ohtani blanco+azul / Sultanes blanco+negro).
               } @else {
-                Escanea un logo o escudo plano (pantalla o impreso).
+                Abre un marcador del sidebar (Abrir imagen) y céntralo de frente.
               }
             } @else {
               Elige un modo y activa la cámara.
@@ -390,8 +415,9 @@
     <div class="history-head">
       <h2>Escaneos más recientes</h2>
       <p>
-        Hasta 2 fichas. Se llenan al cambiar de marcador o al
-        <strong>detener la cámara</strong>.
+        Hasta 2 fichas. Se guardan al
+        <strong>quitar el objeto</strong>, al usar
+        <strong>Detectar ahora</strong> o al detener la cámara.
       </p>
     </div>
 
@@ -419,8 +445,8 @@
       <div class="history-empty">
         <mat-icon>history</mat-icon>
         <p>
-          Aún vacío. Escanea un marcador y luego detén la cámara (o apunta a
-          otro): la ficha pasará al historial.
+          Aún vacío. Escanea un marcador (gorra, pelota o logo) y quítalo del
+          cuadro, o usa Detectar ahora: la ficha queda aquí.
         </p>
       </div>
     }
@@ -451,12 +477,12 @@
           @if (scanMode() === 'gorra') {
                 Apunta la gorra al centro: reconoce por imagen o por colores (negro+dorado / crema+púrpura).
           } @else if (scanMode() === 'pelota') {
-            Centra tu pelota Dodgers/Ohtani o Sultanes.
+            Centra la pelota: imagen o colores (Ohtani blanco+azul / Sultanes blanco+negro).
           } @else {
             Usa el marcador exacto del sidebar (logo-demo o escudo).
           }
         </li>
-        <li>Al detener la cámara, la ficha se guarda en historial.</li>
+        <li>Al quitar el objeto (o detener la cámara), la ficha se guarda en historial.</li>
         <li>Stats, Video, Animar y Foto siguen disponibles.</li>
       </ul>
       <div class="cam-modal-actions">

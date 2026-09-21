@@ -55,6 +55,20 @@ export class TriviaComponent implements OnInit {
       correct: 2,
       explain: 'Tres outs cierran el turno al bat de un equipo en esa entrada.',
     },
+    {
+      id: 5,
+      question: '¿De qué ciudad son los Sultanes en la LMB?',
+      options: ['México', 'Monterrey', 'Guadalajara', 'Tijuana'],
+      correct: 1,
+      explain: 'Los Sultanes juegan en Monterrey, Nuevo León.',
+    },
+    {
+      id: 6,
+      question: '¿Qué liga agrupa a Yankees, Dodgers y Red Sox?',
+      options: ['LMB', 'LNM', 'MLB', 'NPB'],
+      correct: 2,
+      explain: 'Esas franquicias pertenecen a la Major League Baseball (MLB).',
+    },
   ];
 
   index = signal(0);

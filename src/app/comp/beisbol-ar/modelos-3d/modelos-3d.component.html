@@ -1,12 +1,12 @@
 <app-section-shell
   eyebrow="Galería 3D"
   title="Modelos de béisbol"
-  lede="Bates, pelotas y gorras listos para explorar en 3D."
+  lede="Gorras y pelotas listos para explorar en 3D."
 >
-  @if (bates.length) {
-    <h2 class="section-title">Bates</h2>
-    <div class="modelos-grid">
-      @for (m of bates; track m.key) {
+  @if (gorras.length) {
+    <h2 class="section-title">Gorras</h2>
+    <div class="modelos-grid gorras-grid">
+      @for (m of gorras; track m.key) {
         <article class="modelo-card" [style.--accent]="m.color">
           <div class="viewer-wrap">
             <app-ar-model-viewer
@@ -40,24 +40,4 @@
       }
     </div>
   }
-
-  @if (gorras.length) {
-    <h2 class="section-title">Gorras</h2>
-    <div class="modelos-grid gorras-grid">
-      @for (m of gorras; track m.key) {
-        <article class="modelo-card" [style.--accent]="m.color">
-          <div class="viewer-wrap">
-            <app-ar-model-viewer
-              [modelKey]="m.key"
-              [accentColor]="m.color"
-              [animMode]="'spin'"
-              [active]="true"
-            />
-          </div>
-          <h3>{{ m.label }}</h3>
-        </article>
-      }
-    </div>
-  }
-
 </app-section-shell>

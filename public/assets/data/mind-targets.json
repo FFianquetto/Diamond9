@@ -1,6 +1,6 @@
 {
-  "version": 5,
-  "nota": "Modos: Pelota (Ohtani/Sultanes), Gorra (Yankees/Sox reales), Logo (escudos planos como antes).",
+  "version": 6,
+  "nota": "Modos separados: Pelota, Gorra, Logo. Cada uno con su .mind.",
   "modes": {
     "pelota": {
       "label": "Pelota",
@@ -58,15 +58,33 @@
     },
     "logo": {
       "label": "Logo",
-      "mindFile": "assets/mind/logo.mind",
-      "hint": "Escanea un logo o escudo plano (pantalla o impreso).",
+      "mindFile": "assets/mind/logo.mind?v=6",
+      "hint": "Abre el marcador del sidebar y céntralo de frente (pantalla o impreso).",
       "targets": [
-        { "id": "logo-demo", "image": "assets/mind/demo/card.png" },
-        { "id": "logo-yankees", "image": "assets/markers/mind/yankees.png" },
-        { "id": "logo-redsox", "image": "assets/markers/mind/redsox.png" },
-        { "id": "logo-dodgers", "image": "assets/markers/mind/dodgers.png" },
-        { "id": "logo-bucaneros", "image": "assets/markers/mind/bucaneros-cabos.png" },
-        { "id": "logo-lnm", "image": "assets/markers/mind/liga-lnm.png" }
+        {
+          "id": "logo-demo",
+          "image": "assets/mind/demo/card.png"
+        },
+        {
+          "id": "logo-yankees",
+          "image": "assets/markers/mind/yankees.png"
+        },
+        {
+          "id": "logo-redsox",
+          "image": "assets/markers/mind/redsox.png"
+        },
+        {
+          "id": "logo-dodgers",
+          "image": "assets/markers/mind/dodgers.png"
+        },
+        {
+          "id": "logo-bucaneros",
+          "image": "assets/markers/mind/bucaneros-cabos.png"
+        },
+        {
+          "id": "logo-lnm",
+          "image": "assets/markers/mind/liga-lnm.png"
+        }
       ]
     }
   }

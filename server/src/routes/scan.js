@@ -7,7 +7,7 @@ import { findPlayerByText, findTeamByText, getTeamById, listCatalog } from '../s
 export const scanRouter = Router();
 
 const MODE_MODEL = {
-  tarjeta: 'bate',
+  tarjeta: 'pelota',
   gorra: null,
   pelota: 'pelota',
 };
@@ -89,7 +89,7 @@ scanRouter.post('/', async (req, res) => {
             id: player.equipoId,
             nombre: player.equipo,
             liga: player.liga,
-            modelKey: 'bate',
+            modelKey: 'pelota',
           },
           'tarjeta',
         );

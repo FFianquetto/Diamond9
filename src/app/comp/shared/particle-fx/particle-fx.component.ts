@@ -50,7 +50,7 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
     this.resize();
     window.addEventListener('resize', this.resize);
     this.sub = this.fx.bursts.subscribe((burst) => this.spawn(burst));
-    this.loop();
+    // No loop continuo: arranca al primer burst
   }
 
   ngOnDestroy(): void {
@@ -62,13 +62,17 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
   private resize = (): void => {
     const canvas = this.canvasRef?.nativeElement;
     if (!canvas || !this.ctx) return;
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const mobile =
+      window.matchMedia('(max-width: 820px)').matches ||
+      window.matchMedia('(pointer: coarse)').matches;
+    this.dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1 : 1.5);
     canvas.width = Math.floor(window.innerWidth * this.dpr);
     canvas.height = Math.floor(window.innerHeight * this.dpr);
   };
 
   private spawn(burst: ParticleBurst): void {
     if (this.reducedMotion) return;
+    const wasIdle = this.particles.length === 0;
     const count = this.countFor(burst.kind);
     const palette = this.paletteFor(burst.kind);
     for (let i = 0; i < count; i++) {
@@ -92,6 +96,7 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
         angle: Math.random() * Math.PI,
       });
     }
+    if (wasIdle && !this.raf) this.loop();
   }
 
   private countFor(kind: ParticleKind): number {
@@ -161,6 +166,10 @@ export class ParticleFxComponent implements AfterViewInit, OnDestroy {
       ctx.restore();
     }
     ctx.globalAlpha = 1;
+    if (this.particles.length === 0) {
+      this.raf = 0;
+      return;
+    }
     this.raf = requestAnimationFrame(this.loop);
   };
 }
