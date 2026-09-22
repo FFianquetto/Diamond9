@@ -177,7 +177,12 @@
         @if (lastPhotoUrl(); as photo) {
           <div class="photo-preview">
             <img [src]="photo" alt="Última captura del escáner" />
-            <a [href]="photo" download class="photo-dl">Descargar de nuevo</a>
+            <div class="photo-preview-meta">
+              <a [href]="photo" download class="photo-dl">Descargar de nuevo</a>
+              <a routerLink="/videos" [queryParams]="{ tab: 'imagenes' }" class="photo-dl"
+                >Ver en Galería</a
+              >
+            </div>
           </div>
         }
 

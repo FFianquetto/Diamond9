@@ -17,6 +17,8 @@ import {
   SectionShellComponent,
 } from '../../shared/section-shell/section-shell.component';
 import { UiSoundService } from '../../shared/ui-sound.service';
+import { ScanPhotosService } from '../scan-photos.service';
+import { ActivatedRoute } from '@angular/router';
 
 export type GalleryTab = 'videos' | 'imagenes';
 
@@ -74,6 +76,8 @@ export class VideoFiltersComponent
 
   private readonly http = inject(HttpClient);
   private readonly sounds = inject(UiSoundService);
+  private readonly scanPhotos = inject(ScanPhotosService);
+  private readonly route = inject(ActivatedRoute);
   private rafId = 0;
   private boundVideo: HTMLVideoElement | null = null;
   private scratch: HTMLCanvasElement | null = null;
@@ -136,15 +140,36 @@ export class VideoFiltersComponent
 
   ngOnInit(): void {
     document.addEventListener('visibilitychange', this.onVisibility);
+    const wantCaptures = this.route.snapshot.queryParamMap.get('tab') === 'imagenes';
     this.http
       .get<GalleryManifest>('assets/data/galeria.json')
       .pipe(catchError(() => of({ videos: [], images: [] } as GalleryManifest)))
       .subscribe((data) => {
         this.videos.set(data.videos ?? []);
-        this.images.set(data.images ?? []);
+        const captures: GalleryImage[] = this.scanPhotos.photos().map((p) => ({
+          id: p.id,
+          title: p.title,
+          caption: p.caption,
+          src: p.src,
+          tag: p.tag,
+        }));
+        const images = [...captures, ...(data.images ?? [])];
+        this.images.set(images);
         this.activeVideo.set(data.videos?.[0] ?? null);
-        this.activeImage.set(data.images?.[0] ?? null);
+        this.activeImage.set(
+          (wantCaptures && captures[0]) || images[0] || null,
+        );
+        if (wantCaptures) {
+          this.tab.set('imagenes');
+        }
         this.loading.set(false);
+        if (wantCaptures && captures.length) {
+          this.ping(
+            captures.length === 1
+              ? '1 captura del escáner AR'
+              : `${captures.length} capturas del escáner AR`,
+          );
+        }
       });
   }
 

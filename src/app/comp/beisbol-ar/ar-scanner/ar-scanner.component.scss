@@ -836,6 +836,12 @@
     border-radius: 8px;
   }
 
+  .photo-preview-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
   .photo-dl {
     font-size: 0.78rem;
     font-weight: 700;

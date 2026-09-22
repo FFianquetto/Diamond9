@@ -23,6 +23,7 @@ import { MindArService, MindTargetsFile } from '../mind-ar.service';
 import { GorraColorDetectService } from '../gorra-color-detect.service';
 import { PelotaColorDetectService } from '../pelota-color-detect.service';
 import { LogoColorDetectService } from '../logo-color-detect.service';
+import { ScanPhotosService } from '../scan-photos.service';
 import {
   ArFxBannerComponent,
   ArFxKind,
@@ -31,6 +32,7 @@ import {
   SectionPill,
   SectionShellComponent,
 } from '../../shared/section-shell/section-shell.component';
+import { RouterLink } from '@angular/router';
 
 export type ArAction = 'info' | 'stats' | 'video' | 'anim' | 'foto';
 
@@ -55,6 +57,7 @@ interface ScanModeOption {
   imports: [
     CommonModule,
     MatIconModule,
+    RouterLink,
     ArModelViewerComponent,
     ArFxBannerComponent,
     SectionShellComponent,
@@ -150,6 +153,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   private readonly gorraColor = inject(GorraColorDetectService);
   private readonly pelotaColor = inject(PelotaColorDetectService);
   private readonly logoColor = inject(LogoColorDetectService);
+  private readonly scanPhotos = inject(ScanPhotosService);
 
   ngOnInit(): void {
     this.pendingRecentIds = this.readStoredRecentIds();
@@ -554,7 +558,15 @@ export class ArScannerComponent implements OnInit, OnDestroy {
       a.download = `diamante9-${marker?.id || 'scan'}-${Date.now()}.jpg`;
       a.click();
 
-      this.ping(`Foto guardada · ${marker?.nombre || 'escaneo'}`);
+      const saved = await this.scanPhotos.addFromBlob(blob, {
+        markerId: marker?.id,
+        markerName: marker?.nombre,
+      });
+      this.ping(
+        saved
+          ? `Foto en Galería · ${marker?.nombre || 'escaneo'}`
+          : `Foto guardada · ${marker?.nombre || 'escaneo'}`,
+      );
       this.fx.burstCenter('confetti');
     } catch {
       this.ping('No se pudo tomar la foto');
