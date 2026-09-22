@@ -45,7 +45,7 @@ export class ArModelLoaderService {
               label: 'Pelota',
               file: 'assets/modelos/pelota/pelota02.glb',
               format: 'glb',
-              scale: 2.4,
+              scale: 1.55,
               fallback: 'pelota',
             },
           },
@@ -480,7 +480,7 @@ export class ArModelLoaderService {
     const box = new THREE.Box3().setFromObject(model);
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    // scale del manifiesto: pelota ~2.4, gorras ~1.35
+    // scale del manifiesto: pelota ~1.55, gorras ~1.35
     const scaleFactor = Math.min(Math.max(scale || 1, 0.6), 2.6);
     const fit = (1.55 / maxDim) * scaleFactor;
     model.scale.setScalar(fit);

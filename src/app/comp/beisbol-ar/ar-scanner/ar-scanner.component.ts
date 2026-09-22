@@ -713,7 +713,15 @@ export class ArScannerComponent implements OnInit, OnDestroy {
           ? this.gorraColor.sample(video)
           : this.pelotaColor.sample(video);
       if (!guess) {
-        if (this.detectionSource === 'color' && this.activeMarker()) {
+        if (!this.activeMarker()) return;
+        // Pelota: el color es la puerta de proximidad — sin pelota en cuadro
+        // se limpia aunque MindAR aún “crea” ver el target (~400 ms).
+        if (mode === 'pelota') {
+          this.colorMisses++;
+          if (this.colorMisses >= 2) this.clearLiveDetection(true);
+          return;
+        }
+        if (this.detectionSource === 'color') {
           this.colorMisses++;
           // Quitar rápido al sacar el objeto (~400 ms) y guardar en historial
           if (this.colorMisses >= 2) {
@@ -872,7 +880,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.pelotaColor.reset();
     this.logoColor.reset();
     this.clearPanels(true);
-    // El confeti sigue aunque se quite el modelo; solo Celebrar / Quitar lo apaga.
+    this.stopCelebrar();
     if (announce) this.ping('Marcador fuera de vista · guardado en historial');
   }
 
@@ -885,7 +893,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
           this.scanMode() === 'gorra'
             ? 'Sin match aún. Centra la gorra (negro+dorado o crema+púrpura). Colores también cuentan.'
             : this.scanMode() === 'pelota'
-              ? 'Sin match. Centra Ohtani (blanco+azul) o Sultanes (blanco+negro). Colores también cuentan.'
+              ? 'Sin match. Acerca Ohtani (blanco+azul) o Sultanes (blanco+negro) al centro. Colores también cuentan.'
               : 'Sin match. Abre el marcador del sidebar (logo-demo o Yankees) y céntralo de frente.',
         );
       }
@@ -909,7 +917,11 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.clearPanels(false);
     this.showParticles.set(true);
 
-    if (marker.tipo === 'gorra' || marker.tipo === 'logo') {
+    if (
+      marker.tipo === 'gorra' ||
+      marker.tipo === 'logo' ||
+      marker.tipo === 'pelota'
+    ) {
       this.activeAction.set('anim');
       this.runAnim('showcase', 4200);
       this.showFxBanner(
@@ -918,10 +930,6 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         'detect',
         4200,
       );
-    } else if (marker.tipo === 'pelota') {
-      this.activeAction.set('anim');
-      this.runAnim('homerun', 4000);
-      this.showFxBanner('¡Jonrón!', marker.animationLabel, 'homer', 4000);
     } else if (marker.tipo === 'jugador') {
       this.activeAction.set('anim');
       this.runAnim(this.animModeForMarker(marker), 3600);
@@ -943,10 +951,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         : `Detectado: ${marker.nombre}`,
     );
     this.sounds.play('success');
-    this.startCelebrar(
-      event,
-      marker.tipo === 'pelota' ? 'homer' : 'confetti',
-    );
+    this.startCelebrar(event, 'confetti');
 
     const unlocked = this.rewards.recordScan(marker.id, this.scanMode());
     if (unlocked) this.ping(`¡${unlocked}!`);
@@ -1003,8 +1008,13 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   /** Animación coherente con el tipo de marcador / etiqueta. */
   private animModeForMarker(marker: ArMarker): ArAnimMode {
     const label = (marker.animationLabel || '').toLowerCase();
-    if (marker.tipo === 'gorra' || marker.tipo === 'logo') return 'showcase';
-    if (marker.tipo === 'pelota') return 'homerun';
+    if (
+      marker.tipo === 'gorra' ||
+      marker.tipo === 'logo' ||
+      marker.tipo === 'pelota'
+    ) {
+      return 'showcase';
+    }
     if (marker.tipo === 'equipo') return 'spinAxis';
     if (marker.tipo === 'liga') return 'pulse3d';
     if (label.includes('ponche') || label.includes('lanz') || label.includes('entrega')) {

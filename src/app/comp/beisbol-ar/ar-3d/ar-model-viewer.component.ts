@@ -340,7 +340,11 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       this.modelKey === 'gorra' ||
       this.modelKey.startsWith('gorra-') ||
       this.markerTipo === 'gorra';
-    const zoom = this.modelKey === 'guante' ? 1.5 : isGorra ? 1.45 : 1.15;
+    const isPelota =
+      this.modelKey === 'pelota' ||
+      this.modelKey.startsWith('pelota-') ||
+      this.markerTipo === 'pelota';
+    const zoom = this.modelKey === 'guante' ? 1.5 : isGorra ? 1.45 : isPelota ? 1.2 : 1.15;
 
     this.camera.position.set(
       center.x,

@@ -60,7 +60,7 @@
       "label": "Pelota",
       "file": "assets/modelos/pelota/pelota02.glb",
       "format": "glb",
-      "scale": 2.4,
+      "scale": 1.55,
       "fallback": "pelota"
     },
     "gorra-yankees": {

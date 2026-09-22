@@ -152,7 +152,8 @@ export class MindArService {
 
     onProgress?.('Iniciando MindAR…');
 
-    // Logo más estricto; gorra un punto medio (detecta bien sin disparar a lo lejos)
+    // Logo más estricto; pelota exige más frames (no se pega al quitar);
+    // gorra punto medio.
     const mindar = new MindARThree({
       container,
       imageTargetSrc: config.mindFile,
@@ -160,8 +161,8 @@ export class MindArService {
       uiLoading: 'no',
       uiScanning: 'no',
       uiError: 'yes',
-      warmupTolerance: mode === 'logo' ? 8 : mode === 'gorra' ? 5 : 3,
-      missTolerance: mode === 'logo' ? 6 : 10,
+      warmupTolerance: mode === 'logo' ? 8 : mode === 'pelota' ? 6 : 5,
+      missTolerance: mode === 'logo' ? 6 : mode === 'pelota' ? 4 : 10,
     });
     this.mindar = mindar;
 

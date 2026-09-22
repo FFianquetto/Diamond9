@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 
 /**
- * Detector de pelotas por color (región del guía).
+ * Detector de pelotas por color (modo Pelota). Independiente de gorra/logo.
+ * Proximidad estricta: centro del guía (hay que acercar), rechazo de fondo
+ * lejano y clear rápido al sacar la pelota.
  * - Ohtani/Dodgers: cuero blanco + texto azul
- * - Sultanes: cuero blanco + logo negro (sin azul)
- * Sin pelota en cuadro → null (no se pega).
+ * - Sultanes: cuero blanco dominante + logo negro (sin azul); no dispara con
+ *   sombras / manos / fondos oscuros sueltos.
  */
 export type PelotaColorId = 'pelota-othani' | 'pelota-sultanes';
 
@@ -19,7 +21,8 @@ export class PelotaColorDetectService {
   private canvas: HTMLCanvasElement | null = null;
   private stableId: PelotaColorId | null = null;
   private stableHits = 0;
-  private readonly needHits = 2;
+  /** 5 frames ≈ 1 s: Sultanes no debe pegarse a sombras. */
+  private readonly needHits = 5;
 
   reset(): void {
     this.stableId = null;
@@ -27,6 +30,19 @@ export class PelotaColorDetectService {
   }
 
   sample(video: HTMLVideoElement | null): PelotaColorGuess | null {
+    const guess = this.analyze(video);
+    if (!guess) return this.fail();
+
+    if (guess.id === this.stableId) this.stableHits++;
+    else {
+      this.stableId = guess.id;
+      this.stableHits = 1;
+    }
+    if (this.stableHits < this.needHits) return null;
+    return guess;
+  }
+
+  private analyze(video: HTMLVideoElement | null): PelotaColorGuess | null {
     if (!video || video.readyState < 2 || video.videoWidth < 16) return null;
 
     this.canvas ??= document.createElement('canvas');
@@ -39,23 +55,23 @@ export class PelotaColorDetectService {
 
     const vw = video.videoWidth;
     const vh = video.videoHeight;
-    ctx.drawImage(
-      video,
-      vw * 0.18,
-      vh * 0.12,
-      vw * 0.64,
-      vh * 0.62,
-      0,
-      0,
-      w,
-      h,
-    );
+    // Centro del guía (más chico): hay que acercar la pelota al cuadro
+    const guideX = vw * 0.18;
+    const guideY = vh * 0.12;
+    const guideW = vw * 0.64;
+    const guideH = vh * 0.62;
+    const sx = guideX + guideW * 0.2;
+    const sy = guideY + guideH * 0.18;
+    const sw = guideW * 0.6;
+    const sh = guideH * 0.64;
+    ctx.drawImage(video, sx, sy, sw, sh, 0, 0, w, h);
 
     const { data } = ctx.getImageData(0, 0, w, h);
     let white = 0;
     let blue = 0;
     let black = 0;
     let red = 0;
+    let other = 0;
     let total = 0;
 
     for (let i = 0; i < data.length; i += 4) {
@@ -99,12 +115,8 @@ export class PelotaColorDetectService {
         continue;
       }
 
-      // Logo negro (Sultanes MT)
-      if (val < 0.28 && sat < 0.35) {
-        black++;
-        continue;
-      }
-      if (val < 0.22) {
+      // Tinta negra del logo (estricto: no sombras de mano / ropa)
+      if (val <= 0.16 && sat <= 0.28 && Math.max(r, g, b) < 48) {
         black++;
         continue;
       }
@@ -115,67 +127,65 @@ export class PelotaColorDetectService {
         (r > 140 && g < 90 && b < 90 && r - g > 40)
       ) {
         red++;
+        continue;
       }
+
+      other++;
     }
 
-    if (total < 80) return this.fail();
+    if (total < 140) return null;
 
     const pw = white / total;
     const pb = blue / total;
     const pk = black / total;
     const pr = red / total;
+    const po = other / total;
 
-    // Vacío / sin pelota blanca
-    if (pw < 0.12) return this.fail();
-    if (pb < 0.008 && pk < 0.02) return this.fail();
+    // Fondo vacío / lejano
+    if (po > 0.5) return null;
+    if (pw < 0.28) return null;
+    // Mucha oscuridad = habitación / mano, no pelota blanca con logo
+    if (pk > 0.2) return null;
+    if (pb < 0.012 && pk < 0.04) return null;
 
     const ohtaniOk =
-      pw >= 0.15 && blue >= 20 && pb >= 0.02 && (pb > pk * 0.6 || pr >= 0.01);
+      pw >= 0.28 &&
+      blue >= 30 &&
+      pb >= 0.03 &&
+      (pb > pk * 1.2 || pr >= 0.012);
+
+    // Sultanes: cuero blanco dominante + mancha de tinta (no sombra suelta)
     const sultanesOk =
-      pw >= 0.15 && black >= 25 && pk >= 0.025 && pb < 0.015;
+      pw >= 0.38 &&
+      black >= 55 &&
+      pk >= 0.055 &&
+      pk <= 0.18 &&
+      pw >= pk * 2.8 &&
+      pb < 0.01 &&
+      po < 0.42;
 
-    const ohtaniScore = pw * 0.8 + pb * 4 + pr * 1.5;
-    const sultanesScore = pw * 0.8 + pk * 3.5;
-
-    let guess: PelotaColorGuess | null = null;
-
-    if (ohtaniOk && sultanesOk) {
-      guess =
-        pb >= pk * 0.5
-          ? {
-              id: 'pelota-othani',
-              score: ohtaniScore,
-              label: 'Ohtani (blanco + azul)',
-            }
-          : {
-              id: 'pelota-sultanes',
-              score: sultanesScore,
-              label: 'Sultanes (blanco + negro)',
-            };
-    } else if (ohtaniOk) {
-      guess = {
+    const scores: PelotaColorGuess[] = [];
+    if (ohtaniOk) {
+      scores.push({
         id: 'pelota-othani',
-        score: ohtaniScore,
+        score: pw * 0.8 + pb * 4 + pr * 1.5,
         label: 'Ohtani (blanco + azul)',
-      };
-    } else if (sultanesOk) {
-      guess = {
+      });
+    }
+    if (sultanesOk) {
+      scores.push({
         id: 'pelota-sultanes',
-        score: sultanesScore,
+        score: pw * 1.2 + pk * 2.8,
         label: 'Sultanes (blanco + negro)',
-      };
+      });
     }
 
-    if (!guess) return this.fail();
-
-    if (guess.id === this.stableId) this.stableHits++;
-    else {
-      this.stableId = guess.id;
-      this.stableHits = 1;
+    if (!scores.length) return null;
+    scores.sort((a, b) => b.score - a.score);
+    if (scores.length > 1 && scores[0].score < scores[1].score * 1.2) {
+      return null;
     }
-
-    if (this.stableHits < this.needHits) return null;
-    return guess;
+    return scores[0];
   }
 
   private hsv(
