@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 2000 --proxy-config proxy.conf.json",
+    "start": "ng serve --port 2000 --proxy-config proxy.conf.json --allowed-hosts .trycloudflare.com",
     "start:api": "npm --prefix server start",
     "start:all": "npm run start:api & npm start",
     "build": "ng build",
