@@ -1,6 +1,6 @@
 <app-section-shell
   eyebrow="Archivo histórico"
-  title="Historia del béisbol"
+  title="Historia de la Liga del Pacífico"
   [lede]="lede"
   [pills]="vistaPills"
   [activePill]="vista"
@@ -9,7 +9,7 @@
 >
   @if (vista === 'timeline') {
     <section class="timeline" aria-labelledby="timeline-title">
-      <h2 id="timeline-title" class="section-title">Línea de tiempo</h2>
+      <h2 id="timeline-title" class="section-title">Línea de tiempo · Liga del Pacífico</h2>
       <ol class="timeline-list">
         @for (ev of timeline; track ev.year) {
           <li class="timeline-item">
@@ -24,14 +24,7 @@
     </section>
   } @else {
     <section class="leyendas" aria-labelledby="leyendas-title">
-      <h2 id="leyendas-title" class="section-title">Jugadores históricos</h2>
-
-      <app-pill-switch
-        [pills]="origenPills"
-        [active]="filtroOrigen"
-        ariaLabel="Liga"
-        (activeChange)="setFiltro($event)"
-      />
+      <h2 id="leyendas-title" class="section-title">Leyendas de la Liga del Pacífico</h2>
 
       <div class="leyendas-grid">
         @for (l of leyendasFiltradas; track l.id) {
@@ -68,19 +61,21 @@
                 </li>
               }
             </ul>
-            <button
-              type="button"
-              class="btn-collect"
-              [class.owned]="coleccionada(l.id)"
-              disabled
-            >
-              <mat-icon>{{
-                coleccionada(l.id) ? 'check_circle' : 'lock'
-              }}</mat-icon>
-              {{
-                coleccionada(l.id) ? 'En mi colección' : unlockHint(l.id)
-              }}
-            </button>
+            @if (esColeccionable(l.id)) {
+              <button
+                type="button"
+                class="btn-collect"
+                [class.owned]="coleccionada(l.id)"
+                disabled
+              >
+                <mat-icon>{{
+                  coleccionada(l.id) ? 'check_circle' : 'lock'
+                }}</mat-icon>
+                {{
+                  coleccionada(l.id) ? 'En mi colección' : unlockHint(l.id)
+                }}
+              </button>
+            }
           </article>
         }
       </div>

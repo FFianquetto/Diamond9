@@ -40,14 +40,6 @@
         @if (m.estadio) {
           <p class="meta"><strong>Estadio:</strong> {{ m.estadio }}</p>
         }
-        @if (m.filialLmb) {
-          <p class="meta"><strong>Filial LMB:</strong> {{ m.filialLmb }}</p>
-        }
-        <ul class="mini-stats">
-          @for (s of m.stats; track s.label) {
-            <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
-          }
-        </ul>
         @if (m.destacados?.length) {
           <p class="meta destacados">
             <strong>Figuras:</strong> {{ m.destacados!.join(' · ') }}
@@ -56,35 +48,4 @@
       </article>
     }
   </div>
-
-  @if (filtro === 'lnm' && ligaItems.length) {
-    <h2 class="section-title">Liga</h2>
-    <div class="list">
-      @for (m of ligaItems; track m.id) {
-        <article class="card liga-card" [style.--team-color]="m.color">
-          @if (m.targetImage) {
-            <img
-              class="team-logo"
-              [src]="m.targetImage"
-              [alt]="m.nombre"
-              loading="lazy"
-            />
-          }
-          <div class="card-head">
-            <span class="swatch" [style.background]="m.color"></span>
-            <div>
-              <h3>{{ m.nombre }}</h3>
-              <p class="abrev">{{ m.subtitle }}</p>
-            </div>
-          </div>
-          <p>{{ m.info }}</p>
-          <ul class="mini-stats">
-            @for (s of m.stats; track s.label) {
-              <li><span>{{ s.label }}</span><strong>{{ s.value }}</strong></li>
-            }
-          </ul>
-        </article>
-      }
-    </div>
-  }
 </app-section-shell>

@@ -1,0 +1,228 @@
+{
+  "tipo": "equipo",
+  "temporada": 2026,
+  "liga": "Liga ARCO Mexicana del Pacífico",
+  "nota": "10 equipos de la LMP, incluido el regreso de Mayos de Navojoa. Temporada 2025-26: Charros bicampeón.",
+  "items": [
+    {
+      "id": "lmp-naranjeros",
+      "nombre": "Naranjeros de Hermosillo",
+      "abrev": "HMO",
+      "ciudad": "Hermosillo, Son.",
+      "estadio": "Estadio Fernando Valenzuela",
+      "color": "#F15A22",
+      "subtitle": "6° LMP 2025-26 · 40-28",
+      "info": "Naranjeros de Hermosillo es el máximo campeón histórico de la Liga Mexicana del Pacífico (17 títulos). En 2025-26 cerró la campaña regular 40-28 (.588) y quedó 6° al terminar la postemporada. Mánager: Juan Gabriel Castro.",
+      "stats": [
+        { "label": "G-P", "value": "40-28" },
+        { "label": "Pct", "value": ".588" },
+        { "label": "Resultado", "value": "6°" }
+      ],
+      "destacados": ["Juan Gabriel Castro (mánager)"],
+      "videoHint": "Clip: Naranjeros 2025-26",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Insignia H de Naranjeros de Hermosillo.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/naranjeros-hermosillo.png",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-tomateros",
+      "nombre": "Tomateros de Culiacán",
+      "abrev": "CUL",
+      "ciudad": "Culiacán, Sin.",
+      "estadio": "Estadio Tomateros",
+      "color": "#7A1F3D",
+      "subtitle": "Subcampeón LMP 2025-26 · 40-28",
+      "info": "Tomateros de Culiacán suma 13 campeonatos de LMP. En 2025-26 fue líder de la segunda vuelta (22-11) y llegó a la Serie Final, donde Charros lo barrió 4-0. Mánager: Roberto Vizcarra.",
+      "stats": [
+        { "label": "G-P", "value": "40-28" },
+        { "label": "Pct", "value": ".588" },
+        { "label": "Resultado", "value": "Subcampeón" }
+      ],
+      "destacados": ["Roberto Vizcarra (mánager)", "Francisco Estrada"],
+      "videoHint": "Clip: Tomateros en la final",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Insignia de Tomateros de Culiacán.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/tomateros-culiacan.png",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-charros",
+      "nombre": "Charros de Jalisco",
+      "abrev": "JAL",
+      "ciudad": "Zapopan, Jal.",
+      "estadio": "Estadio Panamericano",
+      "color": "#0D47A1",
+      "subtitle": "Bicampeón LMP 2025-26 · 38-30",
+      "info": "Charros de Jalisco se coronó bicampeón de la Liga ARCO el 25 de enero de 2026, al barrer 4-0 a Tomateros en el Estadio Panamericano (8-6 en el juego 4). Es su cuarto título de LMP y también compite en la Liga Mexicana de Beisbol. Mánager: Benjamín Gil.",
+      "stats": [
+        { "label": "G-P", "value": "38-30" },
+        { "label": "Pct", "value": ".559" },
+        { "label": "Título", "value": "Bicampeón" }
+      ],
+      "destacados": ["Benjamín Gil (mánager)"],
+      "videoHint": "Clip: barrida de la Serie Final",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Insignia Ch de Charros de Jalisco.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/charros-jalisco.jpg",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-caneros",
+      "nombre": "Cañeros de Los Mochis",
+      "abrev": "MOC",
+      "ciudad": "Los Mochis, Sin.",
+      "estadio": "Chevron Park",
+      "color": "#0D5C3D",
+      "subtitle": "5° LMP 2025-26 · 38-30",
+      "info": "Cañeros de Los Mochis tiene cuatro títulos de Liga Mexicana del Pacífico. En 2025-26 lideró un tramo de la primera vuelta y cerró 5° de la postemporada (38-30). Juega en el Chevron Park, antes Estadio Emilio Ibarra Almada. Mánager: Félix Fermín.",
+      "stats": [
+        { "label": "G-P", "value": "38-30" },
+        { "label": "Pct", "value": ".559" },
+        { "label": "Resultado", "value": "5°" }
+      ],
+      "destacados": ["Félix Fermín (mánager)"],
+      "videoHint": "Clip: Cañeros 2025-26",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Insignia LM de Cañeros de Los Mochis.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/caneros-mochis.png",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-yaquis",
+      "nombre": "Yaquis de Obregón",
+      "abrev": "OBR",
+      "ciudad": "Ciudad Obregón, Son.",
+      "estadio": "Estadio Yaquis",
+      "color": "#0C3C78",
+      "subtitle": "8° LMP 2025-26 · 40-28",
+      "info": "Yaquis de Ciudad Obregón suma 7 campeonatos de LMP. En 2025-26 fue líder de la primera vuelta (22-13) y terminó la campaña regular 40-28, pero quedó 8° al salir en postemporada. Mánager: Gabe Álvarez.",
+      "stats": [
+        { "label": "G-P", "value": "40-28" },
+        { "label": "Pct", "value": ".588" },
+        { "label": "Resultado", "value": "8°" }
+      ],
+      "destacados": ["Gabe Álvarez (mánager)"],
+      "videoHint": "Clip: Yaquis 2025-26",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Insignia de Yaquis de Obregón.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/yaquis-obregon.png",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-aguilas",
+      "nombre": "Águilas de Mexicali",
+      "abrev": "MXL",
+      "ciudad": "Mexicali, B.C.",
+      "estadio": "Nido de los Águilas",
+      "color": "#E10600",
+      "subtitle": "3° LMP 2025-26 · 33-35",
+      "info": "Águilas de Mexicali tiene cuatro títulos de LMP y la Serie del Caribe 1986. En 2025-26 avanzó hasta el 3° lugar de la postemporada. Mánager: Oscar Robles.",
+      "stats": [
+        { "label": "G-P", "value": "33-35" },
+        { "label": "Pct", "value": ".485" },
+        { "label": "Resultado", "value": "3°" }
+      ],
+      "destacados": ["Oscar Robles (mánager)"],
+      "videoHint": "Clip: Águilas en playoffs",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Insignia M de Águilas de Mexicali.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/aguilas-mexicali.png",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-venados",
+      "nombre": "Venados de Mazatlán",
+      "abrev": "MAZ",
+      "ciudad": "Mazatlán, Sin.",
+      "estadio": "Estadio Teodoro Mariscal",
+      "color": "#1B5E20",
+      "subtitle": "10° LMP 2025-26 · 22-46",
+      "info": "Venados de Mazatlán tiene 9 campeonatos de Liga Mexicana del Pacífico. En 2025-26 celebró 80 años en el circuito y cerró en el último lugar (22-46). Mánager: Juan José Pacho.",
+      "stats": [
+        { "label": "G-P", "value": "22-46" },
+        { "label": "Pct", "value": ".324" },
+        { "label": "Resultado", "value": "10°" }
+      ],
+      "destacados": ["Juan José Pacho (mánager)"],
+      "videoHint": "Clip: Venados 2025-26",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Escudo de Venados de Mazatlán.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/venados-mazatlan.png",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-algodoneros-guasave",
+      "nombre": "Algodoneros de Guasave",
+      "abrev": "GVE",
+      "ciudad": "Guasave, Sin.",
+      "estadio": "Kuroda Park",
+      "color": "#0A2342",
+      "subtitle": "4° LMP 2025-26 · 26-42",
+      "info": "Algodoneros de Guasave regresó a la LMP en 2019-20 y tiene un título (1971-72). En 2025-26 llegó al 4° lugar de la postemporada pese al récord 26-42. Mánager: José Moreno.",
+      "stats": [
+        { "label": "G-P", "value": "26-42" },
+        { "label": "Pct", "value": ".382" },
+        { "label": "Resultado", "value": "4°" }
+      ],
+      "destacados": ["José Moreno (mánager)"],
+      "videoHint": "Clip: Algodoneros de Guasave",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Insignia AG de Algodoneros de Guasave.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/algodoneros-guasave.png",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-jaguares",
+      "nombre": "Jaguares de Nayarit",
+      "abrev": "NAY",
+      "ciudad": "Tepic, Nay.",
+      "estadio": "Estadio Coloso del Pacífico",
+      "color": "#0D2C6C",
+      "subtitle": "Debut 2025-26 · 7° · 40-28",
+      "info": "Jaguares de Nayarit debutó en la Liga Mexicana del Pacífico en 2025-26, en la plaza que dejó Sultanes de Monterrey. Cerró la campaña regular 40-28 y quedó 7° en la postemporada. Mánager: Luis Carlos Rivera.",
+      "stats": [
+        { "label": "G-P", "value": "40-28" },
+        { "label": "Pct", "value": ".588" },
+        { "label": "Resultado", "value": "7°" }
+      ],
+      "destacados": ["Luis Carlos Rivera (mánager)"],
+      "videoHint": "Clip: debut de Jaguares",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Wordmark de Jaguares de Nayarit.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/jaguares-nayarit.png",
+      "ligaOrigen": "LMP"
+    },
+    {
+      "id": "lmp-mayos",
+      "nombre": "Mayos de Navojoa",
+      "abrev": "NAV",
+      "ciudad": "Navojoa, Sonora",
+      "estadio": "Estadio Manuel \"Ciclón\" Echeverría",
+      "color": "#8B1538",
+      "subtitle": "Regreso 2026-27 · 2 títulos LMP",
+      "info": "Mayos de Navojoa vuelve a la Liga ARCO en 2026-27, con sede en Navojoa y localía en el Estadio Manuel \"Ciclón\" Echeverría. Tiene 2 campeonatos de LMP; el último fue en 1999-00. En 2025-26 la franquicia compitió como Tucson Baseball Team.",
+      "stats": [
+        { "label": "Títulos", "value": "2" },
+        { "label": "Último", "value": "1999-00" },
+        { "label": "Temporada", "value": "2026-27" }
+      ],
+      "destacados": ["Regreso a Navojoa"],
+      "videoHint": "Clip: Mayos de Navojoa",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Gorra N de Mayos de Navojoa.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/lmp/mayos-navojoa.png",
+      "ligaOrigen": "LMP"
+    }
+  ]
+}

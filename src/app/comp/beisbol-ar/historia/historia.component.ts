@@ -8,20 +8,13 @@ import {
   SectionPill,
   SectionShellComponent,
 } from '../../shared/section-shell/section-shell.component';
-import { PillSwitchComponent } from '../../shared/pill-switch/pill-switch.component';
 
 type VistaHistoria = 'timeline' | 'leyendas';
-type FiltroOrigen = 'mlb' | 'mex';
 
 @Component({
   selector: 'app-historia',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatIconModule,
-    SectionShellComponent,
-    PillSwitchComponent,
-  ],
+  imports: [CommonModule, MatIconModule, SectionShellComponent],
   templateUrl: './historia.component.html',
   styleUrl: './historia.component.scss',
 })
@@ -29,15 +22,9 @@ export class HistoriaComponent implements OnInit {
   timeline: HistoriaEvento[] = [];
   leyendas: LeyendaBeisbol[] = [];
   vista: VistaHistoria = 'leyendas';
-  filtroOrigen: FiltroOrigen = 'mex';
   readonly vistaPills: SectionPill[] = [
     { id: 'leyendas', label: 'Jugadores' },
     { id: 'timeline', label: 'Línea de tiempo' },
-  ];
-
-  readonly origenPills: SectionPill[] = [
-    { id: 'mex', label: 'México' },
-    { id: 'mlb', label: 'MLB' },
   ];
 
   private readonly lnm = inject(LnmDataService);
@@ -61,22 +48,22 @@ export class HistoriaComponent implements OnInit {
     if (id === 'timeline' || id === 'leyendas') this.vista = id;
   }
 
-  setFiltro(id: string): void {
-    if (id === 'mlb' || id === 'mex') this.filtroOrigen = id;
-  }
-
   get leyendasFiltradas(): LeyendaBeisbol[] {
-    return this.leyendas.filter((l) => l.origen === this.filtroOrigen);
+    return this.leyendas.filter((l) => l.origen === 'lmp');
   }
 
   get lede(): string {
     return this.vista === 'timeline'
-      ? 'Hitos del béisbol desde sus orígenes hasta la era moderna.'
-      : 'Las mismas 10 leyendas de Mi colección. Desbloquéalas jugando o escaneando.';
+      ? 'Hitos de la Liga Mexicana del Pacífico, del circuito invernal al bicampeonato de Charros.'
+      : 'Figuras de la Liga del Pacífico: Naranjeros, Tomateros, Yaquis y Cañeros.';
   }
 
   coleccionada(id: string): boolean {
     return this.rewards.hasCarta(id);
+  }
+
+  esColeccionable(id: string): boolean {
+    return this.cartaHints.has(id);
   }
 
   unlockHint(id: string): string {

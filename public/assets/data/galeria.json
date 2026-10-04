@@ -85,6 +85,83 @@
       "tag": "Equipo"
     },
     {
+      "id": "img-naranjeros",
+      "title": "Naranjeros de Hermosillo",
+      "caption": "Insignia · Liga Mexicana del Pacífico",
+      "src": "assets/galeria/imagenes/equipos/lmp/naranjeros-hermosillo.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-tomateros",
+      "title": "Tomateros de Culiacán",
+      "caption": "Subcampeón LMP 2025-26",
+      "src": "assets/galeria/imagenes/equipos/lmp/tomateros-culiacan.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-charros",
+      "title": "Charros de Jalisco",
+      "caption": "Bicampeón LMP 2025-26",
+      "src": "assets/galeria/imagenes/equipos/lmp/charros-jalisco.jpg",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-caneros",
+      "title": "Cañeros de Los Mochis",
+      "caption": "Insignia · Liga Mexicana del Pacífico",
+      "src": "assets/galeria/imagenes/equipos/lmp/caneros-mochis.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-yaquis",
+      "title": "Yaquis de Obregón",
+      "caption": "Insignia · Liga Mexicana del Pacífico",
+      "src": "assets/galeria/imagenes/equipos/lmp/yaquis-obregon.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-aguilas-mexicali",
+      "title": "Águilas de Mexicali",
+      "caption": "3° LMP 2025-26",
+      "src": "assets/galeria/imagenes/equipos/lmp/aguilas-mexicali.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-venados",
+      "title": "Venados de Mazatlán",
+      "caption": "Escudo · Liga Mexicana del Pacífico",
+      "src": "assets/galeria/imagenes/equipos/lmp/venados-mazatlan.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-algodoneros-guasave",
+      "title": "Algodoneros de Guasave",
+      "caption": "Insignia · Liga Mexicana del Pacífico",
+      "src": "assets/galeria/imagenes/equipos/lmp/algodoneros-guasave.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-jaguares",
+      "title": "Jaguares de Nayarit",
+      "caption": "Debut LMP 2025-26",
+      "src": "assets/galeria/imagenes/equipos/lmp/jaguares-nayarit.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-mayos",
+      "title": "Mayos de Navojoa",
+      "caption": "Regreso 2026-27 · Liga del Pacífico",
+      "src": "assets/galeria/imagenes/equipos/lmp/mayos-navojoa.png",
+      "tag": "Equipo"
+    },
+    {
+      "id": "img-sultanes",
+      "title": "Sultanes de Monterrey",
+      "caption": "Escudo · Liga Norte",
+      "src": "assets/galeria/imagenes/equipos/sultanes-monterrey.jpg",
+      "tag": "Equipo"
+    },
+    {
       "id": "img-yankees",
       "title": "New York Yankees",
       "caption": "Logo histórico · MLB",

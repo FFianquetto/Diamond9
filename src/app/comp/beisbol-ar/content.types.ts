@@ -11,8 +11,8 @@ export interface LeyendaBeisbol {
   era: string;
   posicion: string;
   liga: string;
-  /** mlb | mex — filtro de colección */
-  origen: 'mlb' | 'mex';
+  /** lmp: leyendas de la Liga del Pacífico */
+  origen: 'mlb' | 'mex' | 'lmp';
   color: string;
   foto?: string;
   resumen: string;

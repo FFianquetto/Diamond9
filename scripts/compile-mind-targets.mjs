@@ -32,7 +32,7 @@ async function compileMode(modeKey, mode) {
   process.stdout.write('\n');
 
   const buffer = compiler.exportData();
-  const outName = path.basename(mode.mindFile);
+  const outName = path.basename(mode.mindFile.split('?')[0]);
   const outPath = path.join(outDir, outName);
   await writeFile(outPath, Buffer.from(buffer));
   console.log(`  ✓ ${outPath} (${(buffer.byteLength / 1024).toFixed(1)} KB)`);

@@ -5,130 +5,6 @@
   "nota": "Modo Logo: imagen plana del escudo → ficha del equipo + modelo 3D (gorra del equipo).",
   "items": [
     {
-      "id": "logo-demo",
-      "nombre": "Demo MindAR (card oficial)",
-      "subtitle": "Target de prueba de la documentación MindAR",
-      "color": "#1565C0",
-      "info": "Marcador de ejemplo oficial de MindAR. Si este se detecta, el motor funciona. Descarga/abre assets/mind/demo/card.png.",
-      "stats": [
-        {
-          "label": "Tipo",
-          "value": "Demo"
-        },
-        {
-          "label": "Origen",
-          "value": "MindAR docs"
-        },
-        {
-          "label": "Match",
-          "value": "MindARThree"
-        }
-      ],
-      "videoHint": "Demo AR",
-      "animationLabel": "Pulse",
-      "tip": "Abre card.png a pantalla completa.",
-      "actions": "Info · Stats · Video · Animación · Foto",
-      "modelKey": "pelota",
-      "equipo": "MindAR Demo",
-      "abrev": "DEMO",
-      "equipoReconocido": true,
-      "ligaOrigen": "Demo",
-      "targetImage": "assets/mind/demo/card.png"
-    },
-    {
-      "id": "logo-yankees",
-      "nombre": "New York Yankees",
-      "subtitle": "Logo NY · MLB",
-      "color": "#0C2340",
-      "info": "Logo interlocking NY de los New York Yankees. Escanea la imagen plana del logo para ver ficha y modelo 3D.",
-      "stats": [
-        {
-          "label": "Equipo",
-          "value": "Yankees"
-        },
-        {
-          "label": "Liga",
-          "value": "MLB"
-        },
-        {
-          "label": "Abrev",
-          "value": "NYY"
-        }
-      ],
-      "videoHint": "Clip: Yankees",
-      "animationLabel": "Rotación del logo / gorra",
-      "tip": "Muestra yankees-ny-clean.jpg",
-      "actions": "Info · Stats · Video · Animación · Foto",
-      "modelKey": "gorra-yankees",
-      "equipo": "New York Yankees",
-      "abrev": "NYY",
-      "equipoReconocido": true,
-      "ligaOrigen": "MLB",
-      "targetImage": "assets/markers/mind/yankees.png"
-    },
-    {
-      "id": "logo-redsox",
-      "nombre": "Boston Red Sox",
-      "subtitle": "Logo B · MLB",
-      "color": "#BD3039",
-      "info": "Logo B de los Boston Red Sox. Imagen plana del escudo → ficha del equipo.",
-      "stats": [
-        {
-          "label": "Equipo",
-          "value": "Red Sox"
-        },
-        {
-          "label": "Liga",
-          "value": "MLB"
-        },
-        {
-          "label": "Abrev",
-          "value": "BOS"
-        }
-      ],
-      "videoHint": "Clip: Red Sox",
-      "animationLabel": "Rotación del logo / gorra",
-      "tip": "Muestra redsox-b.jpg",
-      "actions": "Info · Stats · Video · Animación · Foto",
-      "modelKey": "gorra-redsox",
-      "equipo": "Boston Red Sox",
-      "abrev": "BOS",
-      "equipoReconocido": true,
-      "ligaOrigen": "MLB",
-      "targetImage": "assets/markers/mind/redsox.png"
-    },
-    {
-      "id": "logo-dodgers",
-      "nombre": "Los Angeles Dodgers",
-      "subtitle": "Logo LA · MLB",
-      "color": "#005A9C",
-      "info": "Logo LA de los Los Angeles Dodgers. Escanea la imagen plana del logo para la ficha del equipo y el modelo 3D.",
-      "stats": [
-        {
-          "label": "Equipo",
-          "value": "Dodgers"
-        },
-        {
-          "label": "Liga",
-          "value": "MLB"
-        },
-        {
-          "label": "Abrev",
-          "value": "LAD"
-        }
-      ],
-      "videoHint": "Clip: Dodgers",
-      "animationLabel": "Rotación del logo / gorra",
-      "tip": "Muestra dodgers.jpg (logo LA)",
-      "actions": "Info · Stats · Video · Animación · Foto",
-      "modelKey": "gorra-dodgers",
-      "equipo": "Los Angeles Dodgers",
-      "abrev": "LAD",
-      "equipoReconocido": true,
-      "ligaOrigen": "MLB",
-      "targetImage": "assets/markers/mind/dodgers.png"
-    },
-    {
       "id": "logo-marineros",
       "nombre": "Marineros de Ensenada",
       "subtitle": "Escudo · LNM",
@@ -344,6 +220,347 @@
       "equipoReconocido": true,
       "ligaOrigen": "LNM",
       "targetImage": "assets/markers/mind/liga-lnm.png"
+    },
+    {
+      "id": "logo-naranjeros",
+      "nombre": "Naranjeros de Hermosillo",
+      "subtitle": "Insignia H · LMP",
+      "color": "#F15A22",
+      "info": "Insignia de Naranjeros de Hermosillo (Liga ARCO Mexicana del Pacífico). Máximo campeón histórico del circuito, con 17 títulos. Temporada 2025-26: 40-28, 6°.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Naranjeros"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "HMO"
+        }
+      ],
+      "videoHint": "Clip: Naranjeros",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador naranjeros-hermosillo.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Naranjeros de Hermosillo",
+      "abrev": "HMO",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/naranjeros-hermosillo.png"
+    },
+    {
+      "id": "logo-tomateros",
+      "nombre": "Tomateros de Culiacán",
+      "subtitle": "Subcampeón LMP 2025-26",
+      "color": "#7A1F3D",
+      "info": "Insignia de Tomateros de Culiacán. Subcampeón 2025-26 tras caer 4-0 ante Charros en la Serie Final. 13 títulos de LMP.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Tomateros"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "CUL"
+        }
+      ],
+      "videoHint": "Clip: Tomateros",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador tomateros-culiacan.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Tomateros de Culiacán",
+      "abrev": "CUL",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/tomateros-culiacan.png"
+    },
+    {
+      "id": "logo-charros",
+      "nombre": "Charros de Jalisco",
+      "subtitle": "Bicampeón LMP 2025-26",
+      "color": "#0D47A1",
+      "info": "Insignia de Charros de Jalisco, bicampeón de la Liga ARCO 2025-26 (barrida 4-0 a Tomateros). Cuarto título del club en la LMP.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Charros"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "JAL"
+        }
+      ],
+      "videoHint": "Clip: Charros bicampeón",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador charros-jalisco.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Charros de Jalisco",
+      "abrev": "JAL",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/charros-jalisco.jpg"
+    },
+    {
+      "id": "logo-caneros",
+      "nombre": "Cañeros de Los Mochis",
+      "subtitle": "Insignia LM · LMP",
+      "color": "#0D5C3D",
+      "info": "Insignia de Cañeros de Los Mochis. Cuatro títulos de LMP. Temporada 2025-26: 38-30, 5°.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Cañeros"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "MOC"
+        }
+      ],
+      "videoHint": "Clip: Cañeros",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador caneros-mochis.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Cañeros de Los Mochis",
+      "abrev": "MOC",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/caneros-mochis.png"
+    },
+    {
+      "id": "logo-yaquis",
+      "nombre": "Yaquis de Obregón",
+      "subtitle": "Insignia · LMP",
+      "color": "#0C3C78",
+      "info": "Insignia de Yaquis de Ciudad Obregón. Siete títulos de LMP. Líder de la primera vuelta 2025-26 y 8° al cierre de la postemporada (40-28).",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Yaquis"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "OBR"
+        }
+      ],
+      "videoHint": "Clip: Yaquis",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador yaquis-obregon.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Yaquis de Obregón",
+      "abrev": "OBR",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/yaquis-obregon.png"
+    },
+    {
+      "id": "logo-aguilas-mexicali",
+      "nombre": "Águilas de Mexicali",
+      "subtitle": "3° LMP 2025-26",
+      "color": "#E10600",
+      "info": "Insignia de Águilas de Mexicali. Cuatro títulos de LMP y Serie del Caribe 1986. En 2025-26 llegó al 3° lugar.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Águilas"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "MXL"
+        }
+      ],
+      "videoHint": "Clip: Águilas",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador aguilas-mexicali.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Águilas de Mexicali",
+      "abrev": "MXL",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/aguilas-mexicali.png"
+    },
+    {
+      "id": "logo-venados",
+      "nombre": "Venados de Mazatlán",
+      "subtitle": "Escudo · LMP",
+      "color": "#1B5E20",
+      "info": "Escudo de Venados de Mazatlán. Nueve títulos de LMP. En 2025-26 cerró 10° con récord 22-46.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Venados"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "MAZ"
+        }
+      ],
+      "videoHint": "Clip: Venados",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador venados-mazatlan.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Venados de Mazatlán",
+      "abrev": "MAZ",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/venados-mazatlan.png"
+    },
+    {
+      "id": "logo-algodoneros-guasave",
+      "nombre": "Algodoneros de Guasave",
+      "subtitle": "Insignia AG · LMP",
+      "color": "#0A2342",
+      "info": "Insignia de Algodoneros de Guasave. Título de LMP en 1971-72. En 2025-26 llegó al 4° lugar de la postemporada.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Algodoneros"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "GVE"
+        }
+      ],
+      "videoHint": "Clip: Algodoneros Guasave",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador algodoneros-guasave.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Algodoneros de Guasave",
+      "abrev": "GVE",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/algodoneros-guasave.png"
+    },
+    {
+      "id": "logo-jaguares",
+      "nombre": "Jaguares de Nayarit",
+      "subtitle": "Debut LMP 2025-26",
+      "color": "#0D2C6C",
+      "info": "Wordmark de Jaguares de Nayarit, equipo que debutó en la LMP en 2025-26 con sede en Tepic. Récord 40-28 y 7° lugar.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Jaguares"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "NAY"
+        }
+      ],
+      "videoHint": "Clip: Jaguares",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador jaguares-nayarit.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Jaguares de Nayarit",
+      "abrev": "NAY",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/jaguares-nayarit.png"
+    },
+    {
+      "id": "logo-mayos",
+      "nombre": "Mayos de Navojoa",
+      "subtitle": "Regreso 2026-27 · LMP",
+      "color": "#8B1538",
+      "info": "Marcador de Mayos de Navojoa. El equipo regresa a la Liga ARCO en 2026-27 y juega en el Estadio Manuel \"Ciclón\" Echeverría, en Navojoa, Sonora.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Mayos"
+        },
+        {
+          "label": "Liga",
+          "value": "LMP"
+        },
+        {
+          "label": "Abrev",
+          "value": "NAV"
+        }
+      ],
+      "videoHint": "Clip: Mayos",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador mayos-navojoa.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Mayos de Navojoa",
+      "abrev": "NAV",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/mayos-navojoa.png"
+    },
+    {
+      "id": "logo-sultanes",
+      "nombre": "Sultanes de Monterrey",
+      "subtitle": "Escudo M · LMB / Liga Norte",
+      "color": "#0A2342",
+      "info": "Escudo de Sultanes de Monterrey. Club de la Liga Mexicana de Beisbol con sede en el Estadio Mobil Super. En la Liga Norte su filial es Algodoneros de San Luis.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Sultanes"
+        },
+        {
+          "label": "Liga",
+          "value": "LMB"
+        },
+        {
+          "label": "Abrev",
+          "value": "MTY"
+        }
+      ],
+      "videoHint": "Clip: Sultanes",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Marcador sultanes-monterrey.jpg",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Sultanes de Monterrey",
+      "abrev": "MTY",
+      "equipoReconocido": true,
+      "ligaOrigen": "LNM",
+      "targetImage": "assets/markers/mind/sultanes-monterrey.jpg"
     }
   ]
 }

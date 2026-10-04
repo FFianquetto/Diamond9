@@ -97,7 +97,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   recentScans = signal<ArMarker[]>([]);
   feedback = signal<string | null>(null);
   scanMiss = signal<string | null>(null);
-  scanMode = signal<ScanModo>('pelota');
+  scanMode = signal<ScanModo>('logo');
   animating = signal(false);
   animMode = signal<ArAnimMode>('idle');
   showStats = signal(false);
@@ -114,10 +114,10 @@ export class ArScannerComponent implements OnInit, OnDestroy {
 
   readonly scanModes: ScanModeOption[] = [
     {
-      id: 'pelota',
-      label: 'Pelota',
-      icon: 'sports_baseball',
-      hint: 'Ohtani (blanco+azul) o Sultanes (blanco+negro). Imagen o colores.',
+      id: 'logo',
+      label: 'Imágenes',
+      icon: 'shield',
+      hint: 'Abre el marcador del sidebar (escudo LMP, MLB o LNM) y céntralo.',
     },
     {
       id: 'gorra',
@@ -126,10 +126,10 @@ export class ArScannerComponent implements OnInit, OnDestroy {
       hint: 'Yankees (negro+dorado) o Sox (crema+púrpura). Imagen o colores.',
     },
     {
-      id: 'logo',
-      label: 'Logo',
-      icon: 'shield',
-      hint: 'Abre el marcador del sidebar (logo-demo / Yankees / …) y céntralo.',
+      id: 'pelota',
+      label: 'Pelota',
+      icon: 'sports_baseball',
+      hint: 'Ohtani (blanco+azul) o Sultanes (blanco+negro). Imagen o colores.',
     },
   ];
 
@@ -341,7 +341,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         this.showParticles.set(true);
         this.activeAction.set('stats');
         this.runAnim('pulse3d', 1800);
-        this.showFxBanner('Stats en vivo', marker.nombre, 'stats', 2400);
+        this.showFxBanner('Stats', marker.nombre, 'stats', 2400);
         this.fx.burst('spark', event);
         this.ping(`Estadísticas: ${marker.nombre}`);
         break;
@@ -681,8 +681,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
             : 'Escaneando Pelota · imagen + colores',
         );
       } else if (mode === 'logo') {
-        this.startLogoPoll();
-        this.ping('Escaneando Logo · abre el marcador del sidebar');
+        this.ping('Escaneando imágenes · abre el marcador del sidebar');
       } else {
         this.ping(`Escaneando ${this.modeShortLabel()} (MindAR)`);
       }
@@ -894,7 +893,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
             ? 'Sin match aún. Centra la gorra (negro+dorado o crema+púrpura). Colores también cuentan.'
             : this.scanMode() === 'pelota'
               ? 'Sin match. Acerca Ohtani (blanco+azul) o Sultanes (blanco+negro) al centro. Colores también cuentan.'
-              : 'Sin match. Abre el marcador del sidebar (logo-demo o Yankees) y céntralo de frente.',
+              : 'Sin match. Abre un marcador del sidebar y céntralo de frente.',
         );
       }
     }, 6000);

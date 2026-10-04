@@ -2,7 +2,7 @@
   "tipo": "equipo",
   "temporada": 2026,
   "liga": "Liga Norte de México",
-  "nota": "6 equipos activos al cierre de la temporada regular LNM 2026.",
+  "nota": "6 equipos de la temporada regular LNM 2026, más Sultanes de Monterrey.",
   "items": [
     {
       "id": "marineros-ensenada",
@@ -135,6 +135,28 @@
       "tip": "Escudo o logo de Cerveceros de Tecate.",
       "actions": "Info · Stats · Video · Animación",
       "targetImage": "assets/markers/cerveceros-tecate.jpg"
+    },
+    {
+      "id": "sultanes-monterrey",
+      "nombre": "Sultanes de Monterrey",
+      "abrev": "MTY",
+      "ciudad": "Monterrey, N.L.",
+      "estadio": "Estadio Mobil Super",
+      "color": "#0A2342",
+      "subtitle": "LMB · filial de Algodoneros de San Luis",
+      "info": "Sultanes de Monterrey es un club histórico de la Liga Mexicana de Beisbol. En la Liga Norte su filial es Algodoneros de San Luis Río Colorado. Juega en el Estadio Mobil Super.",
+      "stats": [
+        { "label": "Liga", "value": "LMB" },
+        { "label": "Abrev", "value": "MTY" },
+        { "label": "Filial LNM", "value": "Algodoneros" }
+      ],
+      "destacados": ["Algodoneros de San Luis"],
+      "videoHint": "Clip: Sultanes",
+      "animationLabel": "Rotación del escudo",
+      "tip": "Escudo M de Sultanes de Monterrey.",
+      "actions": "Info · Stats · Video · Animación",
+      "targetImage": "assets/galeria/imagenes/equipos/sultanes-monterrey.jpg",
+      "ligaOrigen": "LNM"
     }
   ]
 }

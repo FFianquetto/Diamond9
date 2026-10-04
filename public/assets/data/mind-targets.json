@@ -1,6 +1,6 @@
 {
-  "version": 6,
-  "nota": "Modos separados: Pelota, Gorra, Logo. Cada uno con su .mind.",
+  "version": 9,
+  "nota": "Modos separados: Imágenes, Gorra, Pelota. Cada uno con su .mind.",
   "modes": {
     "pelota": {
       "label": "Pelota",
@@ -57,26 +57,10 @@
       ]
     },
     "logo": {
-      "label": "Logo",
-      "mindFile": "assets/mind/logo.mind?v=6",
+      "label": "Imágenes",
+      "mindFile": "assets/mind/logo.mind?v=9",
       "hint": "Abre el marcador del sidebar y céntralo de frente (pantalla o impreso).",
       "targets": [
-        {
-          "id": "logo-demo",
-          "image": "assets/mind/demo/card.png"
-        },
-        {
-          "id": "logo-yankees",
-          "image": "assets/markers/mind/yankees.png"
-        },
-        {
-          "id": "logo-redsox",
-          "image": "assets/markers/mind/redsox.png"
-        },
-        {
-          "id": "logo-dodgers",
-          "image": "assets/markers/mind/dodgers.png"
-        },
         {
           "id": "logo-bucaneros",
           "image": "assets/markers/mind/bucaneros-cabos.png"
@@ -84,6 +68,70 @@
         {
           "id": "logo-lnm",
           "image": "assets/markers/mind/liga-lnm.png"
+        },
+        {
+          "id": "logo-marineros",
+          "image": "assets/markers/mind/marineros-ensenada.png"
+        },
+        {
+          "id": "logo-barbanegras",
+          "image": "assets/markers/mind/barbanegras-tijuana.png"
+        },
+        {
+          "id": "logo-tiburones",
+          "image": "assets/markers/mind/tiburones-penasco.png"
+        },
+        {
+          "id": "logo-algodoneros",
+          "image": "assets/markers/mind/algodoneros-slrc.png"
+        },
+        {
+          "id": "logo-cerveceros",
+          "image": "assets/markers/mind/cerveceros-tecate.png"
+        },
+        {
+          "id": "logo-sultanes",
+          "image": "assets/markers/mind/sultanes-monterrey.jpg"
+        },
+        {
+          "id": "logo-naranjeros",
+          "image": "assets/markers/mind/naranjeros-hermosillo.png"
+        },
+        {
+          "id": "logo-tomateros",
+          "image": "assets/markers/mind/tomateros-culiacan.png"
+        },
+        {
+          "id": "logo-charros",
+          "image": "assets/markers/mind/charros-jalisco.jpg"
+        },
+        {
+          "id": "logo-caneros",
+          "image": "assets/markers/mind/caneros-mochis.png"
+        },
+        {
+          "id": "logo-yaquis",
+          "image": "assets/markers/mind/yaquis-obregon.png"
+        },
+        {
+          "id": "logo-aguilas-mexicali",
+          "image": "assets/markers/mind/aguilas-mexicali.png"
+        },
+        {
+          "id": "logo-venados",
+          "image": "assets/markers/mind/venados-mazatlan.png"
+        },
+        {
+          "id": "logo-algodoneros-guasave",
+          "image": "assets/markers/mind/algodoneros-guasave.png"
+        },
+        {
+          "id": "logo-jaguares",
+          "image": "assets/markers/mind/jaguares-nayarit.png"
+        },
+        {
+          "id": "logo-mayos",
+          "image": "assets/markers/mind/mayos-navojoa.png"
         }
       ]
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LnmScanItem } from '../lnm-catalog.types';
+import { HttpClient } from '@angular/common/http';
+import { LnmCatalogFile } from '../lnm-catalog.types';
 import { LeyendaBeisbol } from '../content.types';
 import { LnmDataService } from '../lnm-data.service';
 import { ParticleFxService } from '../../shared/particle-fx/particle-fx.service';
@@ -8,7 +9,6 @@ import {
   SectionPill,
   SectionShellComponent,
 } from '../../shared/section-shell/section-shell.component';
-import { PillSwitchComponent } from '../../shared/pill-switch/pill-switch.component';
 
 interface StandingRow {
   pos: number;
@@ -17,77 +17,69 @@ interface StandingRow {
   record: string;
   pct: string;
   color: string;
-  pctNum?: number;
 }
 
-interface LeaderRow {
-  nombre: string;
-  equipo: string;
-  stat: string;
-  value: string;
-}
+/** Standing general de ganados y perdidos, LMP 2025-26 (68 juegos). */
+const LMP_STANDING: { id: string; record: string; pct: string }[] = [
+  { id: 'lmp-jaguares', record: '40-28', pct: '.588' },
+  { id: 'lmp-tomateros', record: '40-28', pct: '.588' },
+  { id: 'lmp-yaquis', record: '40-28', pct: '.588' },
+  { id: 'lmp-naranjeros', record: '40-28', pct: '.588' },
+  { id: 'lmp-caneros', record: '38-30', pct: '.559' },
+  { id: 'lmp-charros', record: '38-30', pct: '.559' },
+  { id: 'lmp-aguilas', record: '33-35', pct: '.485' },
+  { id: 'lmp-algodoneros-guasave', record: '26-42', pct: '.382' },
+  { id: 'lmp-mayos', record: '23-45', pct: '.338' },
+  { id: 'lmp-venados', record: '22-46', pct: '.324' },
+];
 
 @Component({
   selector: 'app-stats',
   standalone: true,
-  imports: [
-    CommonModule,
-    SectionShellComponent,
-    PillSwitchComponent,
-  ],
+  imports: [CommonModule, SectionShellComponent],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss',
 })
 export class StatsComponent implements OnInit {
   private readonly lnm = inject(LnmDataService);
+  private readonly http = inject(HttpClient);
   private readonly fx = inject(ParticleFxService);
 
   standing = signal<StandingRow[]>([]);
-  lnmLeaders = signal<LeaderRow[]>([]);
   leyendas = signal<LeyendaBeisbol[]>([]);
-  ligaResumen = signal<{ label: string; value: string }[]>([]);
-  tab = signal<'lnm' | 'leyendas'>('lnm');
-  origen = signal<'mlb' | 'mex'>('mex');
+  ligaResumen = signal<{ label: string; value: string }[]>([
+    { label: 'Campeón', value: 'Charros 4-0' },
+    { label: 'Subcampeón', value: 'Tomateros' },
+    { label: 'Equipos', value: '10' },
+  ]);
+  tab = signal<'lmp' | 'leyendas'>('lmp');
 
   readonly pills: SectionPill[] = [
-    { id: 'lnm', label: 'Liga Norte' },
+    { id: 'lmp', label: 'Liga del Pacífico' },
     { id: 'leyendas', label: 'Leyendas' },
   ];
 
-  readonly origenPills: SectionPill[] = [
-    { id: 'mex', label: 'México' },
-    { id: 'mlb', label: 'MLB' },
-  ];
-
   ngOnInit(): void {
-    this.lnm.loadCatalog().subscribe((bundle) => {
-      const rows: StandingRow[] = bundle.equipos
-        .map((e) => {
-          const gp = e.stats.find((s) => s.label === 'G-P')?.value ?? '—';
-          const pct = e.stats.find((s) => s.label === 'Pct')?.value ?? '—';
-          const pctNum = parseFloat(pct.replace(/^\./, '0.')) || 0;
-          return {
-            pos: 0,
-            nombre: e.nombre,
-            abrev: e.abrev ?? '—',
-            record: gp,
-            pct,
-            color: e.color,
-            pctNum,
-          };
-        })
-        .sort((a, b) => b.pctNum - a.pctNum)
-        .map((row, i) => ({ ...row, pos: i + 1 }));
-      this.standing.set(rows);
-
-      const leaders = this.buildLnmLeaders(bundle.jugadores);
-      this.lnmLeaders.set(leaders);
-
-      const liga = bundle.liga[0];
-      if (liga) {
-        this.ligaResumen.set(liga.stats);
-      }
-    });
+    this.http
+      .get<LnmCatalogFile>('assets/data/equipos-lmp.json')
+      .subscribe((file) => {
+        const byId = new Map((file.items ?? []).map((item) => [item.id, item]));
+        const rows: StandingRow[] = LMP_STANDING.flatMap((row, i) => {
+          const team = byId.get(row.id);
+          if (!team) return [];
+          return [
+            {
+              pos: i + 1,
+              nombre: team.nombre,
+              abrev: team.abrev ?? '—',
+              record: row.record,
+              pct: row.pct,
+              color: team.color,
+            },
+          ];
+        });
+        this.standing.set(rows);
+      });
 
     this.lnm.loadHistoria().subscribe((data) => {
       this.leyendas.set(data.leyendas);
@@ -95,66 +87,18 @@ export class StatsComponent implements OnInit {
   }
 
   setTab(t: string): void {
-    if (t !== 'lnm' && t !== 'leyendas') return;
+    if (t !== 'lmp' && t !== 'leyendas') return;
     this.tab.set(t);
     this.fx.burstCenter('spark');
   }
 
-  setOrigen(t: string): void {
-    if (t !== 'mlb' && t !== 'mex') return;
-    this.origen.set(t);
-  }
-
   get leyendasFiltradas(): LeyendaBeisbol[] {
-    return this.leyendas().filter((l) => l.origen === this.origen());
+    return this.leyendas().filter((l) => l.origen === 'lmp');
   }
 
   get lede(): string {
-    return this.tab() === 'lnm'
-      ? 'Standing y líderes reales de la LNM 2026. Campeón: Bucaneros (4-2 vs Barbanegras).'
-      : 'Récords de las 10 leyendas coleccionables (MLB y México).';
-  }
-
-  private buildLnmLeaders(jugadores: LnmScanItem[]): LeaderRow[] {
-    const rows: LeaderRow[] = [];
-    for (const j of jugadores) {
-      const avg = j.stats.find((s) => s.label === 'AVG');
-      const rbi = j.stats.find((s) => s.label === 'RBI');
-      const hr = j.stats.find((s) => s.label === 'HR');
-      const era = j.stats.find((s) => s.label === 'ERA');
-      if (avg) {
-        rows.push({
-          nombre: j.nombre,
-          equipo: j.equipo ?? '—',
-          stat: 'AVG',
-          value: avg.value,
-        });
-      }
-      if (rbi) {
-        rows.push({
-          nombre: j.nombre,
-          equipo: j.equipo ?? '—',
-          stat: 'RBI',
-          value: rbi.value,
-        });
-      }
-      if (hr) {
-        rows.push({
-          nombre: j.nombre,
-          equipo: j.equipo ?? '—',
-          stat: 'HR',
-          value: hr.value,
-        });
-      }
-      if (era) {
-        rows.push({
-          nombre: j.nombre,
-          equipo: j.equipo ?? '—',
-          stat: 'ERA',
-          value: era.value,
-        });
-      }
-    }
-    return rows.slice(0, 8);
+    return this.tab() === 'lmp'
+      ? 'Standing de ganados y perdidos, Liga del Pacífico 2025-26 (68 juegos). Campeón: Charros, barrida 4-0 a Tomateros. Mayos aparece con el récord de esa campaña, cuando la franquicia jugó como Tucson Baseball Team.'
+      : 'Figuras de la Liga del Pacífico: Espino, Romo, Valenzuela, Barrera y Durazo.';
   }
 }

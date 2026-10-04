@@ -7,7 +7,7 @@
   pillsAriaLabel="Sección"
   (pillChange)="setTab($event)"
 >
-  @if (tab() === 'lnm') {
+  @if (tab() === 'lmp') {
     @if (ligaResumen().length) {
       <div class="liga-resumen">
         @for (s of ligaResumen(); track s.label) {
@@ -20,7 +20,7 @@
     }
 
     <section aria-labelledby="standing-title">
-      <h2 id="standing-title" class="section-title">Standing temporada regular</h2>
+      <h2 id="standing-title" class="section-title">Standing temporada regular 2025-26</h2>
       <div class="standing-table">
         <div class="standing-head">
           <span>#</span>
@@ -42,35 +42,21 @@
         }
       </div>
     </section>
-
-    <section class="leaders" aria-labelledby="lnm-leaders-title">
-      <h2 id="lnm-leaders-title">Líderes individuales LNM</h2>
-      <ul>
-        @for (l of lnmLeaders(); track l.nombre + l.stat) {
-          <li>
-            <strong>{{ l.nombre }}</strong>
-            <span>{{ l.equipo }}</span>
-            <em>{{ l.stat }} {{ l.value }}</em>
-          </li>
-        }
-      </ul>
-    </section>
   } @else {
     <section class="leyendas-stats" aria-labelledby="leyendas-stats-title">
-      <h2 id="leyendas-stats-title" class="section-title">Grandes de la historia</h2>
-      <app-pill-switch
-        [pills]="origenPills"
-        [active]="origen()"
-        ariaLabel="Liga"
-        (activeChange)="setOrigen($event)"
-      />
-      <p class="hint">Récords de las cartas coleccionables.</p>
+      <h2 id="leyendas-stats-title" class="section-title">Leyendas de la Liga del Pacífico</h2>
+      <p class="hint">Figuras del circuito invernal, con sus números de la LMP.</p>
       <div class="leyendas-table">
         @for (l of leyendasFiltradas; track l.id) {
           <article class="leyenda-row" [style.--team-color]="l.color">
             <header>
-              <h3>{{ l.nombre }}</h3>
-              <p>{{ l.posicion }} · {{ l.liga }} · {{ l.era }}</p>
+              @if (l.foto) {
+                <img class="leyenda-foto" [src]="l.foto" [alt]="l.nombre" loading="lazy" />
+              }
+              <div>
+                <h3>{{ l.nombre }}</h3>
+                <p>{{ l.posicion }} · {{ l.liga }} · {{ l.era }}</p>
+              </div>
             </header>
             <ul class="mini-stats">
               @for (s of l.stats; track s.label) {

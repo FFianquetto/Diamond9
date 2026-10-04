@@ -1,0 +1,4 @@
+Commands:
+npx cloudflared tunnel --url http://localhost:2000
+
+npm start
