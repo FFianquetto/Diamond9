@@ -212,14 +212,45 @@
       ],
       "videoHint": "Resumen LNM",
       "animationLabel": "Pulse de liga",
-      "tip": "Marcador liga-lnm.png",
+      "tip": "Marcador del escudo LNM.",
       "actions": "Info · Stats · Video · Animación · Foto",
-      "modelKey": "pelota",
+      "modelKey": "gorra-visor-camo",
       "equipo": "Liga Norte de México",
       "abrev": "LNM",
       "equipoReconocido": true,
       "ligaOrigen": "LNM",
-      "targetImage": "assets/markers/mind/liga-lnm.png"
+      "targetImage": "assets/logos/lnm.jpg"
+    },
+    {
+      "id": "logo-lmp",
+      "nombre": "Liga del Pacífico",
+      "subtitle": "Liga ARCO Mexicana del Pacífico",
+      "color": "#0B3A82",
+      "info": "Logo de la Liga ARCO Mexicana del Pacífico.",
+      "stats": [
+        {
+          "label": "Tipo",
+          "value": "Liga"
+        },
+        {
+          "label": "Campeón",
+          "value": "Charros"
+        },
+        {
+          "label": "Equipos",
+          "value": "10"
+        }
+      ],
+      "videoHint": "Resumen LMP",
+      "animationLabel": "Pulse de liga",
+      "tip": "Marcador liga-lmp.png",
+      "actions": "Info · Stats · Video · Animación · Foto",
+      "modelKey": "pelota",
+      "equipo": "Liga del Pacífico",
+      "abrev": "LMP",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMP",
+      "targetImage": "assets/markers/mind/liga-lmp.png"
     },
     {
       "id": "logo-naranjeros",

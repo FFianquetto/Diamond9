@@ -1,5 +1,5 @@
 {
-  "version": 9,
+  "version": 11,
   "nota": "Modos separados: Imágenes, Gorra, Pelota. Cada uno con su .mind.",
   "modes": {
     "pelota": {
@@ -58,7 +58,7 @@
     },
     "logo": {
       "label": "Imágenes",
-      "mindFile": "assets/mind/logo.mind?v=9",
+      "mindFile": "assets/mind/logo.mind?v=11",
       "hint": "Abre el marcador del sidebar y céntralo de frente (pantalla o impreso).",
       "targets": [
         {
@@ -67,7 +67,11 @@
         },
         {
           "id": "logo-lnm",
-          "image": "assets/markers/mind/liga-lnm.png"
+          "image": "assets/logos/lnm.jpg"
+        },
+        {
+          "id": "logo-lmp",
+          "image": "assets/markers/mind/liga-lmp.png"
         },
         {
           "id": "logo-marineros",

@@ -13,7 +13,8 @@
   },
   "overrides": {
     "liga-lnm": "pelota",
-    "logo-lnm": "pelota",
+    "logo-lnm": "gorra-visor-camo",
+    "logo-lmp": "pelota",
     "logo-yankees": "gorra-yankees",
     "logo-redsox": "gorra-redsox",
     "logo-dodgers": "gorra-dodgers",

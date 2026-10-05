@@ -43,6 +43,13 @@
       "tag": "Liga"
     },
     {
+      "id": "img-lmp",
+      "title": "Liga del Pacífico",
+      "caption": "Logo de la Liga ARCO Mexicana del Pacífico",
+      "src": "assets/galeria/imagenes/liga-lmp.png",
+      "tag": "Liga"
+    },
+    {
       "id": "img-marineros",
       "title": "Marineros de Ensenada",
       "caption": "Escudo oficial · LNM",
