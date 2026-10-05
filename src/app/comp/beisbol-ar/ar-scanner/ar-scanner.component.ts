@@ -169,6 +169,28 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Los 9 equipos LMP con modelo propio: gorra en Imágenes y Gorra,
+   * pelota solo en el apartado de pelotas. Mayos no tiene GLB.
+   */
+  private readonly lmpModelByMarker: Record<string, { gorra: string; pelota: string }> = {
+    'logo-naranjeros': { gorra: 'gorra-naranjeros', pelota: 'pelota-naranjeros' },
+    'logo-tomateros': { gorra: 'gorra-tomateros', pelota: 'pelota-tomateros' },
+    'logo-charros': { gorra: 'gorra-charros', pelota: 'pelota-charros' },
+    'logo-caneros': { gorra: 'gorra-caneros', pelota: 'pelota-caneros' },
+    'logo-yaquis': { gorra: 'gorra-yaquis', pelota: 'pelota-yaquis' },
+    'logo-aguilas-mexicali': { gorra: 'gorra-aguilas', pelota: 'pelota-aguilas' },
+    'logo-venados': { gorra: 'gorra-venados', pelota: 'pelota-venados' },
+    'logo-algodoneros-guasave': { gorra: 'gorra-guasave', pelota: 'pelota-guasave' },
+    'logo-jaguares': { gorra: 'gorra-jaguares', pelota: 'pelota-jaguares' },
+  };
+
+  modelKeyFor(marker: { id: string; modelKey?: string }): string {
+    const pair = this.lmpModelByMarker[marker.id];
+    if (!pair) return marker.modelKey || '';
+    return this.scanMode() === 'pelota' ? pair.pelota : pair.gorra;
+  }
+
   onModePill(id: string): void {
     if (id !== 'pelota' && id !== 'gorra' && id !== 'logo') return;
     void this.setScanMode(id);

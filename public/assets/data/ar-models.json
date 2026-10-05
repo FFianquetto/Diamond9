@@ -53,7 +53,16 @@
     "pelota-beisbol": "pelota",
     "pelota-lmb": "pelota",
     "pelota-othani": "pelota",
-    "pelota-sultanes": "pelota"
+    "pelota-sultanes": "pelota",
+    "logo-naranjeros": "gorra-naranjeros",
+    "logo-tomateros": "gorra-tomateros",
+    "logo-charros": "gorra-charros",
+    "logo-caneros": "gorra-caneros",
+    "logo-yaquis": "gorra-yaquis",
+    "logo-aguilas-mexicali": "gorra-aguilas",
+    "logo-venados": "gorra-venados",
+    "logo-algodoneros-guasave": "gorra-guasave",
+    "logo-jaguares": "gorra-jaguares"
   },
   "models": {
     "pelota": {
@@ -161,6 +170,132 @@
       "format": "glb",
       "scale": 1.35,
       "fallback": "gorra"
+    },
+    "gorra-naranjeros": {
+      "label": "Naranjeros de Hermosillo",
+      "file": "assets/modelos/gorra/gorra%20new%20era%20naranjeros%20de%20hermosillo%20lamp%20game%20cap%2059fifty.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-naranjeros": {
+      "label": "Pelota Naranjeros de Hermosillo",
+      "file": "assets/modelos/pelota/pelotanaranjeros.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
+    },
+    "gorra-tomateros": {
+      "label": "Tomateros de Culiacán",
+      "file": "assets/modelos/gorra/Gorra%20Tomateros%20de%20Culiac%C3%A1n%205950%20Oficial%20Guinda.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-tomateros": {
+      "label": "Pelota Tomateros de Culiacán",
+      "file": "assets/modelos/pelota/pelotatomateros.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
+    },
+    "gorra-charros": {
+      "label": "Charros de Jalisco",
+      "file": "assets/modelos/gorra/Gorra%20Beisbol%20Softbol%20New%20Era%20Charros%20Jalisco%2059Fifty%20Azul%20Blanco.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-charros": {
+      "label": "Pelota Charros de Jalisco",
+      "file": "assets/modelos/pelota/pelotacharros.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
+    },
+    "gorra-caneros": {
+      "label": "Cañeros de Los Mochis",
+      "file": "assets/modelos/gorra/Gorra%20Caneros%20Summer%20Training%202025%2059Fifty.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-caneros": {
+      "label": "Pelota Cañeros de Los Mochis",
+      "file": "assets/modelos/pelota/pelotacaneros.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
+    },
+    "gorra-yaquis": {
+      "label": "Yaquis de Obregón",
+      "file": "assets/modelos/gorra/Gorra%20New%20Era%20Yaquis%20De%20Obreg%C3%B3n%2059Fifty.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-yaquis": {
+      "label": "Pelota Yaquis de Obregón",
+      "file": "assets/modelos/pelota/pelotayaquis.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
+    },
+    "gorra-aguilas": {
+      "label": "Águilas de Mexicali",
+      "file": "assets/modelos/gorra/gorra%20new%20era%2059fifty%20%C3%A1guilas%20de%20mexicali.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-aguilas": {
+      "label": "Pelota Águilas de Mexicali",
+      "file": "assets/modelos/pelota/pelotaaguilas.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
+    },
+    "gorra-venados": {
+      "label": "Venados de Mazatlán",
+      "file": "assets/modelos/gorra/Gorra%20Venados%20SR69%20Roja.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-venados": {
+      "label": "Pelota Venados de Mazatlán",
+      "file": "assets/modelos/pelota/pelotavenados.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
+    },
+    "gorra-guasave": {
+      "label": "Algodoneros de Guasave",
+      "file": "assets/modelos/gorra/Gorra%20New%20Era%20Algodoneros%20De%20Guasave%20LAMP%20Retro%2059Fifty.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-guasave": {
+      "label": "Pelota Algodoneros de Guasave",
+      "file": "assets/modelos/pelota/pelotaalgodoneros.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
+    },
+    "gorra-jaguares": {
+      "label": "Jaguares de Nayarit",
+      "file": "assets/modelos/gorra/Gorra%20ON%20FIELD%20Jaguares%20SR69.glb",
+      "format": "glb",
+      "scale": 1.35,
+      "fallback": "gorra"
+    },
+    "pelota-jaguares": {
+      "label": "Pelota Jaguares de Nayarit",
+      "file": "assets/modelos/pelota/pelotajaguares.glb",
+      "format": "glb",
+      "scale": 1.55,
+      "fallback": "pelota"
     }
   }
 }
