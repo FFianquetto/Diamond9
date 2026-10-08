@@ -32,11 +32,39 @@ import {
   SectionPill,
   SectionShellComponent,
 } from '../../shared/section-shell/section-shell.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 export type ArAction = 'info' | 'stats' | 'video' | 'anim' | 'foto';
 
 const RECENT_SCANS_KEY = 'd9-recent-scans-v1';
+
+/** Marcador escaneado → trivia de ese club (solo los 10 de la Liga del Pacífico). */
+const LMP_TRIVIA_BY_MARKER: Record<string, string> = {
+  'logo-naranjeros': 'naranjeros',
+  'logo-tomateros': 'tomateros',
+  'logo-charros': 'charros',
+  'logo-caneros': 'caneros',
+  'logo-yaquis': 'yaquis',
+  'logo-aguilas-mexicali': 'aguilas',
+  'logo-venados': 'venados',
+  'logo-algodoneros-guasave': 'guasave',
+  'logo-jaguares': 'jaguares',
+  'logo-mayos': 'mayos',
+};
+
+const LMP_TRIVIA_BY_NAME: { needle: string; id: string }[] = [
+  { needle: 'naranjeros', id: 'naranjeros' },
+  { needle: 'tomateros', id: 'tomateros' },
+  { needle: 'charros', id: 'charros' },
+  { needle: 'cañeros', id: 'caneros' },
+  { needle: 'yaquis', id: 'yaquis' },
+  { needle: 'águilas', id: 'aguilas' },
+  { needle: 'aguilas', id: 'aguilas' },
+  { needle: 'venados', id: 'venados' },
+  { needle: 'guasave', id: 'guasave' },
+  { needle: 'jaguares', id: 'jaguares' },
+  { needle: 'mayos', id: 'mayos' },
+];
 
 interface FxBannerState {
   title: string;
@@ -111,6 +139,13 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   btnPressed = signal<string | null>(null);
   activeAction = signal<ArAction | null>(null);
   fxBanner = signal<FxBannerState | null>(null);
+  /** Gorra congelada con un toque en el cuadro de la cámara. */
+  gorraPaused = signal(false);
+  /**
+   * Mientras la pantalla está pausada, el último target que la cámara sigue
+   * viendo. Null si el objeto ya salió del cuadro.
+   */
+  private liveTargetId: string | null = null;
 
   readonly scanModes: ScanModeOption[] = [
     {
@@ -154,6 +189,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   private readonly pelotaColor = inject(PelotaColorDetectService);
   private readonly logoColor = inject(LogoColorDetectService);
   private readonly scanPhotos = inject(ScanPhotosService);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.pendingRecentIds = this.readStoredRecentIds();
@@ -191,6 +227,74 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     return this.scanMode() === 'pelota' ? pair.pelota : pair.gorra;
   }
 
+  /** Id de trivia LMP, o null si el marcador no es uno de los 10 equipos. */
+  lmpTriviaId(marker: ArMarker): string | null {
+    const direct = LMP_TRIVIA_BY_MARKER[marker.id];
+    if (direct) return direct;
+    if (marker.ligaOrigen !== 'LMP') return null;
+    const blob = `${marker.equipo ?? ''} ${marker.nombre}`.toLowerCase();
+    return LMP_TRIVIA_BY_NAME.find((hint) => blob.includes(hint.needle))?.id ?? null;
+  }
+
+  showsGorra(marker: ArMarker): boolean {
+    const key = this.modelKeyFor(marker);
+    if (key.startsWith('gorra')) return true;
+    return marker.tipo === 'gorra' || (marker.modelKey ?? '').startsWith('gorra');
+  }
+
+  gorraInteractive(): boolean {
+    const marker = this.activeMarker();
+    return !!marker && this.cameraActive() && this.showsGorra(marker);
+  }
+
+  onFrameTap(event: PointerEvent): void {
+    if (!this.cameraActive()) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('button, a, input, textarea, .ar-panel')) return;
+    const marker = this.activeMarker();
+    if (!marker || !this.showsGorra(marker)) return;
+    this.modelViewer?.toggleSpin();
+  }
+
+  /** El visor avisa el pausa/reanuda. La pantalla no se suelta hasta el segundo toque. */
+  onSpinHeld(paused: boolean): void {
+    this.gorraPaused.set(paused);
+    if (paused) {
+      this.liveTargetId = this.activeMarker()?.id ?? null;
+      return;
+    }
+    this.releaseHold();
+  }
+
+  /**
+   * Segundo toque: el mismo equipo sigue su ciclo si aún está en cuadro.
+   * Si ya no está, la cámara vuelve a esperar. Si entró otro, ese toma el relevo.
+   */
+  private releaseHold(): void {
+    const frozen = this.activeMarker();
+    const live = this.liveTargetId;
+    this.liveTargetId = null;
+    if (!frozen) return;
+    if (!live) {
+      this.clearLiveDetection(true, true);
+      return;
+    }
+    if (live !== frozen.id) {
+      const marker = this.catalog.find((item) => item.id === live);
+      if (marker) this.applyDetection(marker);
+    }
+  }
+
+  openTeamTrivia(marker: ArMarker, event: Event): void {
+    const id = this.lmpTriviaId(marker);
+    if (!id) return;
+    event.preventDefault();
+    event.stopPropagation();
+    this.sounds.play('click');
+    this.fx.burst('spark', event);
+    void this.router.navigate(['/trivia'], { queryParams: { equipo: id } });
+  }
+
   onModePill(id: string): void {
     if (id !== 'pelota' && id !== 'gorra' && id !== 'logo') return;
     void this.setScanMode(id);
@@ -200,7 +304,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     if (this.scanMode() === mode) return;
     this.scanMode.set(mode);
     this.scanMiss.set(null);
-    this.clearLiveDetection(false);
+    this.clearLiveDetection(false, true);
     this.ping(`Modo: ${this.modeShortLabel()}`);
     this.fx.burst('spark', event);
     if (this.cameraActive()) await this.restartEngine();
@@ -310,7 +414,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     const current = this.activeMarker();
     if (current) {
       this.pushRecent(current);
-      this.clearLiveDetection(false);
+      this.clearLiveDetection(false, true);
       this.ping(`Cámara apagada. Guardado: ${current.nombre}`);
       this.fx.burst('spark', event);
     }
@@ -649,7 +753,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     void this.stopEngines();
     this.stopCelebrar();
-    this.clearLiveDetection(false);
+    this.clearLiveDetection(false, true);
     this.stopClip();
     this.stopNarration();
     this.clearMissTimer();
@@ -677,7 +781,7 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.scanning.set(false);
     this.compileProgress.set(null);
     this.scanMiss.set(null);
-    this.clearLiveDetection(false);
+    this.clearLiveDetection(false, true);
     await this.stopEngines();
 
     try {
@@ -751,6 +855,11 @@ export class ArScannerComponent implements OnInit, OnDestroy {
         }
         return;
       }
+      if (this.gorraPaused()) {
+        this.colorMisses = 0;
+        this.liveTargetId = guess.id;
+        return;
+      }
       this.colorMisses = 0;
       this.scanMiss.set(null);
       this.clearMissTimer();
@@ -800,6 +909,11 @@ export class ArScannerComponent implements OnInit, OnDestroy {
           this.logoMisses++;
           if (this.logoMisses >= 2) this.clearLiveDetection(true);
         }
+        return;
+      }
+      if (this.gorraPaused()) {
+        this.logoMisses = 0;
+        this.liveTargetId = guess.id;
         return;
       }
       this.logoMisses = 0;
@@ -861,6 +975,13 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     const id = this.mindAr.getTargetId(index);
     if (!id) return;
 
+    if (this.gorraPaused()) {
+      this.liveTargetId = id;
+      this.trackedTargetIndex = index;
+      this.lastHitAt = Date.now();
+      return;
+    }
+
     const now = Date.now();
     if (id === this.activeMarker()?.id) {
       this.lastHitId = id;
@@ -887,13 +1008,23 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     this.applyDetection(marker);
   }
 
-  /** Quita modelo/paneles; si había detección, la guarda en “últimos escaneos”. */
-  private clearLiveDetection(announce: boolean): void {
+  /**
+   * Quita modelo y paneles. Con la pantalla pausada no hace nada
+   * (solo anota que el objeto ya no está), salvo que `force` sea true.
+   */
+  private clearLiveDetection(announce: boolean, force = false): void {
+    if (this.gorraPaused() && !force) {
+      this.liveTargetId = null;
+      return;
+    }
+
     const current = this.activeMarker();
     if (current) this.pushRecent(current);
 
     this.activeMarker.set(null);
     this.lastHitId = null;
+    this.liveTargetId = null;
+    this.gorraPaused.set(false);
     this.detectionSource = null;
     this.colorMisses = 0;
     this.logoMisses = 0;
@@ -931,6 +1062,8 @@ export class ArScannerComponent implements OnInit, OnDestroy {
     if (prev && prev.id !== marker.id) this.pushRecent(prev);
 
     this.activeMarker.set(marker);
+    this.gorraPaused.set(false);
+    this.modelViewer?.releaseSpin();
     this.lastHitId = marker.id;
     this.lastHitAt = Date.now();
     this.scanMiss.set(null);

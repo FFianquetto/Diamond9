@@ -1,7 +1,9 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -17,7 +19,16 @@ import { LnmItemType } from '../lnm-catalog.types';
 @Component({
   selector: 'app-ar-model-viewer',
   standalone: true,
-  template: `<canvas #canvas class="ar-model-canvas" aria-hidden="true"></canvas>`,
+  template: `<canvas
+    #canvas
+    class="ar-model-canvas"
+    [class.is-held]="spinHeld"
+    [style.cursor]="canHoldSpin() ? 'pointer' : 'default'"
+    [attr.aria-hidden]="canHoldSpin() ? null : true"
+    [attr.role]="canHoldSpin() ? 'button' : null"
+    [attr.aria-label]="canHoldSpin() ? (spinHeld ? 'Reanudar giro de la gorra' : 'Detener giro de la gorra') : null"
+    (pointerup)="onCanvasPointer($event)"
+  ></canvas>`,
   styles: [
     `
       :host {
@@ -29,7 +40,10 @@ import { LnmItemType } from '../lnm-catalog.types';
         display: block;
         width: 100%;
         height: 100%;
-        touch-action: none;
+        touch-action: manipulation;
+      }
+      .ar-model-canvas.is-held {
+        filter: saturate(0.92);
       }
     `,
   ],
@@ -45,6 +59,7 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() active = true;
   /** Partículas 3D (se intensifican con video / animación). */
   @Input() particles = false;
+  @Output() spinHeldChange = new EventEmitter<boolean>();
 
   private readonly loader = inject(ArModelLoaderService);
 
@@ -59,6 +74,9 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
   private fillLight: THREE.DirectionalLight | null = null;
   private raf = 0;
   private startedAt = 0;
+  /** Giro congelado en el ángulo actual hasta el siguiente toque. */
+  spinHeld = false;
+  private heldElapsed = 0;
   private resizeObs: ResizeObserver | null = null;
   private ready = false;
   private pendingKey = '';
@@ -84,8 +102,15 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
       this.syncParticles();
     }
 
+    if (changes['markerId'] || changes['markerTipo'] || changes['modelKey']) {
+      this.spinHeld = false;
+      this.heldElapsed = 0;
+    }
+
     if (changes['animMode']) {
-      this.startedAt = performance.now();
+      if (!this.spinHeld) {
+        this.startedAt = performance.now();
+      }
       this.applyCelebrationLights();
       this.boostParticlesForAnim();
       if (
@@ -122,6 +147,41 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
   /** Canvas WebGL para composición de fotos. */
   getCanvas(): HTMLCanvasElement | null {
     return this.canvasRef?.nativeElement ?? null;
+  }
+
+  /** La gorra (y solo la gorra) se detiene o reanuda con un toque. */
+  canHoldSpin(): boolean {
+    return (
+      this.modelKey === 'gorra' ||
+      this.modelKey.startsWith('gorra-') ||
+      this.markerTipo === 'gorra'
+    );
+  }
+
+  /** Alterna el giro. Devuelve true si quedó detenida. */
+  toggleSpin(): boolean {
+    if (!this.canHoldSpin()) return false;
+    if (this.spinHeld) {
+      this.startedAt = performance.now() - this.heldElapsed;
+      this.spinHeld = false;
+    } else {
+      this.heldElapsed = Math.max(0, performance.now() - this.startedAt);
+      this.spinHeld = true;
+    }
+    this.spinHeldChange.emit(this.spinHeld);
+    return this.spinHeld;
+  }
+
+  releaseSpin(): void {
+    this.spinHeld = false;
+    this.heldElapsed = 0;
+    this.startedAt = performance.now();
+  }
+
+  onCanvasPointer(event: PointerEvent): void {
+    if (!this.canHoldSpin() || event.button !== 0) return;
+    event.stopPropagation();
+    this.toggleSpin();
   }
 
   private initScene(): void {
@@ -373,7 +433,7 @@ export class ArModelViewerComponent implements OnInit, OnChanges, OnDestroy {
     const tick = (now: number) => {
       if (!this.renderer || !this.scene || !this.camera) return;
       if (this.active) {
-        if (this.model) {
+        if (this.model && !this.spinHeld) {
           this.loader.applyAnimation(
             this.model,
             this.animMode,

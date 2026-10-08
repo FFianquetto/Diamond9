@@ -258,6 +258,11 @@
 
 .camera-frame {
   position: relative;
+
+  &.can-hold-gorra {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
   /* Si la altura limita el frame, queda centrado en vez de pegado a la izquierda */
   margin-inline: auto;
   aspect-ratio: 3 / 4;
@@ -896,6 +901,11 @@
     border-color: $rebase-10;
     background: rgba($rebase-10, 0.22);
     box-shadow: 0 0 0 1px rgba($rebase-10, 0.35);
+  }
+
+  &--trivia {
+    border-color: rgba($rebase-10, 0.85);
+    background: rgba($rebase-10, 0.12);
   }
 }
 

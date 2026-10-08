@@ -19,7 +19,12 @@
 
   <div class="ar-layout">
     <div class="ar-stage">
-      <div class="camera-frame" #cameraFrame>
+      <div
+        class="camera-frame"
+        #cameraFrame
+        [class.can-hold-gorra]="gorraInteractive()"
+        (pointerup)="onFrameTap($event)"
+      >
         <!-- Contenedor oficial MindARThree (él crea el <video>) -->
         <div
           #mindarHost
@@ -118,10 +123,16 @@
                 [animMode]="animMode()"
                 [active]="true"
                 [particles]="showParticles() || videoPlaying()"
+                (spinHeldChange)="onSpinHeld($event)"
               />
             </div>
             <p class="ar-label">
               {{ marker.nombre }}
+              @if (showsGorra(marker)) {
+                <span class="ar-anim-badge spin-state">{{
+                  gorraPaused() ? 'Detenida · toca para girar' : 'Toca para detener'
+                }}</span>
+              }
               @if (animating()) {
                 <span class="ar-anim-badge">{{
                   marker.animationLabel || 'Animando'
@@ -189,6 +200,16 @@
         @if (activeMarker(); as marker) {
           <p class="actions-label">Acciones AR · {{ marker.nombre }}</p>
           <div class="action-row" role="group" aria-label="Acciones AR">
+            @if (lmpTriviaId(marker); as triviaId) {
+              <button
+                type="button"
+                class="action-btn action-btn--trivia"
+                (click)="openTeamTrivia(marker, $event)"
+              >
+                <mat-icon>quiz</mat-icon>
+                Trivia
+              </button>
+            }
             <button
               type="button"
               class="action-btn"

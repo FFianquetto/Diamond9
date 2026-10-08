@@ -1,0 +1,536 @@
+{
+  "liga": "Liga del Pacífico",
+  "nota": "10 trivias, una por equipo de la Liga ARCO Mexicana del Pacífico. 6 preguntas cada una.",
+  "equipos": [
+    {
+      "id": "naranjeros",
+      "nombre": "Naranjeros de Hermosillo",
+      "ciudad": "Hermosillo, Sonora",
+      "color": "#F15A22",
+      "preguntas": [
+        {
+          "pregunta": "¿En qué ciudad juegan los Naranjeros?",
+          "opciones": ["Culiacán", "Hermosillo", "Obregón", "Mexicali"],
+          "correcta": 1,
+          "explica": "Los Naranjeros son el equipo de Hermosillo, Sonora."
+        },
+        {
+          "pregunta": "¿Cuántos títulos de la Liga del Pacífico acumulan los Naranjeros?",
+          "opciones": ["9", "13", "17", "4"],
+          "correcta": 2,
+          "explica": "Naranjeros de Hermosillo es el máximo campeón histórico, con 17 títulos."
+        },
+        {
+          "pregunta": "¿Cómo se llama su estadio?",
+          "opciones": [
+            "Estadio Fernando Valenzuela",
+            "Estadio Panamericano",
+            "Chevron Park",
+            "Kuroda Park"
+          ],
+          "correcta": 0,
+          "explica": "Juegan en el Estadio Fernando Valenzuela, en Hermosillo."
+        },
+        {
+          "pregunta": "¿Qué récord tuvieron en la campaña regular 2025-26?",
+          "opciones": ["22-46", "33-35", "38-30", "40-28"],
+          "correcta": 3,
+          "explica": "Cerraron la campaña regular 40-28, porcentaje de .588."
+        },
+        {
+          "pregunta": "¿Quién los eliminó en la primera ronda de playoffs 2025-26?",
+          "opciones": ["Tomateros", "Yaquis", "Charros", "Venados"],
+          "correcta": 2,
+          "explica": "Naranjeros era el sembrado 3 y cayó en seis juegos ante Charros."
+        },
+        {
+          "pregunta": "¿Quién fue su mánager en 2025-26?",
+          "opciones": [
+            "Benjamín Gil",
+            "Juan Gabriel Castro",
+            "Roberto Vizcarra",
+            "Gabe Álvarez"
+          ],
+          "correcta": 1,
+          "explica": "El mánager de Naranjeros en esa temporada fue Juan Gabriel Castro."
+        }
+      ]
+    },
+    {
+      "id": "tomateros",
+      "nombre": "Tomateros de Culiacán",
+      "ciudad": "Culiacán, Sinaloa",
+      "color": "#7A1F3D",
+      "preguntas": [
+        {
+          "pregunta": "¿De qué ciudad son los Tomateros?",
+          "opciones": ["Los Mochis", "Mazatlán", "Culiacán", "Guasave"],
+          "correcta": 2,
+          "explica": "Tomateros representa a Culiacán, Sinaloa."
+        },
+        {
+          "pregunta": "¿Cuántos campeonatos de LMP suma el club?",
+          "opciones": ["7", "13", "17", "2"],
+          "correcta": 1,
+          "explica": "Tomateros de Culiacán suma 13 campeonatos de la Liga del Pacífico."
+        },
+        {
+          "pregunta": "¿Cómo terminó la temporada 2025-26?",
+          "opciones": ["Campeón", "Subcampeón", "10° lugar", "Debut"],
+          "correcta": 1,
+          "explica": "Fue subcampeón: llegó a la Serie Final y cayó ante Charros."
+        },
+        {
+          "pregunta": "¿Cuál fue el marcador de la Serie Final 2025-26?",
+          "opciones": ["4-3", "4-1", "4-0", "3-2"],
+          "correcta": 2,
+          "explica": "Charros barrió a Tomateros 4-0 en la Serie Final."
+        },
+        {
+          "pregunta": "¿Quién dirigió a Tomateros en la Serie Final 2025-26?",
+          "opciones": [
+            "Lorenzo Bundy",
+            "Roberto Vizcarra",
+            "Oscar Robles",
+            "José Moreno"
+          ],
+          "correcta": 0,
+          "explica": "Lorenzo Bundy tomó a Tomateros a mitad de la temporada y lo dirigió en la Serie Final."
+        },
+        {
+          "pregunta": "¿Qué marca tuvieron como líderes de la segunda vuelta?",
+          "opciones": ["22-11", "22-13", "40-28", "26-42"],
+          "correcta": 0,
+          "explica": "En 2025-26 lideraron la segunda vuelta con 22-11."
+        }
+      ]
+    },
+    {
+      "id": "charros",
+      "nombre": "Charros de Jalisco",
+      "ciudad": "Zapopan, Jalisco",
+      "color": "#0D47A1",
+      "preguntas": [
+        {
+          "pregunta": "¿Dónde está la sede de Charros de Jalisco?",
+          "opciones": ["Guadalajara centro", "Zapopan", "Tepic", "Hermosillo"],
+          "correcta": 1,
+          "explica": "Charros juega en Zapopan, Jalisco."
+        },
+        {
+          "pregunta": "¿Qué lograron el 25 de enero de 2026?",
+          "opciones": [
+            "El debut en la liga",
+            "El bicampeonato de la Liga ARCO",
+            "El descenso",
+            "Mudarse a Navojoa"
+          ],
+          "correcta": 1,
+          "explica": "Ese día se coronaron bicampeones de la Liga ARCO."
+        },
+        {
+          "pregunta": "¿A quién barrieron en la Serie Final 2025-26?",
+          "opciones": ["Yaquis", "Naranjeros", "Tomateros", "Venados"],
+          "correcta": 2,
+          "explica": "Barrieron 4-0 a Tomateros de Culiacán."
+        },
+        {
+          "pregunta": "¿Cuántos títulos de LMP tiene Charros con ese bicampeonato?",
+          "opciones": ["2", "3", "4", "9"],
+          "correcta": 2,
+          "explica": "El bicampeonato fue su cuarto título de Liga del Pacífico."
+        },
+        {
+          "pregunta": "¿En qué estadio cerraron la final?",
+          "opciones": [
+            "Estadio Tomateros",
+            "Estadio Panamericano",
+            "Nido de los Águilas",
+            "Estadio Yaquis"
+          ],
+          "correcta": 1,
+          "explica": "El juego 4 fue en el Estadio Panamericano (8-6)."
+        },
+        {
+          "pregunta": "¿Quién era el mánager del bicampeón?",
+          "opciones": [
+            "Benjamín Gil",
+            "Juan José Pacho",
+            "Luis Carlos Rivera",
+            "Juan Gabriel Castro"
+          ],
+          "correcta": 0,
+          "explica": "Benjamín Gil dirigió el bicampeonato. Charros también compite en la LMB."
+        }
+      ]
+    },
+    {
+      "id": "caneros",
+      "nombre": "Cañeros de Los Mochis",
+      "ciudad": "Los Mochis, Sinaloa",
+      "color": "#0D5C3D",
+      "preguntas": [
+        {
+          "pregunta": "¿De qué ciudad son los Cañeros?",
+          "opciones": ["Guasave", "Los Mochis", "Culiacán", "Mazatlán"],
+          "correcta": 1,
+          "explica": "Cañeros representa a Los Mochis, Sinaloa."
+        },
+        {
+          "pregunta": "¿Cuántos títulos de Liga Mexicana del Pacífico tiene el club?",
+          "opciones": ["2", "4", "7", "13"],
+          "correcta": 1,
+          "explica": "Cañeros de Los Mochis tiene cuatro títulos de LMP."
+        },
+        {
+          "pregunta": "¿Cómo se llama hoy su estadio?",
+          "opciones": [
+            "Chevron Park",
+            "Kuroda Park",
+            "Estadio Teodoro Mariscal",
+            "Coloso del Pacífico"
+          ],
+          "correcta": 0,
+          "explica": "Juegan en el Chevron Park, antes Estadio Emilio Ibarra Almada."
+        },
+        {
+          "pregunta": "¿Con qué sembrado entraron a los playoffs 2025-26?",
+          "opciones": ["1°", "3°", "5°", "8°"],
+          "correcta": 2,
+          "explica": "Cañeros fue el sembrado 5 y cayó en la primera ronda ante Tomateros."
+        },
+        {
+          "pregunta": "¿Cuál fue su récord de 2025-26?",
+          "opciones": ["40-28", "38-30", "33-35", "26-42"],
+          "correcta": 1,
+          "explica": "Terminaron 38-30, porcentaje de .559."
+        },
+        {
+          "pregunta": "¿Quién cerró la temporada 2025-26 como mánager?",
+          "opciones": ["Chris Coste", "Félix Fermín", "Gabe Álvarez", "José Moreno"],
+          "correcta": 0,
+          "explica": "Félix Fermín arrancó la campaña y el 18 de diciembre de 2025 lo sustituyó Chris Coste."
+        }
+      ]
+    },
+    {
+      "id": "yaquis",
+      "nombre": "Yaquis de Obregón",
+      "ciudad": "Ciudad Obregón, Sonora",
+      "color": "#0C3C78",
+      "preguntas": [
+        {
+          "pregunta": "¿Dónde juegan los Yaquis?",
+          "opciones": ["Hermosillo", "Navojoa", "Ciudad Obregón", "Mexicali"],
+          "correcta": 2,
+          "explica": "Yaquis es el equipo de Ciudad Obregón, Sonora."
+        },
+        {
+          "pregunta": "¿Cuántos campeonatos de LMP suma Yaquis?",
+          "opciones": ["4", "7", "9", "17"],
+          "correcta": 1,
+          "explica": "Yaquis de Obregón suma 7 campeonatos."
+        },
+        {
+          "pregunta": "¿Qué hicieron en la primera vuelta de 2025-26?",
+          "opciones": [
+            "Quedaron últimos",
+            "Fueron líderes con 22-13",
+            "No participaron",
+            "Barrieron la final"
+          ],
+          "correcta": 1,
+          "explica": "Fueron líderes de la primera vuelta con marca de 22-13."
+        },
+        {
+          "pregunta": "¿Quién los eliminó en la primera ronda de playoffs?",
+          "opciones": ["Naranjeros", "Águilas", "Charros", "Cañeros"],
+          "correcta": 1,
+          "explica": "Yaquis era el sembrado 2 y Águilas, sembrado 7, lo eliminó en la primera ronda."
+        },
+        {
+          "pregunta": "¿Cuál fue el récord de la campaña regular?",
+          "opciones": ["22-46", "26-42", "40-28", "33-35"],
+          "correcta": 2,
+          "explica": "La campaña regular terminó 40-28."
+        },
+        {
+          "pregunta": "¿Quién dirigió a Yaquis?",
+          "opciones": ["Gabe Álvarez", "Benjamín Gil", "Roberto Vizcarra", "Félix Fermín"],
+          "correcta": 0,
+          "explica": "El mánager fue Gabe Álvarez. Su casa es el Estadio Yaquis."
+        }
+      ]
+    },
+    {
+      "id": "aguilas",
+      "nombre": "Águilas de Mexicali",
+      "ciudad": "Mexicali, Baja California",
+      "color": "#E10600",
+      "preguntas": [
+        {
+          "pregunta": "¿De qué ciudad son las Águilas?",
+          "opciones": ["Tijuana", "Mexicali", "Hermosillo", "Los Mochis"],
+          "correcta": 1,
+          "explica": "Águilas representa a Mexicali, Baja California."
+        },
+        {
+          "pregunta": "¿Cuántos títulos de LMP tiene el club?",
+          "opciones": ["2", "4", "9", "13"],
+          "correcta": 1,
+          "explica": "Águilas de Mexicali tiene cuatro títulos de LMP."
+        },
+        {
+          "pregunta": "¿En qué año ganaron la Serie del Caribe?",
+          "opciones": ["1972", "1986", "1999", "2026"],
+          "correcta": 1,
+          "explica": "Águilas ganó la Serie del Caribe de 1986."
+        },
+        {
+          "pregunta": "¿Hasta qué ronda llegaron en los playoffs 2025-26?",
+          "opciones": ["No clasificaron", "Primera ronda", "Semifinal", "Serie Final"],
+          "correcta": 2,
+          "explica": "Águilas eliminó a Yaquis en la primera ronda y cayó en semifinales ante Charros."
+        },
+        {
+          "pregunta": "¿Cuál fue su récord de 2025-26?",
+          "opciones": ["40-28", "38-30", "33-35", "22-46"],
+          "correcta": 2,
+          "explica": "Cerraron 33-35, porcentaje de .485."
+        },
+        {
+          "pregunta": "¿Quién fue el mánager y cómo se llama su estadio?",
+          "opciones": [
+            "Oscar Robles · Nido de los Águilas",
+            "José Moreno · Kuroda Park",
+            "Juan José Pacho · Teodoro Mariscal",
+            "Luis Carlos Rivera · Coloso del Pacífico"
+          ],
+          "correcta": 0,
+          "explica": "Oscar Robles dirigió al equipo en el Nido de los Águilas."
+        }
+      ]
+    },
+    {
+      "id": "venados",
+      "nombre": "Venados de Mazatlán",
+      "ciudad": "Mazatlán, Sinaloa",
+      "color": "#1B5E20",
+      "preguntas": [
+        {
+          "pregunta": "¿Dónde juegan los Venados?",
+          "opciones": ["Culiacán", "Guasave", "Mazatlán", "Tepic"],
+          "correcta": 2,
+          "explica": "Venados es el equipo de Mazatlán, Sinaloa."
+        },
+        {
+          "pregunta": "¿Cuántos campeonatos de LMP tiene Venados?",
+          "opciones": ["4", "7", "9", "17"],
+          "correcta": 2,
+          "explica": "Venados de Mazatlán tiene 9 campeonatos."
+        },
+        {
+          "pregunta": "¿Qué récord tuvieron en 2025-26?",
+          "opciones": ["40-28", "38-30", "26-42", "22-46"],
+          "correcta": 3,
+          "explica": "Cerraron en el último lugar con 22-46."
+        },
+        {
+          "pregunta": "¿Qué aniversario celebraron en 2025-26?",
+          "opciones": ["25 años", "50 años", "80 años", "100 años"],
+          "correcta": 2,
+          "explica": "En 2025-26 celebraron 80 años en el circuito."
+        },
+        {
+          "pregunta": "¿Cómo se llama su estadio?",
+          "opciones": [
+            "Estadio Teodoro Mariscal",
+            "Estadio Fernando Valenzuela",
+            "Estadio Panamericano",
+            "Chevron Park"
+          ],
+          "correcta": 0,
+          "explica": "Su casa es el Estadio Teodoro Mariscal."
+        },
+        {
+          "pregunta": "¿Quién fue el mánager en esa temporada?",
+          "opciones": [
+            "Juan José Pacho",
+            "Benjamín Gil",
+            "Gabe Álvarez",
+            "Félix Fermín"
+          ],
+          "correcta": 0,
+          "explica": "Juan José Pacho dirigió a Venados en 2025-26."
+        }
+      ]
+    },
+    {
+      "id": "guasave",
+      "nombre": "Algodoneros de Guasave",
+      "ciudad": "Guasave, Sinaloa",
+      "color": "#0A2342",
+      "preguntas": [
+        {
+          "pregunta": "¿De qué ciudad son estos Algodoneros de la Liga del Pacífico?",
+          "opciones": ["San Luis Río Colorado", "Guasave", "Obregón", "Navojoa"],
+          "correcta": 1,
+          "explica": "En la LMP, Algodoneros es el club de Guasave, Sinaloa."
+        },
+        {
+          "pregunta": "¿En qué temporada regresaron a la LMP?",
+          "opciones": ["1971-72", "1999-00", "2019-20", "2025-26"],
+          "correcta": 2,
+          "explica": "Algodoneros de Guasave regresó a la liga en 2019-20."
+        },
+        {
+          "pregunta": "¿Cuándo fue su único título?",
+          "opciones": ["1971-72", "1986", "1999-00", "2026"],
+          "correcta": 0,
+          "explica": "Su campeonato de LMP es el de la temporada 1971-72."
+        },
+        {
+          "pregunta": "¿A quién enfrentaron en las semifinales 2025-26?",
+          "opciones": ["Charros", "Yaquis", "Naranjeros", "Tomateros"],
+          "correcta": 3,
+          "explica": "Algodoneros, sembrado 8, eliminó a Jaguares y cayó en semifinales ante Tomateros."
+        },
+        {
+          "pregunta": "¿Cuál fue su récord regular en 2025-26?",
+          "opciones": ["40-28", "33-35", "26-42", "22-46"],
+          "correcta": 2,
+          "explica": "El récord fue 26-42, porcentaje de .382."
+        },
+        {
+          "pregunta": "¿Quién dirigió al equipo y en qué parque juegan?",
+          "opciones": [
+            "José Moreno · Kuroda Park",
+            "Oscar Robles · Nido de los Águilas",
+            "Félix Fermín · Chevron Park",
+            "Roberto Vizcarra · Estadio Tomateros"
+          ],
+          "correcta": 0,
+          "explica": "José Moreno fue el mánager y la sede es el Kuroda Park."
+        }
+      ]
+    },
+    {
+      "id": "jaguares",
+      "nombre": "Jaguares de Nayarit",
+      "ciudad": "Tepic, Nayarit",
+      "color": "#0D2C6C",
+      "preguntas": [
+        {
+          "pregunta": "¿En qué temporada debutaron los Jaguares en la LMP?",
+          "opciones": ["2019-20", "1971-72", "2025-26", "2026-27"],
+          "correcta": 2,
+          "explica": "Jaguares de Nayarit debutó en la temporada 2025-26."
+        },
+        {
+          "pregunta": "¿Qué plaza ocuparon al entrar a la liga?",
+          "opciones": [
+            "La de Sultanes de Monterrey",
+            "La de Mayos de Navojoa",
+            "La de Charros",
+            "Una franquicia nueva en Hermosillo"
+          ],
+          "correcta": 0,
+          "explica": "Entraron en la plaza que dejó Sultanes de Monterrey."
+        },
+        {
+          "pregunta": "¿Dónde está su sede?",
+          "opciones": ["Mazatlán", "Tepic", "Zapopan", "Los Mochis"],
+          "correcta": 1,
+          "explica": "Juegan en Tepic, Nayarit."
+        },
+        {
+          "pregunta": "¿Cómo se llama su estadio?",
+          "opciones": [
+            "Estadio Coloso del Pacífico",
+            "Estadio Panamericano",
+            "Estadio Yaquis",
+            "Kuroda Park"
+          ],
+          "correcta": 0,
+          "explica": "Su casa es el Estadio Coloso del Pacífico."
+        },
+        {
+          "pregunta": "¿Cómo entraron a los playoffs y quién los eliminó?",
+          "opciones": [
+            "Sembrado 8 · cayeron ante Yaquis",
+            "Sembrado 5 · cayeron ante Charros",
+            "Sembrado 1 · cayeron ante Algodoneros",
+            "No clasificaron"
+          ],
+          "correcta": 2,
+          "explica": "Con marca de 40-28 fueron el sembrado 1 y Algodoneros de Guasave los eliminó en la primera ronda."
+        },
+        {
+          "pregunta": "¿Quién fue el mánager del debut?",
+          "opciones": [
+            "Luis Carlos Rivera",
+            "Benjamín Gil",
+            "Juan Gabriel Castro",
+            "Gabe Álvarez"
+          ],
+          "correcta": 0,
+          "explica": "Luis Carlos Rivera dirigió a Jaguares en 2025-26."
+        }
+      ]
+    },
+    {
+      "id": "mayos",
+      "nombre": "Mayos de Navojoa",
+      "ciudad": "Navojoa, Sonora",
+      "color": "#8B1538",
+      "preguntas": [
+        {
+          "pregunta": "¿En qué temporada regresan Mayos a la Liga ARCO?",
+          "opciones": ["2019-20", "2025-26", "2026-27", "1999-00"],
+          "correcta": 2,
+          "explica": "Mayos de Navojoa vuelve en la temporada 2026-27."
+        },
+        {
+          "pregunta": "¿De qué ciudad es el club?",
+          "opciones": ["Obregón", "Hermosillo", "Navojoa", "Tucson"],
+          "correcta": 2,
+          "explica": "La sede es Navojoa, Sonora."
+        },
+        {
+          "pregunta": "¿Cuántos campeonatos de LMP tiene Mayos?",
+          "opciones": ["1", "2", "4", "7"],
+          "correcta": 1,
+          "explica": "Mayos tiene 2 campeonatos de Liga del Pacífico."
+        },
+        {
+          "pregunta": "¿Cuándo fue su último título?",
+          "opciones": ["1971-72", "1986", "1999-00", "2026"],
+          "correcta": 2,
+          "explica": "El último campeonato fue en la temporada 1999-00."
+        },
+        {
+          "pregunta": "¿Cómo se llama su estadio?",
+          "opciones": [
+            "Estadio Manuel \"Ciclón\" Echeverría",
+            "Estadio Fernando Valenzuela",
+            "Nido de los Águilas",
+            "Chevron Park"
+          ],
+          "correcta": 0,
+          "explica": "Juegan en el Estadio Manuel \"Ciclón\" Echeverría."
+        },
+        {
+          "pregunta": "¿Con qué nombre compitió la franquicia en 2025-26?",
+          "opciones": [
+            "Sultanes de Monterrey",
+            "Jaguares de Nayarit",
+            "Tucson Baseball Team",
+            "Charros de Jalisco"
+          ],
+          "correcta": 2,
+          "explica": "En 2025-26 la franquicia compitió como Tucson Baseball Team."
+        }
+      ]
+    }
+  ]
+}

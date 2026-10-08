@@ -97,3 +97,111 @@ h1 {
   color: $rebase-10;
   margin: 0.5rem 0 1rem;
 }
+
+.team-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 640px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.team-pick {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 2px solid rgba($rebase-14, 0.45);
+  border-left: 4px solid var(--team, #{$rebase-10});
+  background: $rebase-6;
+  color: $rebase-7;
+  cursor: pointer;
+  touch-action: manipulation;
+
+  strong {
+    display: block;
+    font-size: 0.95rem;
+  }
+
+  em {
+    display: block;
+    margin-top: 0.15rem;
+    font-style: normal;
+    font-size: 0.78rem;
+    color: $rebase-14;
+  }
+
+  &:hover {
+    border-color: var(--team, #{$rebase-10});
+  }
+}
+
+.team-swatch {
+  width: 14px;
+  height: 36px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+
+.result-actions {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.btn-dice {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-height: 56px;
+  padding: 0.85rem 1.25rem;
+  border-radius: 14px;
+  border: 2px solid $rebase-7;
+  background: $rebase-11;
+  color: $rebase-7;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  touch-action: manipulation;
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: $rebase-10;
+  }
+
+  &.rolling mat-icon {
+    animation: dice-roll 0.45s ease;
+  }
+}
+
+.btn-text {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: $rebase-12;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.35rem;
+}
+
+@keyframes dice-roll {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.15);
+  }
+  to {
+    transform: rotate(360deg) scale(1);
+  }
+}

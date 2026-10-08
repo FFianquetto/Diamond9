@@ -1,30 +1,53 @@
 <section class="trivia-page page-shell">
   <header>
-    <p class="eyebrow">Modo bonus</p>
-    <h1>Trivia de beisbol</h1>
+    <p class="eyebrow">Liga del Pacífico · 10 equipos</p>
+    <h1>
+      @if (team(); as club) {
+        Trivia · {{ club.nombre }}
+      } @else {
+        Trivia de la Liga del Pacífico
+      }
+    </h1>
     <p class="lede">
-      Reto interactivo sobre la historia y reglas del beisbol mexicano. Gana
-      puntos y recibe retroalimentación al instante.
+      Seis preguntas por club. Elige un equipo o entra desde el escáner: el
+      botón Trivia abre la del equipo que acabas de detectar.
     </p>
   </header>
 
-  @if (!finished()) {
+  @if (loadError()) {
+    <p class="feedback" role="alert">No se pudo cargar el banco de preguntas.</p>
+  } @else if (picking()) {
+    <div class="team-grid">
+      @for (club of teams(); track club.id) {
+        <button
+          type="button"
+          class="team-pick"
+          [style.--team]="club.color"
+          (click)="choose(club.id, $event)"
+        >
+          <span class="team-swatch" [style.background]="club.color"></span>
+          <span>
+            <strong>{{ club.nombre }}</strong>
+            <em>{{ club.ciudad }}</em>
+          </span>
+        </button>
+      }
+    </div>
+  } @else if (!finished() && current()) {
     <div class="progress">
-      Pregunta {{ index() + 1 }} / {{ questions.length }} · Puntaje
+      Pregunta {{ index() + 1 }} / {{ questions().length }} · Puntaje
       {{ score() }}
     </div>
 
-    <article class="card">
-      <h2>{{ current().question }}</h2>
+    <article class="card" [style.--team]="team()?.color">
+      <h2>{{ current()!.pregunta }}</h2>
       <div class="options">
-        @for (opt of current().options; track opt; let i = $index) {
+        @for (opt of current()!.opciones; track opt; let i = $index) {
           <button
             type="button"
             class="option"
-            [class.correct]="answered() && i === current().correct"
-            [class.wrong]="
-              answered() && selected() === i && i !== current().correct
-            "
+            [class.correct]="answered() && i === current()!.correcta"
+            [class.wrong]="answered() && selected() === i && i !== current()!.correcta"
             [disabled]="answered()"
             (click)="pick(i, $event)"
           >
@@ -40,17 +63,32 @@
 
     @if (answered()) {
       <button type="button" class="btn-primary" (click)="next($event)">
-        {{ index() >= questions.length - 1 ? "Ver resultado" : "Siguiente" }}
+        {{ index() >= questions().length - 1 ? "Ver resultado" : "Siguiente" }}
       </button>
     }
-  } @else {
-    <article class="card result">
-      <h2>Resultado final</h2>
-      <p class="score-big">{{ score() }} / {{ questions.length }}</p>
+  } @else if (finished()) {
+    <article class="card result" [style.--team]="team()?.color">
+      <h2>Resultado · {{ team()?.nombre }}</h2>
+      <p class="score-big">{{ score() }} / {{ questions().length }}</p>
       <p>{{ feedback() }}</p>
-      <button type="button" class="btn-primary" (click)="restart($event)">
-        Jugar de nuevo
-      </button>
+      <div class="result-actions">
+        <button
+          type="button"
+          class="btn-dice"
+          [class.rolling]="rolling()"
+          (click)="rollRandom($event)"
+          aria-label="Comenzar una trivia al azar"
+        >
+          <mat-icon>casino</mat-icon>
+          Nueva al azar
+        </button>
+        <button type="button" class="btn-primary" (click)="restart($event)">
+          Repetir este equipo
+        </button>
+        <button type="button" class="btn-text" (click)="showPicker($event)">
+          Elegir otro equipo
+        </button>
+      </div>
     </article>
   }
 </section>

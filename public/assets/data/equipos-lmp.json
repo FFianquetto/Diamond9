@@ -11,12 +11,12 @@
       "ciudad": "Hermosillo, Son.",
       "estadio": "Estadio Fernando Valenzuela",
       "color": "#F15A22",
-      "subtitle": "6° LMP 2025-26 · 40-28",
-      "info": "Naranjeros de Hermosillo es el máximo campeón histórico de la Liga Mexicana del Pacífico (17 títulos). En 2025-26 cerró la campaña regular 40-28 (.588) y quedó 6° al terminar la postemporada. Mánager: Juan Gabriel Castro.",
+      "subtitle": "Sembrado 3 · 2025-26 · 40-28",
+      "info": "Naranjeros de Hermosillo es el máximo campeón histórico de la Liga Mexicana del Pacífico (17 títulos). En 2025-26 cerró la campaña regular 40-28 (.588), entró como sembrado 3 y cayó en la primera ronda ante Charros. Mánager: Juan Gabriel Castro.",
       "stats": [
         { "label": "G-P", "value": "40-28" },
         { "label": "Pct", "value": ".588" },
-        { "label": "Resultado", "value": "6°" }
+        { "label": "Playoffs", "value": "1ª ronda" }
       ],
       "destacados": ["Juan Gabriel Castro (mánager)"],
       "videoHint": "Clip: Naranjeros 2025-26",
@@ -34,13 +34,13 @@
       "estadio": "Estadio Tomateros",
       "color": "#7A1F3D",
       "subtitle": "Subcampeón LMP 2025-26 · 40-28",
-      "info": "Tomateros de Culiacán suma 13 campeonatos de LMP. En 2025-26 fue líder de la segunda vuelta (22-11) y llegó a la Serie Final, donde Charros lo barrió 4-0. Mánager: Roberto Vizcarra.",
+      "info": "Tomateros de Culiacán suma 13 campeonatos de LMP. En 2025-26 fue líder de la segunda vuelta (22-11) y llegó a la Serie Final, donde Charros lo barrió 4-0. En la final lo dirigió Lorenzo Bundy.",
       "stats": [
         { "label": "G-P", "value": "40-28" },
         { "label": "Pct", "value": ".588" },
         { "label": "Resultado", "value": "Subcampeón" }
       ],
-      "destacados": ["Roberto Vizcarra (mánager)", "Francisco Estrada"],
+      "destacados": ["Lorenzo Bundy (mánager en la final)", "Francisco Estrada"],
       "videoHint": "Clip: Tomateros en la final",
       "animationLabel": "Rotación del escudo",
       "tip": "Insignia de Tomateros de Culiacán.",
@@ -77,14 +77,14 @@
       "ciudad": "Los Mochis, Sin.",
       "estadio": "Chevron Park",
       "color": "#0D5C3D",
-      "subtitle": "5° LMP 2025-26 · 38-30",
-      "info": "Cañeros de Los Mochis tiene cuatro títulos de Liga Mexicana del Pacífico. En 2025-26 lideró un tramo de la primera vuelta y cerró 5° de la postemporada (38-30). Juega en el Chevron Park, antes Estadio Emilio Ibarra Almada. Mánager: Félix Fermín.",
+      "subtitle": "Sembrado 5 · 2025-26 · 38-30",
+      "info": "Cañeros de Los Mochis tiene cuatro títulos de Liga Mexicana del Pacífico. En 2025-26 cerró 38-30, entró a playoffs como sembrado 5 y cayó ante Tomateros. Juega en el Chevron Park, antes Estadio Emilio Ibarra Almada. La campaña la cerró Chris Coste, tras la salida de Félix Fermín el 18 de diciembre de 2025.",
       "stats": [
         { "label": "G-P", "value": "38-30" },
         { "label": "Pct", "value": ".559" },
-        { "label": "Resultado", "value": "5°" }
+        { "label": "Playoffs", "value": "Sembrado 5" }
       ],
-      "destacados": ["Félix Fermín (mánager)"],
+      "destacados": ["Chris Coste (mánager al cierre)"],
       "videoHint": "Clip: Cañeros 2025-26",
       "animationLabel": "Rotación del escudo",
       "tip": "Insignia LM de Cañeros de Los Mochis.",
@@ -99,12 +99,12 @@
       "ciudad": "Ciudad Obregón, Son.",
       "estadio": "Estadio Yaquis",
       "color": "#0C3C78",
-      "subtitle": "8° LMP 2025-26 · 40-28",
-      "info": "Yaquis de Ciudad Obregón suma 7 campeonatos de LMP. En 2025-26 fue líder de la primera vuelta (22-13) y terminó la campaña regular 40-28, pero quedó 8° al salir en postemporada. Mánager: Gabe Álvarez.",
+      "subtitle": "Sembrado 2 · 2025-26 · 40-28",
+      "info": "Yaquis de Ciudad Obregón suma 7 campeonatos de LMP. En 2025-26 fue líder de la primera vuelta (22-13), cerró 40-28 y entró como sembrado 2. Águilas lo eliminó en la primera ronda. Mánager: Gabe Álvarez.",
       "stats": [
         { "label": "G-P", "value": "40-28" },
         { "label": "Pct", "value": ".588" },
-        { "label": "Resultado", "value": "8°" }
+        { "label": "Playoffs", "value": "1ª ronda" }
       ],
       "destacados": ["Gabe Álvarez (mánager)"],
       "videoHint": "Clip: Yaquis 2025-26",
@@ -121,12 +121,12 @@
       "ciudad": "Mexicali, B.C.",
       "estadio": "Nido de los Águilas",
       "color": "#E10600",
-      "subtitle": "3° LMP 2025-26 · 33-35",
-      "info": "Águilas de Mexicali tiene cuatro títulos de LMP y la Serie del Caribe 1986. En 2025-26 avanzó hasta el 3° lugar de la postemporada. Mánager: Oscar Robles.",
+      "subtitle": "Semifinal 2025-26 · 33-35",
+      "info": "Águilas de Mexicali tiene cuatro títulos de LMP y la Serie del Caribe 1986. En 2025-26, como sembrado 7, eliminó a Yaquis y cayó en semifinales ante Charros. Mánager: Oscar Robles.",
       "stats": [
         { "label": "G-P", "value": "33-35" },
         { "label": "Pct", "value": ".485" },
-        { "label": "Resultado", "value": "3°" }
+        { "label": "Playoffs", "value": "Semifinal" }
       ],
       "destacados": ["Oscar Robles (mánager)"],
       "videoHint": "Clip: Águilas en playoffs",
@@ -165,12 +165,12 @@
       "ciudad": "Guasave, Sin.",
       "estadio": "Kuroda Park",
       "color": "#0A2342",
-      "subtitle": "4° LMP 2025-26 · 26-42",
-      "info": "Algodoneros de Guasave regresó a la LMP en 2019-20 y tiene un título (1971-72). En 2025-26 llegó al 4° lugar de la postemporada pese al récord 26-42. Mánager: José Moreno.",
+      "subtitle": "Semifinal 2025-26 · 26-42",
+      "info": "Algodoneros de Guasave regresó a la LMP en 2019-20 y tiene un título (1971-72). En 2025-26, sembrado 8 con récord 26-42, eliminó a Jaguares y cayó en semifinales ante Tomateros. Mánager: José Moreno.",
       "stats": [
         { "label": "G-P", "value": "26-42" },
         { "label": "Pct", "value": ".382" },
-        { "label": "Resultado", "value": "4°" }
+        { "label": "Playoffs", "value": "Semifinal" }
       ],
       "destacados": ["José Moreno (mánager)"],
       "videoHint": "Clip: Algodoneros de Guasave",
@@ -187,12 +187,12 @@
       "ciudad": "Tepic, Nay.",
       "estadio": "Estadio Coloso del Pacífico",
       "color": "#0D2C6C",
-      "subtitle": "Debut 2025-26 · 7° · 40-28",
-      "info": "Jaguares de Nayarit debutó en la Liga Mexicana del Pacífico en 2025-26, en la plaza que dejó Sultanes de Monterrey. Cerró la campaña regular 40-28 y quedó 7° en la postemporada. Mánager: Luis Carlos Rivera.",
+      "subtitle": "Debut 2025-26 · sembrado 1 · 40-28",
+      "info": "Jaguares de Nayarit debutó en la Liga Mexicana del Pacífico en 2025-26, en la plaza que dejó Sultanes de Monterrey. Cerró 40-28, fue el sembrado 1 y Algodoneros de Guasave lo eliminó en la primera ronda. Mánager: Luis Carlos Rivera.",
       "stats": [
         { "label": "G-P", "value": "40-28" },
         { "label": "Pct", "value": ".588" },
-        { "label": "Resultado", "value": "7°" }
+        { "label": "Playoffs", "value": "Sembrado 1" }
       ],
       "destacados": ["Luis Carlos Rivera (mánager)"],
       "videoHint": "Clip: debut de Jaguares",
