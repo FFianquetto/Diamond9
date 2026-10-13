@@ -5,7 +5,7 @@
       "id": "jonron-historia",
       "title": "Jonrón — Historia",
       "caption": "Recorrido visual por leyendas del beisbol mundial",
-      "src": "assets/videos/jonron-historia.mp4",
+      "src": "assets/videos/jonron-historia.mp4?v=4",
       "poster": "assets/galeria/imagenes/jugadores/baberuth.jpg",
       "tag": "Historia"
     },
@@ -13,7 +13,7 @@
       "id": "leyendas-mexicanas",
       "title": "Leyendas mexicanas",
       "caption": "Íconos del beisbol mexicano y la LMB",
-      "src": "assets/videos/leyendas-mexicanas.mp4",
+      "src": "assets/videos/leyendas-mexicanas.mp4?v=4",
       "poster": "assets/galeria/imagenes/jugadores/fernandovalenzuela.jpg",
       "tag": "México"
     },
@@ -21,7 +21,7 @@
       "id": "escudos-lnm",
       "title": "Escudos LNM",
       "caption": "Identidad visual de equipos de la Liga del Noroeste",
-      "src": "assets/videos/escudos-lnm.mp4",
+      "src": "assets/videos/escudos-lnm.mp4?v=4",
       "poster": "assets/galeria/imagenes/equipos/bucaneros-cabos.jpg",
       "tag": "Equipos"
     },
@@ -29,7 +29,7 @@
       "id": "estrellas-mlb",
       "title": "Estrellas MLB",
       "caption": "Figuras y franquicias de las Grandes Ligas",
-      "src": "assets/videos/estrellas-mlb.mp4",
+      "src": "assets/videos/estrellas-mlb.mp4?v=4",
       "poster": "assets/galeria/imagenes/jugadores/othani.jpg",
       "tag": "MLB"
     }

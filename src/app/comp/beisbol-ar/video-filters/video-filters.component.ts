@@ -22,7 +22,6 @@ import { ActivatedRoute } from '@angular/router';
 
 export type GalleryTab = 'videos' | 'imagenes';
 
-/** Filtros permitidos por rúbrica (sin B&N, grises, sepia, exposición ni invertir). */
 export type MediaFilterId =
   | 'none'
   | 'blur'
@@ -30,7 +29,7 @@ export type MediaFilterId =
   | 'thermal'
   | 'color'
   | 'soft'
-  | 'pastel'
+  | 'bw'
   | 'vivid';
 
 export interface GalleryVideo {
@@ -73,6 +72,10 @@ export class VideoFiltersComponent
 {
   @ViewChild('sourceVideo') sourceVideo?: ElementRef<HTMLVideoElement>;
   @ViewChild('filterCanvas') filterCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('sourceImage') sourceImage?: ElementRef<HTMLImageElement>;
+  @ViewChild('imageCanvas') imageCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('videoStage') videoStage?: ElementRef<HTMLElement>;
+  @ViewChild('imageStage') imageStage?: ElementRef<HTMLElement>;
 
   private readonly http = inject(HttpClient);
   private readonly sounds = inject(UiSoundService);
@@ -82,6 +85,7 @@ export class VideoFiltersComponent
   private boundVideo: HTMLVideoElement | null = null;
   private scratch: HTMLCanvasElement | null = null;
   private frameSkip = 0;
+  private imagePaintKey = '';
   private readonly isMobile =
     typeof window !== 'undefined' &&
     (window.matchMedia('(max-width: 820px)').matches ||
@@ -126,7 +130,7 @@ export class VideoFiltersComponent
     { id: 'thermal', label: 'Térmica', hint: 'Cámara térmica' },
     { id: 'color', label: 'Color', hint: 'Ajuste de color' },
     { id: 'soft', label: 'Suavizado', hint: 'Personalizado' },
-    { id: 'pastel', label: 'Pasteles', hint: 'Personalizado' },
+    { id: 'bw', label: 'Blanco y negro', hint: 'Escala de grises' },
     { id: 'vivid', label: 'Alta sat.', hint: 'Personalizado' },
   ];
 
@@ -177,11 +181,10 @@ export class VideoFiltersComponent
     const video = this.sourceVideo?.nativeElement ?? null;
     if (this.tab() !== 'videos' || !video) {
       if (this.boundVideo) this.detachLoop();
-      return;
-    }
-    if (this.boundVideo !== video) {
+    } else if (this.boundVideo !== video) {
       this.attachLoop(video);
     }
+    if (this.tab() === 'imagenes') this.paintImagePreview();
   }
 
   ngOnDestroy(): void {
@@ -193,24 +196,55 @@ export class VideoFiltersComponent
   setTab(next: string): void {
     if (next !== 'imagenes' && next !== 'videos') return;
     if (next === 'imagenes') this.detachLoop();
+    this.imagePaintKey = '';
     this.tab.set(next);
     this.sounds.play('click');
     this.ping(next === 'videos' ? 'Acervo de videos' : 'Galería de imágenes');
   }
 
   selectVideo(item: GalleryVideo): void {
-    if (this.activeVideo()?.id === item.id) return;
-    this.detachLoop();
-    this.activeVideo.set(item);
-    this.sounds.play('click');
-    this.ping(`Video: ${item.title}`);
+    const same = this.activeVideo()?.id === item.id;
+    if (!same) {
+      this.detachLoop();
+      this.activeVideo.set(item);
+      this.sounds.play('click');
+      this.ping(`Video: ${item.title}`);
+    }
+    this.revealStage();
   }
 
   selectImage(item: GalleryImage): void {
-    this.activeImage.set(item);
-    this.downloadError = null;
-    this.sounds.play('click');
-    this.ping(`Imagen: ${item.title}`);
+    const same = this.activeImage()?.id === item.id;
+    if (!same) {
+      this.imagePaintKey = '';
+      this.activeImage.set(item);
+      this.downloadError = null;
+      this.sounds.play('click');
+      this.ping(`Imagen: ${item.title}`);
+    }
+    this.revealStage();
+  }
+
+  /** La foto o el video elegido queda arriba, debajo de la barra. */
+  private revealStage(): void {
+    setTimeout(() => {
+      const el =
+        this.tab() === 'videos'
+          ? this.videoStage?.nativeElement
+          : this.imageStage?.nativeElement;
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 0);
+  }
+
+  /** Pixelado y térmica se pintan en canvas: el CSS no los reproduce en el celular. */
+  bitmapPreview(): boolean {
+    const id = this.activeFilter();
+    return id === 'pixelate' || id === 'thermal';
+  }
+
+  onImageLoaded(): void {
+    this.imagePaintKey = '';
+    this.paintImagePreview();
   }
 
   setFilter(id: MediaFilterId): void {
@@ -220,6 +254,7 @@ export class VideoFiltersComponent
       this.saturate.set(100);
     }
     const label = this.filters.find((f) => f.id === id)?.label ?? id;
+    this.imagePaintKey = '';
     this.sounds.play('filter');
     this.ping(`Filtro · ${label}`);
   }
@@ -232,15 +267,11 @@ export class VideoFiltersComponent
     this.saturate.set(Number((ev.target as HTMLInputElement).value));
   }
 
-  resetFilter(): void {
-    this.activeFilter.set('none');
-    this.hue.set(0);
-    this.saturate.set(100);
-    this.sounds.play('click');
-    this.ping('Filtros reiniciados');
-  }
-
-  /** CSS Filter API solo para pestaña imágenes (mismos presets permitidos). */
+  /**
+   * Filtro CSS del elemento visible.
+   * En celular `ctx.filter` se ignora; el filtro del elemento sí se aplica.
+   * Térmica y pixelado se pintan en el bitmap, así que aquí van en none.
+   */
   imageFilterCss(): string {
     const hue = this.hue();
     const sat = this.saturate() / 100;
@@ -248,21 +279,62 @@ export class VideoFiltersComponent
       case 'blur':
         return 'blur(5px)';
       case 'pixelate':
-        // Aprox. visual; el pixelado real va en canvas de video.
-        return 'contrast(1.2) saturate(1.1)';
       case 'thermal':
-        return 'hue-rotate(180deg) saturate(2.4) contrast(1.35)';
+        return 'none';
       case 'color':
         return `hue-rotate(${hue}deg) saturate(${sat})`;
       case 'soft':
         return 'blur(1.6px) contrast(0.92) saturate(0.9)';
-      case 'pastel':
-        return 'saturate(0.48) contrast(0.88) hue-rotate(18deg)';
+      case 'bw':
+        return 'grayscale(1) contrast(1.08)';
       case 'vivid':
         return 'saturate(2.15) contrast(1.12)';
       default:
         return 'none';
     }
+  }
+
+  private paintImagePreview(): void {
+    if (this.tab() !== 'imagenes' || !this.bitmapPreview()) return;
+    const item = this.activeImage();
+    const canvas = this.imageCanvas?.nativeElement;
+    const img = this.sourceImage?.nativeElement;
+    if (!item || !canvas || !img?.naturalWidth) return;
+
+    const rect = img.getBoundingClientRect();
+    if (rect.width < 2 || rect.height < 2) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w = Math.max(2, Math.round(rect.width * dpr));
+    let h = Math.max(2, Math.round(rect.height * dpr));
+    w -= w % 2;
+    h -= h % 2;
+    const key = `${item.id}|${this.activeFilter()}|${w}x${h}`;
+    if (key === this.imagePaintKey) return;
+    this.imagePaintKey = key;
+
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const scale = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+    const dw = Math.max(2, Math.round(img.naturalWidth * scale));
+    const dh = Math.max(2, Math.round(img.naturalHeight * scale));
+    const dx = Math.round((w - dw) / 2);
+    const dy = Math.round((h - dh) / 2);
+
+    ctx.clearRect(0, 0, w, h);
+    ctx.filter = 'none';
+    if (this.activeFilter() === 'pixelate') {
+      const block = Math.max(12, Math.round(Math.min(dw, dh) / 14));
+      this.drawPixelated(ctx, img, dw, dh, block, dx, dy);
+      return;
+    }
+    ctx.drawImage(img, dx, dy, dw, dh);
+    this.applyThermal(ctx, w, h);
   }
 
   downloadError: string | null = null;
@@ -286,8 +358,12 @@ export class VideoFiltersComponent
       } else if (this.activeFilter() === 'thermal') {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         this.applyThermal(ctx, canvas.width, canvas.height);
+      } else if (this.activeFilter() === 'bw') {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        this.applyGrayscale(ctx, canvas.width, canvas.height);
       } else {
-        ctx.filter = this.imageFilterCss();
+        const css = this.imageFilterCss();
+        if (css !== 'none') ctx.filter = css;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         ctx.filter = 'none';
       }
@@ -383,12 +459,20 @@ export class VideoFiltersComponent
   private syncCanvasSize(video: HTMLVideoElement): void {
     const canvas = this.filterCanvas?.nativeElement;
     if (!canvas) return;
-    let w = video.videoWidth || 640;
-    let h = video.videoHeight || 360;
-    const maxSide = this.isMobile ? 480 : 720;
-    const scale = Math.min(1, maxSide / Math.max(w, h));
-    w = Math.max(1, Math.round(w * scale));
-    h = Math.max(1, Math.round(h * scale));
+    const vw = video.videoWidth || 1280;
+    const vh = video.videoHeight || 720;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const boxW = Math.max(2, Math.round((rect.width || vw) * dpr));
+    const boxH = Math.max(2, Math.round((rect.height || vh) * dpr));
+    const heavy =
+      this.activeFilter() === 'thermal' || this.activeFilter() === 'pixelate';
+    const cap = heavy ? (this.isMobile ? 720 : 960) : this.isMobile ? 1280 : 1600;
+    const fit = Math.min(boxW / vw, boxH / vh, cap / Math.max(vw, vh), 1);
+    let w = Math.max(2, Math.round(vw * fit));
+    let h = Math.max(2, Math.round(vh * fit));
+    w -= w % 2;
+    h -= h % 2;
     if (canvas.width !== w || canvas.height !== h) {
       canvas.width = w;
       canvas.height = h;
@@ -409,7 +493,7 @@ export class VideoFiltersComponent
     }
 
     this.syncCanvasSize(video);
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     const w = canvas.width;
@@ -417,41 +501,17 @@ export class VideoFiltersComponent
     const filter = this.activeFilter();
 
     ctx.save();
+    ctx.filter = 'none';
     ctx.clearRect(0, 0, w, h);
 
-    switch (filter) {
-      case 'blur':
-        ctx.filter = 'blur(7px)';
-        ctx.drawImage(video, 0, 0, w, h);
-        break;
-      case 'soft':
-        ctx.filter = 'blur(2.2px) contrast(0.92) saturate(0.9)';
-        ctx.drawImage(video, 0, 0, w, h);
-        break;
-      case 'pastel':
-        ctx.filter = 'saturate(0.48) contrast(0.88) hue-rotate(18deg)';
-        ctx.drawImage(video, 0, 0, w, h);
-        break;
-      case 'vivid':
-        ctx.filter = 'saturate(2.2) contrast(1.12)';
-        ctx.drawImage(video, 0, 0, w, h);
-        break;
-      case 'color':
-        ctx.filter = `hue-rotate(${this.hue()}deg) saturate(${this.saturate() / 100})`;
-        ctx.drawImage(video, 0, 0, w, h);
-        break;
-      case 'pixelate':
-        this.drawPixelated(ctx, video, w, h, this.isMobile ? 20 : 16);
-        break;
-      case 'thermal':
-        ctx.filter = 'none';
-        ctx.drawImage(video, 0, 0, w, h);
-        this.applyThermal(ctx, w, h);
-        break;
-      default:
-        ctx.filter = 'none';
-        ctx.drawImage(video, 0, 0, w, h);
-        break;
+    if (filter === 'pixelate') {
+      this.drawPixelated(ctx, video, w, h, this.isMobile ? 18 : 14);
+    } else if (filter === 'thermal') {
+      ctx.drawImage(video, 0, 0, w, h);
+      this.applyThermal(ctx, w, h);
+    } else {
+      // El color, el desenfoque y el blanco y negro van en CSS del canvas.
+      ctx.drawImage(video, 0, 0, w, h);
     }
 
     ctx.restore();
@@ -463,6 +523,8 @@ export class VideoFiltersComponent
     w: number,
     h: number,
     block: number,
+    destX = 0,
+    destY = 0,
   ): void {
     if (!this.scratch) this.scratch = document.createElement('canvas');
     const sw = Math.max(1, Math.floor(w / block));
@@ -475,7 +537,7 @@ export class VideoFiltersComponent
     sctx.drawImage(source, 0, 0, sw, sh);
     ctx.imageSmoothingEnabled = false;
     ctx.filter = 'none';
-    ctx.drawImage(this.scratch, 0, 0, sw, sh, 0, 0, w, h);
+    ctx.drawImage(this.scratch, 0, 0, sw, sh, destX, destY, w, h);
     ctx.imageSmoothingEnabled = true;
   }
 
@@ -517,6 +579,23 @@ export class VideoFiltersComponent
       d[i] = r;
       d[i + 1] = g;
       d[i + 2] = b;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  private applyGrayscale(
+    ctx: CanvasRenderingContext2D,
+    w: number,
+    h: number,
+  ): void {
+    const img = ctx.getImageData(0, 0, w, h);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const y = Math.round(0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
+      const c = Math.min(255, Math.round((y - 128) * 1.08 + 128));
+      d[i] = c;
+      d[i + 1] = c;
+      d[i + 2] = c;
     }
     ctx.putImageData(img, 0, 0);
   }

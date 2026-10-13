@@ -15,26 +15,29 @@
     <p class="status">Cargando galería…</p>
   } @else if (tab() === 'videos') {
     <div class="layout" role="tabpanel">
-      <div class="stage video-stage">
+      <div #videoStage class="stage video-stage">
         @if (activeVideo(); as vid) {
           <div class="player-wrap">
-            <video
-              #sourceVideo
-              class="source-video"
-              [src]="vid.src"
-              [poster]="vid.poster || null"
-              [attr.aria-label]="vid.title"
-              playsinline
-              loop
-              muted
-              preload="auto"
-            ></video>
-            <canvas
-              #filterCanvas
-              class="filter-canvas"
-              aria-hidden="true"
-            ></canvas>
-            <span class="filter-badge">{{ activeFilterLabel() }}</span>
+            <div class="media-frame">
+              <video
+                #sourceVideo
+                class="source-video"
+                [src]="vid.src"
+                [poster]="vid.poster || null"
+                [attr.aria-label]="vid.title"
+                playsinline
+                loop
+                muted
+                preload="auto"
+              ></video>
+              <canvas
+                #filterCanvas
+                class="filter-canvas"
+                [style.filter]="imageFilterCss()"
+                aria-hidden="true"
+              ></canvas>
+              <span class="filter-badge">{{ activeFilterLabel() }}</span>
+            </div>
             <div class="player-controls" aria-label="Controles de video">
               <button
                 type="button"
@@ -59,7 +62,6 @@
           <div class="stage-meta">
             <span class="tag">{{ vid.tag }}</span>
             <h2>{{ vid.title }}</h2>
-            <p>{{ vid.caption }}</p>
           </div>
         } @else {
           <p class="status">Aún no hay videos en la galería.</p>
@@ -109,15 +111,6 @@
             </div>
           }
 
-          <div class="download-row">
-            <button type="button" class="ghost-btn" (click)="resetFilter()">
-              Restablecer
-            </button>
-            <p class="hint">
-              Filtros en tiempo real sobre el video (Canvas). Sin B&amp;N, sepia,
-              exposición ni inversión.
-            </p>
-          </div>
         </div>
       }
 
@@ -143,15 +136,26 @@
     </div>
   } @else {
     <div class="layout" role="tabpanel">
-      <div class="stage image-stage">
+      <div #imageStage class="stage image-stage">
         @if (activeImage(); as img) {
-          <img
-            [src]="img.src"
-            [alt]="img.title"
-            [style.filter]="imageFilterCss()"
-            decoding="async"
-            fetchpriority="high"
-          />
+          <div class="image-view">
+            <img
+              #sourceImage
+              [src]="img.src"
+              [alt]="img.title"
+              [class.is-hidden]="bitmapPreview()"
+              [style.filter]="imageFilterCss()"
+              (load)="onImageLoaded()"
+              decoding="async"
+              fetchpriority="high"
+            />
+            <canvas
+              #imageCanvas
+              class="image-canvas"
+              [class.is-live]="bitmapPreview()"
+              aria-hidden="true"
+            ></canvas>
+          </div>
           <div class="stage-meta">
             <span class="tag">{{ img.tag }}</span>
             <h2>{{ img.title }}</h2>
@@ -219,9 +223,6 @@
                 }}</strong>
                 <small>PNG con filtros aplicados</small>
               </span>
-            </button>
-            <button type="button" class="ghost-btn" (click)="resetFilter()">
-              Restablecer
             </button>
             @if (downloadError) {
               <p class="status error">{{ downloadError }}</p>
