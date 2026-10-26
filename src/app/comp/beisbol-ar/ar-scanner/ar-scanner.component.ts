@@ -50,6 +50,15 @@ const LMP_TRIVIA_BY_MARKER: Record<string, string> = {
   'logo-algodoneros-guasave': 'guasave',
   'logo-jaguares': 'jaguares',
   'logo-mayos': 'mayos',
+  'pelota-naranjeros': 'naranjeros',
+  'pelota-tomateros': 'tomateros',
+  'pelota-charros': 'charros',
+  'pelota-caneros': 'caneros',
+  'pelota-yaquis': 'yaquis',
+  'pelota-aguilas': 'aguilas',
+  'pelota-venados': 'venados',
+  'pelota-guasave': 'guasave',
+  'pelota-jaguares': 'jaguares',
 };
 
 const LMP_TRIVIA_BY_NAME: { needle: string; id: string }[] = [

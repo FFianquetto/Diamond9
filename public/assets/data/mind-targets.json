@@ -1,11 +1,11 @@
 {
-  "version": 11,
+  "version": 13,
   "nota": "Modos separados: Imágenes, Gorra, Pelota. Cada uno con su .mind.",
   "modes": {
     "pelota": {
       "label": "Pelota",
-      "mindFile": "assets/mind/pelota.mind",
-      "hint": "Escanea tu pelota Dodgers/Ohtani o Sultanes.",
+      "mindFile": "assets/mind/pelota.mind?v=12",
+      "hint": "Escanea pelotas: Ohtani/Dodgers, Sultanes o equipos LMP comunes.",
       "targets": [
         {
           "id": "pelota-othani",
@@ -14,13 +14,61 @@
         {
           "id": "pelota-sultanes",
           "image": "assets/markers/mind/pelota-sultanes.jpg"
+        },
+        {
+          "id": "pelota-sultanes",
+          "image": "assets/markers/mind/pelota-sultanes-tight.jpg"
+        },
+        {
+          "id": "pelota-sultanes",
+          "image": "assets/markers/mind/pelota-sultanes-mid.jpg"
+        },
+        {
+          "id": "pelota-sultanes",
+          "image": "assets/markers/mind/pelota-sultanes-logo.jpg"
+        },
+        {
+          "id": "pelota-naranjeros",
+          "image": "assets/markers/mind/pelota-naranjeros.jpg"
+        },
+        {
+          "id": "pelota-tomateros",
+          "image": "assets/markers/mind/pelota-tomateros.jpg"
+        },
+        {
+          "id": "pelota-charros",
+          "image": "assets/markers/mind/pelota-charros.jpg"
+        },
+        {
+          "id": "pelota-caneros",
+          "image": "assets/markers/mind/pelota-caneros.jpg"
+        },
+        {
+          "id": "pelota-yaquis",
+          "image": "assets/markers/mind/pelota-yaquis.jpg"
+        },
+        {
+          "id": "pelota-aguilas",
+          "image": "assets/markers/mind/pelota-aguilas.jpg"
+        },
+        {
+          "id": "pelota-venados",
+          "image": "assets/markers/mind/pelota-venados.jpg"
+        },
+        {
+          "id": "pelota-guasave",
+          "image": "assets/markers/mind/pelota-guasave.jpg"
+        },
+        {
+          "id": "pelota-jaguares",
+          "image": "assets/markers/mind/pelota-jaguares.jpg"
         }
       ]
     },
     "gorra": {
       "label": "Gorra",
-      "mindFile": "assets/mind/gorra.mind",
-      "hint": "Centra el logo NY o Sox de frente (gorra real o logo en pantalla).",
+      "mindFile": "assets/mind/gorra.mind?v=13",
+      "hint": "Centra el logo NY, Sox o MT (Sultanes) de frente (gorra real o logo en pantalla).",
       "targets": [
         {
           "id": "gorra-yankees",
@@ -53,6 +101,30 @@
         {
           "id": "gorra-redsox",
           "image": "assets/markers/mind/gorra-sox-full.jpg"
+        },
+        {
+          "id": "gorra-sultanes",
+          "image": "assets/markers/mind/gorra-sultanes-logo.jpg"
+        },
+        {
+          "id": "gorra-sultanes",
+          "image": "assets/markers/mind/gorra-sultanes-tight.jpg"
+        },
+        {
+          "id": "gorra-sultanes",
+          "image": "assets/markers/mind/gorra-sultanes-mid.jpg"
+        },
+        {
+          "id": "gorra-sultanes",
+          "image": "assets/markers/mind/gorra-sultanes-clean.jpg"
+        },
+        {
+          "id": "gorra-sultanes",
+          "image": "assets/markers/mind/gorra-sultanes-cap.jpg"
+        },
+        {
+          "id": "gorra-sultanes",
+          "image": "assets/markers/mind/gorra-sultanes-bold.jpg"
         }
       ]
     },

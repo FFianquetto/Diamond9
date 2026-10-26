@@ -67,6 +67,39 @@
       "targetImage": "assets/markers/mind/gorra-sox-logo-crop.jpg"
     },
     {
+      "id": "gorra-sultanes",
+      "nombre": "Gorra Sultanes de Monterrey",
+      "subtitle": "Tu gorra · LMB",
+      "color": "#0C2340",
+      "info": "Sí: gorra de los Sultanes de Monterrey (LMB). Logo MT blanco sobre navy. También puedes mostrar el logo MT en pantalla.",
+      "stats": [
+        {
+          "label": "Equipo",
+          "value": "Sultanes"
+        },
+        {
+          "label": "Liga",
+          "value": "LMB"
+        },
+        {
+          "label": "Match",
+          "value": "Sí"
+        }
+      ],
+      "videoHint": "Clip: Leyendas mexicanas",
+      "videoSrc": "assets/videos/leyendas-mexicanas.mp4",
+      "animationLabel": "Rotación de gorra",
+      "tip": "Centra el monograma MT: MindAR + colores (navy + blanco). No hace falta ángulo perfecto.",
+      "actions": "Info · Stats · Video · Animación",
+      "modelKey": "gorra-sultanes",
+      "equipo": "Sultanes de Monterrey",
+      "abrev": "MTY",
+      "ciudad": "Monterrey",
+      "equipoReconocido": true,
+      "ligaOrigen": "LMB",
+      "targetImage": "assets/markers/mind/gorra-sultanes-logo.jpg"
+    },
+    {
       "id": "gorra-dodgers",
       "nombre": "Gorra Los Angeles Dodgers",
       "subtitle": "Equipo reconocido · MLB",

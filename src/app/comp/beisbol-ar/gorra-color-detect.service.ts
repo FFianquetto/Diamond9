@@ -5,8 +5,9 @@ import { Injectable } from '@angular/core';
  * Proximidad moderada: centro del guía, sin ser tan estricto como logos.
  * - Yankees: negro + dorado
  * - Sox: crema + púrpura
+ * - Sultanes: navy + blanco (MT)
  */
-export type GorraColorId = 'gorra-yankees' | 'gorra-redsox';
+export type GorraColorId = 'gorra-yankees' | 'gorra-redsox' | 'gorra-sultanes';
 
 export interface GorraColorGuess {
   id: GorraColorId;
@@ -66,6 +67,8 @@ export class GorraColorDetectService {
 
     const { data } = ctx.getImageData(0, 0, w, h);
     let dark = 0;
+    let navy = 0;
+    let white = 0;
     let gold = 0;
     let purple = 0;
     let cream = 0;
@@ -79,6 +82,26 @@ export class GorraColorDetectService {
       if (r > 252 && g > 252 && b > 252) continue;
       total++;
       const { h: hue, s: sat, v: val } = this.hsv(r, g, b);
+
+      // Blanco / off-white del monograma MT
+      if (val >= 0.72 && sat <= 0.18 && r > 170 && g > 170 && b > 170) {
+        white++;
+        continue;
+      }
+
+      // Navy Sultanes (azul oscuro, no negro puro)
+      if (
+        val >= 0.08 &&
+        val <= 0.42 &&
+        sat >= 0.18 &&
+        hue >= 195 &&
+        hue <= 255 &&
+        b >= r &&
+        b >= g
+      ) {
+        navy++;
+        continue;
+      }
 
       if (val < 0.28) {
         dark++;
@@ -158,6 +181,8 @@ export class GorraColorDetectService {
     if (total < 90) return null;
 
     const pd = dark / total;
+    const pn = navy / total;
+    const pw = white / total;
     const pg = gold / total;
     const pp = purple / total;
     const pc = cream / total;
@@ -165,10 +190,12 @@ export class GorraColorDetectService {
 
     // Solo rechaza fondos claramente vacíos / lejanos
     if (po > 0.72) return null;
-    if (pd > 0.88 && pg < 0.005 && pp < 0.005) return null;
+    if (pd > 0.88 && pg < 0.005 && pp < 0.005 && pn < 0.05) return null;
 
     const yankeesOk = pd >= 0.14 && gold >= 10 && pg >= 0.01;
     const soxOk = pc >= 0.08 && purple >= 14 && pp >= 0.014;
+    const sultanesOk =
+      pn >= 0.1 && white >= 12 && pw >= 0.012 && pg < 0.04;
 
     const scores: GorraColorGuess[] = [];
     if (yankeesOk) {
@@ -183,6 +210,13 @@ export class GorraColorDetectService {
         id: 'gorra-redsox',
         score: pc * 1.8 + pp * 3.5,
         label: 'White Sox (crema + púrpura)',
+      });
+    }
+    if (sultanesOk) {
+      scores.push({
+        id: 'gorra-sultanes',
+        score: pn * 1.5 + pw * 3.2,
+        label: 'Sultanes (navy + blanco)',
       });
     }
 
