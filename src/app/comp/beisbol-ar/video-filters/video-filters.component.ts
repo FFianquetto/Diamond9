@@ -29,7 +29,7 @@ export type MediaFilterId =
   | 'thermal'
   | 'color'
   | 'soft'
-  | 'bw'
+  | 'pastel'
   | 'vivid';
 
 export interface GalleryVideo {
@@ -130,7 +130,7 @@ export class VideoFiltersComponent
     { id: 'thermal', label: 'Térmica', hint: 'Cámara térmica' },
     { id: 'color', label: 'Color', hint: 'Ajuste de color' },
     { id: 'soft', label: 'Suavizado', hint: 'Personalizado' },
-    { id: 'bw', label: 'Blanco y negro', hint: 'Escala de grises' },
+    { id: 'pastel', label: 'Pasteles', hint: 'Personalizado' },
     { id: 'vivid', label: 'Alta sat.', hint: 'Personalizado' },
   ];
 
@@ -285,8 +285,8 @@ export class VideoFiltersComponent
         return `hue-rotate(${hue}deg) saturate(${sat})`;
       case 'soft':
         return 'blur(1.6px) contrast(0.92) saturate(0.9)';
-      case 'bw':
-        return 'grayscale(1) contrast(1.08)';
+      case 'pastel':
+        return 'saturate(0.48) contrast(0.88) hue-rotate(18deg)';
       case 'vivid':
         return 'saturate(2.15) contrast(1.12)';
       default:
@@ -358,9 +358,6 @@ export class VideoFiltersComponent
       } else if (this.activeFilter() === 'thermal') {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         this.applyThermal(ctx, canvas.width, canvas.height);
-      } else if (this.activeFilter() === 'bw') {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        this.applyGrayscale(ctx, canvas.width, canvas.height);
       } else {
         const css = this.imageFilterCss();
         if (css !== 'none') ctx.filter = css;
@@ -579,23 +576,6 @@ export class VideoFiltersComponent
       d[i] = r;
       d[i + 1] = g;
       d[i + 2] = b;
-    }
-    ctx.putImageData(img, 0, 0);
-  }
-
-  private applyGrayscale(
-    ctx: CanvasRenderingContext2D,
-    w: number,
-    h: number,
-  ): void {
-    const img = ctx.getImageData(0, 0, w, h);
-    const d = img.data;
-    for (let i = 0; i < d.length; i += 4) {
-      const y = Math.round(0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
-      const c = Math.min(255, Math.round((y - 128) * 1.08 + 128));
-      d[i] = c;
-      d[i + 1] = c;
-      d[i + 2] = c;
     }
     ctx.putImageData(img, 0, 0);
   }

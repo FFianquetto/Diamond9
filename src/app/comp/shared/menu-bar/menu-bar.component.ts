@@ -9,6 +9,7 @@ import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { ProfileService } from '../../beisbol-ar/profile.service';
+import { RewardsService } from '../../beisbol-ar/rewards.service';
 
 @Component({
   selector: 'app-menu-bar',
@@ -31,7 +32,10 @@ export class MenuBarComponent implements OnInit, OnDestroy {
   private skipNextDocumentClose = false;
 
   private readonly profile = inject(ProfileService);
+  private readonly rewards = inject(RewardsService);
   readonly displayName = this.profile.displayName;
+  readonly avatarUrl = this.profile.avatarUrl;
+  readonly coleccionResumen = this.rewards.coleccionResumen;
 
   constructor(private router: Router) {
     this.router.events
@@ -170,6 +174,7 @@ export class MenuBarComponent implements OnInit, OnDestroy {
     return (
       this.isActive('equipos') ||
       this.isActive('historia') ||
+      this.isActive('perfil') ||
       this.isActive('coleccion') ||
       this.isActive('recompensas') ||
       this.isActive('modelos')

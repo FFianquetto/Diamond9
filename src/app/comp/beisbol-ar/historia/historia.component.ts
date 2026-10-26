@@ -67,6 +67,6 @@ export class HistoriaComponent implements OnInit {
   }
 
   unlockHint(id: string): string {
-    return this.cartaHints.get(id) ?? 'Ver Mi colección';
+    return this.cartaHints.get(id) ?? 'Ver Mi perfil';
   }
 }

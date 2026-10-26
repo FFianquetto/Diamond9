@@ -1,0 +1,148 @@
+<app-section-shell
+  eyebrow="Cuenta"
+  [title]="tab() === 'perfil' ? 'Mi perfil' : 'Colección'"
+  [lede]="lede"
+  [pills]="mainPills"
+  [activePill]="tab()"
+  pillsAriaLabel="Sección de perfil"
+  (pillChange)="setTab($event)"
+>
+  @if (feedback(); as msg) {
+    <p class="feedback-toast" role="status" aria-live="polite">{{ msg }}</p>
+  }
+
+  @if (tab() === 'perfil') {
+    <div class="profile-panel">
+      <div class="avatar-block">
+        <div class="avatar-ring" aria-hidden="true">
+          @if (avatarUrl(); as src) {
+            <img [src]="src" alt="" class="avatar-img" />
+          } @else {
+            <span class="avatar-fallback">{{
+              displayName().charAt(0) | uppercase
+            }}</span>
+          }
+        </div>
+        <div class="avatar-actions">
+          <label class="upload-btn">
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onAvatarPick($event)"
+              [disabled]="saving()"
+              hidden
+            />
+            <span>{{ saving() ? 'Cargando…' : 'Subir foto' }}</span>
+          </label>
+          @if (avatarUrl()) {
+            <button type="button" class="ghost-btn" (click)="removeAvatar()">
+              Quitar foto
+            </button>
+          }
+        </div>
+        @if (avatarError(); as err) {
+          <p class="status error">{{ err }}</p>
+        }
+        <p class="avatar-hint">JPG o PNG · se guarda en este dispositivo</p>
+      </div>
+
+      <div class="identity-block">
+        <p class="estado-pill">{{ coleccionResumen() }}</p>
+        <label class="field">
+          <span>Nombre de usuario</span>
+          <input
+            type="text"
+            maxlength="24"
+            [value]="draftName()"
+            (input)="onDraft($event)"
+            autocomplete="nickname"
+          />
+        </label>
+        <p class="lema">{{ perfil().lema }}</p>
+      </div>
+    </div>
+  } @else {
+    <div class="league-switch">
+      <app-pill-switch
+        [pills]="leaguePills"
+        [active]="filtro()"
+        ariaLabel="Liga"
+        (activeChange)="setFiltro($event)"
+      />
+    </div>
+
+    <div class="progress-bar" role="status">
+      <span class="progress-label">
+        {{ totalCartas() }} / {{ cartas.length || 12 }} cartas en total
+      </span>
+      <div class="track">
+        <div
+          class="fill"
+          [style.width.%]="
+            cartas.length ? (totalCartas() / cartas.length) * 100 : 0
+          "
+        ></div>
+      </div>
+      <span class="scan-count">
+        MLB {{ countOwned('mlb') }}/{{ countTotal('mlb') }} · México
+        {{ countOwned('mex') }}/{{ countTotal('mex') }}
+      </span>
+    </div>
+
+    <h2 class="section-title">
+      {{ filtro() === 'mex' ? 'Cartas México' : 'Cartas MLB' }}
+    </h2>
+
+    <div class="cartas-grid">
+      @for (c of cartasFiltradas; track c.id) {
+        <article
+          class="carta-card"
+          [class.unlocked]="tieneCarta(c.id)"
+          [class.source-inicial]="sourceOf(c.id) === 'inicial'"
+          [class.source-juego]="sourceOf(c.id) === 'juego'"
+          [class.source-scanner]="sourceOf(c.id) === 'scanner'"
+          [class.source-completo]="sourceOf(c.id) === 'completo'"
+          [style.--team-color]="tieneCarta(c.id) ? c.color : 'transparent'"
+        >
+          @if (tieneCarta(c.id)) {
+            <span class="carta-num">#{{ c.numero }}</span>
+            <span
+              class="source-badge"
+              [class.gold]="sourceOf(c.id) === 'juego'"
+              [class.silver]="sourceOf(c.id) === 'scanner'"
+              [class.starter]="sourceOf(c.id) === 'inicial'"
+              [class.cyan]="sourceOf(c.id) === 'completo'"
+            >
+              {{ sourceLabel(c) }}
+            </span>
+          } @else {
+            <span class="carta-num">?</span>
+          }
+          <div class="carta-media">
+            @if (tieneCarta(c.id)) {
+              <img [src]="c.foto" [alt]="c.nombre" loading="lazy" />
+              <span class="foil" aria-hidden="true"></span>
+            } @else {
+              <div class="carta-locked">
+                <mat-icon>lock</mat-icon>
+                <span>{{ unlockHint(c) }}</span>
+              </div>
+            }
+          </div>
+          <div class="carta-body">
+            @if (tieneCarta(c.id)) {
+              <p class="serie">{{ c.serie }} · {{ c.rareza }}</p>
+              <h3>{{ c.nombre }}</h3>
+              <p class="liga">{{ c.liga }}</p>
+              <p class="resumen">{{ c.resumen }}</p>
+            } @else {
+              <p class="serie">Sin revelar</p>
+              <h3 class="mystery">???</h3>
+              <p class="liga">Desbloquéala para descubrirla</p>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</app-section-shell>

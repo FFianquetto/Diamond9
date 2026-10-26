@@ -1,0 +1,95 @@
+DIAMANTE 9 — Cumplimiento rúbrica (App Web AR)
+Proyecto: Angular 19 + MindAR + Three.js · Temática beisbol (LMP / LNM / MLB)
+Omitidos a petición: video explicativo · instalador APK/IPA
+
+================================================================================
+APLICACIÓN WEB BASADA EN AR
+================================================================================
+
+1) Tecnologías web (HTML, CSS, JS, frameworks)
+   CUMPLE. Angular 19 (TypeScript), HTML/SCSS, Three.js y MindAR en el navegador.
+   Evidencia: package.json, src/app/, src/index.html.
+
+2) Compatible con navegadores móviles Android e iOS
+   CUMPLE. Corre en Chrome/Safari vía HTTPS o túnel; viewport y PWA meta en
+   index.html; cámara WebRTC/MindAR en móvil.
+   Evidencia: src/index.html, /ar, túnel Cloudflare usado en pruebas.
+
+3) Diseño responsive
+   CUMPLE. Layout adaptable (menú móvil, media queries, page-shell) en home,
+   escáner, galería, perfil y juegos.
+   Evidencia: home-page.component.scss, menu-bar, _page-shell.scss.
+
+4) Optimización de recursos (3D liviano, CPU/GPU)
+   CUMPLE. Modelos GLB; carga optimizada/serial; en móvil baja resolución,
+   menos luces y powerPreference.
+   Evidencia: public/assets/modelos/*.glb, ar-model-loader.service.ts,
+   ar-model-viewer.component.ts.
+
+5) Acceso a la cámara mediante APIs compatibles
+   CUMPLE. MindAR/WebRTC crea el stream de cámara en el escáner AR.
+   Evidencia: mind-ar.service.ts, ar-scanner (/ar).
+
+================================================================================
+CARACTERÍSTICAS Y REQUISITOS
+================================================================================
+
+6) Escaneo de elementos (imágenes / marcadores)
+   CUMPLE. Image Tracking MindAR con targets .mind (pelota, gorra, logo, etc.).
+   Evidencia: public/assets/mind/*.mind, mind-targets.json, /ar.
+
+7) Contenido interactivo 3D
+   CUMPLE. Gorras y pelotas por equipo (GLB); fallbacks geométricos
+   (trofeo/guante/pelota) cuando no hay modelo.
+   Evidencia: public/assets/modelos/, ar-models.json, /modelos y overlay /ar.
+   Nota: no hay modelo de estadio ni jugador humano completo; la rúbrica
+   menciona ejemplos, no una lista obligatoria.
+
+8) Interacciones en la ventana AR (botones/controles + mismo estilo)
+   CUMPLE. Overlay con Trivia, Stats, Video, Animar, Info, etc.; mismos tokens
+   de color/tipografía que el resto del sitio ($rebase / page-shell).
+   Evidencia: ar-scanner.component.html|.scss, variables.scss.
+
+9) Acciones en botones
+   CUMPLE.
+   - Animaciones 3D del modelo (spin / celebraciones / gestos).
+   - Info: rotación 360° + panel de datos + narración con speechSynthesis.
+   - Video: clip asociado al marcador.
+   - Efectos: partículas y luces de celebración.
+   Evidencia: ar-model-viewer.component.ts, ar-scanner.component.ts.
+
+10) Estadísticas y resultados (simulados OK)
+    CUMPLE. Standing/stats LMP y panel de stats del marcador (datos de
+    assets JSON, prototipo simulado).
+    Evidencia: /estadisticas, stats.component, datos en public/assets/data/.
+
+11) Trivias, encuestas o retos
+    CUMPLE. Trivia LMP (10 equipos × 6 preguntas) + minijuegos (jonrón / rebote).
+    Evidencia: /trivia, trivias-lmp.json, /juego, /rebote.
+    Nota: no hay “encuesta” aparte; la rúbrica pide trivia O encuesta O reto.
+
+12) Experiencias múltiples
+    CUMPLE. Escáner AR, galería de videos/imágenes, trivia, stats, historia,
+    modelos 3D, juegos, perfil/colección.
+    Evidencia: app.routes.ts (/ar, /videos, /trivia, /juego, /rebote, …).
+
+13) Videos con filtros
+    CUMPLE. Acervo en /videos con:
+    Desenfoque · Pixelado · Térmica · Ajuste de color · Suavizado · Pasteles · Alta sat.
+    Sin B&N, grises, sepia, exposición ni inversión.
+    Evidencia: video-filters.component.ts, public/assets/videos/, galeria.json.
+
+14) Retroalimentación al usuario
+    CUMPLE. Sonidos UI, toasts/mensajes, estados active/pressed, partículas
+    al interactuar.
+    Evidencia: UiSoundService, feedback-toast, ParticleFx.
+
+15) Temática beisbol (coherencia visual y narrativa)
+    CUMPLE. LMP/LNM/MLB, gorras, pelotas, trivias, historia, galería y marca
+    Diamante 9 en toda la UI.
+    Evidencia: home, assets/data, marcadores, copy de secciones.
+
+================================================================================
+RESUMEN
+================================================================================
+Cumple lo evaluable de la lista web AR 

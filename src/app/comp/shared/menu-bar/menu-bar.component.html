@@ -120,9 +120,9 @@
           >Historia</a
         >
         <a
-          [class.is-active]="isActive('coleccion') || isActive('recompensas')"
-          (click)="navigateTo('coleccion'); $event.preventDefault()"
-          >Mi colección</a
+          [class.is-active]="isActive('perfil') || isActive('coleccion') || isActive('recompensas')"
+          (click)="navigateTo('perfil'); $event.preventDefault()"
+          >Mi perfil</a
         >
       </div>
     </li>
@@ -251,9 +251,9 @@
           </li>
           <li>
             <a
-              [class.is-active]="isActive('coleccion') || isActive('recompensas')"
-              (click)="navigateTo('coleccion'); $event.preventDefault()"
-              >Mi colección</a
+              [class.is-active]="isActive('perfil') || isActive('coleccion') || isActive('recompensas')"
+              (click)="navigateTo('perfil'); $event.preventDefault()"
+              >Mi perfil</a
             >
           </li>
         </ul>
@@ -262,10 +262,24 @@
   </ul>
 
   <div class="button-container">
-    <div class="nav-user" aria-label="Usuario">
-      <span class="nav-user-dot" aria-hidden="true"></span>
-      <span class="nav-user-name">{{ displayName() }}</span>
-    </div>
+    <button
+      type="button"
+      class="nav-user"
+      aria-label="Ir a mi perfil"
+      (click)="navigateTo('perfil')"
+    >
+      @if (avatarUrl(); as src) {
+        <img class="nav-user-avatar" [src]="src" alt="" width="40" height="40" />
+      } @else {
+        <span class="nav-user-fallback" aria-hidden="true">{{
+          displayName().charAt(0)
+        }}</span>
+      }
+      <span class="nav-user-copy">
+        <span class="nav-user-status">{{ coleccionResumen() }}</span>
+        <span class="nav-user-name">{{ displayName() }}</span>
+      </span>
+    </button>
   </div>
 
   <div class="menu-toggle" [class.active]="isMenuOpen" (click)="toggleMenu()">

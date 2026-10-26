@@ -55,12 +55,20 @@ export class RewardsService {
   private cartasFile: CartasColeccionFile | null = null;
   private readonly progress = signal<RewardsProgress>(this.load());
   private readonly celebrationSig = signal<CartaUnlockCelebration | null>(null);
+  private readonly catalogTotal = signal(12);
 
   readonly state = this.progress.asReadonly();
   readonly celebration = this.celebrationSig.asReadonly();
   readonly totalScans = computed(() => this.progress().scans.length);
   readonly totalPremios = computed(() => this.progress().premios.length);
   readonly totalCartas = computed(() => this.progress().cartas.length);
+  readonly catalogTotalCartas = this.catalogTotal.asReadonly();
+  /** Texto corto para navbar / perfil: "3/12 cartas". */
+  readonly coleccionResumen = computed(() => {
+    const n = this.totalCartas();
+    const t = Math.max(this.catalogTotal(), 1);
+    return n === 0 ? '0 cartas' : `${n}/${t} cartas`;
+  });
 
   constructor() {
     // Precarga reglas de desbloqueo (juegos / escáner pueden ocurrir antes de abrir Colección).
@@ -78,6 +86,7 @@ export class RewardsService {
 
   loadCartas(): Observable<CartasColeccionFile> {
     if (this.cartasFile) {
+      this.catalogTotal.set(this.cartasFile.cartas?.length || 12);
       this.ensureInitialCarta();
       return of(this.cartasFile);
     }
@@ -86,6 +95,7 @@ export class RewardsService {
       .pipe(
         tap((file) => {
           this.cartasFile = file;
+          this.catalogTotal.set(file.cartas?.length || 12);
           this.ensureInitialCarta();
           this.syncUnlockedFromProgress();
         }),

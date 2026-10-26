@@ -2,43 +2,6 @@
   <section class="hero-video-section" aria-labelledby="hero-brand">
     <div class="hero-depth-layer" aria-hidden="true"></div>
 
-    <aside class="hero-user-chip" aria-label="Usuario">
-      <span class="chip-dot" aria-hidden="true"></span>
-      <div class="chip-copy">
-        <span class="chip-status">{{ perfil().estado }}</span>
-        <strong class="chip-name">{{ displayName() }}</strong>
-      </div>
-      <button
-        type="button"
-        class="chip-gear"
-        [attr.aria-expanded]="gearOpen()"
-        aria-label="Configurar nombre de usuario"
-        (click)="toggleGear($event)"
-      >
-        <mat-icon>settings</mat-icon>
-      </button>
-
-      @if (gearOpen()) {
-        <div class="chip-panel" role="dialog" aria-label="Cambiar nombre" (click)="$event.stopPropagation()">
-          <label>
-            <span>Nombre de usuario</span>
-            <input
-              type="text"
-              maxlength="24"
-              [value]="draftName()"
-              (input)="onDraft($event)"
-              (keydown.enter)="saveName()"
-              autocomplete="nickname"
-            />
-          </label>
-          <div class="chip-panel-actions">
-            <button type="button" class="chip-save" (click)="saveName()">Guardar</button>
-            <button type="button" class="chip-cancel" (click)="closeGear()">Cerrar</button>
-          </div>
-        </div>
-      }
-    </aside>
-
     <div class="hero-video-content">
       <p class="hero-brand" id="hero-brand" aria-label="Diamante 9">DIAMANTE 9</p>
       <h1 class="hero-video-title">
